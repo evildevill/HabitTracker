@@ -76,17 +76,25 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
 
   useEffect(() => {
     if (reduceMotion) {
-      fade.setValue(1); rise.setValue(0);
+      fade.setValue(1);
+      rise.setValue(0);
+      slide.setValue(0);
+      artScale.setValue(1);
       progress.setValue(step / 2);
       return;
     }
-    fade.setValue(0); rise.setValue(12);
+    fade.setValue(0);
+    rise.setValue(12);
+    slide.setValue(18);
+    artScale.setValue(0.96);
     Animated.parallel([
-      Animated.timing(fade, { toValue: 1, duration: 340, useNativeDriver: true }),
+      Animated.timing(fade, { toValue: 1, duration: 360, useNativeDriver: true }),
       Animated.spring(rise, { toValue: 0, speed: 18, bounciness: 3, useNativeDriver: true }),
+      Animated.spring(slide, { toValue: 0, speed: 16, bounciness: 2, useNativeDriver: true }),
+      Animated.spring(artScale, { toValue: 1, speed: 15, bounciness: 4, useNativeDriver: true }),
       Animated.spring(progress, { toValue: step / 2, speed: 18, bounciness: 0, useNativeDriver: false }),
     ]).start();
-  }, [step, reduceMotion, fade, rise, progress]);
+  }, [step, reduceMotion, fade, rise, slide, artScale, progress]);
 
   const togglePreset = (id: string) => {
     void Haptics.selectionAsync().catch(() => undefined);
