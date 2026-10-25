@@ -268,3 +268,16 @@ Habit cards use a compact category tile, a restrained accent rail, clear title/s
 Interaction feedback uses `expo-haptics`: medium impact when completing a habit, light impact when unchecking it, selection feedback when opening the add-habit flow or changing tabs, and success notification feedback after creating a habit. Feedback calls are non-blocking and failures are safely ignored so interaction is never blocked.
 
 The app shell uses `SafeAreaView` and `SafeAreaProvider` from `react-native-safe-area-context`, not the deprecated React Native `SafeAreaView`. The add-habit sheet remains keyboard-aware and scrollable. Verify both the keyboard layout and haptics on physical iOS and Android devices before describing them as device-tested.
+
+
+## 13. Onboarding — 2026-10-25
+
+The first-run onboarding is implemented in `src/features/onboarding/onboarding-screen.tsx` and is mounted by `src/app/app-shell.tsx` before the four-tab app.
+
+- Three stages: welcome, multi-select preset packs, and a review/finish step.
+- Preset packs: A little balance, Gentle mornings, Focus & learning, and Move & recharge.
+- Preset selection maps to the existing `Habit` model and supported icon/accent tokens. Overlapping habit titles are deduplicated when multiple packs are combined.
+- The onboarding uses the documented normalized RGB palette, an ink-and-citrus brand mark, and paper/canvas surfaces.
+- Motion uses React Native's `Animated` API with a short fade/spring transition and an animated progress indicator. The transition falls back to final states when Reduce Motion is enabled.
+- Preset changes use selection haptics; finishing uses a success notification. Haptics are non-blocking.
+- Preset selection seeds the app's in-memory habit list. Durable storage is not implemented in the current app architecture, so onboarding completion and selected habits do not survive an app restart yet. Add a storage layer before treating onboarding as a one-time persistent flow.
