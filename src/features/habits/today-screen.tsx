@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   rowWrap: { flex: 1 },
   empty: { alignItems: "center", paddingHorizontal: 22, paddingVertical: 26, backgroundColor: color("paper", 0.72), borderRadius: 21, borderWidth: 1, borderColor: surfaces.border, gap: 10 },
   emptyMark: { width: 45, height: 45, borderRadius: 16, backgroundColor: color("brand", 0.1), alignItems: "center", justifyContent: "center" },
-  emptyTitle: { color: colors.ink, fontSize: 17, fontWeight: "750", textAlign: "center", letterSpacing: -0.4 },
+  emptyTitle: { color: colors.ink, fontSize: 17, fontWeight: "700", textAlign: "center", letterSpacing: -0.4 },
   emptyBody: { color: colors.secondary, fontSize: 12, lineHeight: 18, textAlign: "center" },
   emptyButton: { backgroundColor: colors.brand, borderRadius: 12, minHeight: 42, paddingHorizontal: 17, alignItems: "center", justifyContent: "center", marginTop: 4 },
   emptyButtonText: { color: colors.paper, fontSize: 12, fontWeight: "700" },
