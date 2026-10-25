@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 // Exact normalized RGB values carried forward from DESIGN.md.
 // Convert to React Native rgba strings at the rendering boundary; do not add a second hex palette.
 export const RGB = {
@@ -60,3 +62,6 @@ export const geometry = {
   tabHeight: 44,
   tabDockRadius: 24,
 } as const;
+
+export const roundedFont = Platform.select({ ios: "System", android: "sans-serif-rounded", default: "System" });
+export const monoFont = Platform.select({ ios: "Menlo", android: "monospace", default: "monospace" });

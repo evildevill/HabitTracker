@@ -2,7 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Plus, SlidersHorizontal } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { ScreenHeading } from "../../components/ui/screen-heading";
-import { colors, surfaces } from "../../design/tokens";
+import { color, colors, monoFont, surfaces } from "../../design/tokens";
 import { HabitRow } from "./habit-row";
 import type { Habit } from "./types";
 
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: "900",
     letterSpacing: 1.5,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   heading: {
     marginBottom: 22,

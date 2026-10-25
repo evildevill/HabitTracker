@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { color, colors, typography } from "../../design/tokens";
+import { colors, monoFont, roundedFont, typography } from "../../design/tokens";
 
 type ScreenHeadingProps = {
   eyebrow: string;
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontSize: typography.eyebrow,
     fontWeight: "900",
     letterSpacing: 2,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   countPill: {
     backgroundColor: colors.paper,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     letterSpacing: -1.3,
     lineHeight: 42,
-    fontFamily: "sans-serif-rounded",
+    fontFamily: roundedFont,
   },
   subtitle: {
     color: colors.secondary,

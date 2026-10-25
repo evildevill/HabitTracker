@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { BarChart3, ListChecks, Settings, Sun } from "lucide-react-native";
 import type { ComponentType } from "react";
-import { color, colors, geometry, surfaces } from "../design/tokens";
+import { color, colors, geometry, roundedFont, surfaces } from "../design/tokens";
 
 export type TabKey = "today" | "habits" | "insights" | "settings";
 
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     color: colors.paper,
     fontSize: 12,
     fontWeight: "800",
-    fontFamily: "sans-serif-rounded",
+    fontFamily: roundedFont,
   },
   pressed: {
     opacity: 0.8,

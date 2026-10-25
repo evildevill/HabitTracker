@@ -3,7 +3,7 @@ import { ArrowUpRight, ChartNoAxesColumnIncreasing, CircleCheck, Sparkles } from
 import { AppBackground } from "../../components/ui/app-background";
 import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
-import { color, colors, surfaces } from "../../design/tokens";
+import { color, colors, monoFont, roundedFont, surfaces } from "../../design/tokens";
 import type { Habit } from "../habits/types";
 
 type InsightsScreenProps = {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: "900",
     letterSpacing: 1.5,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   heading: {
     marginBottom: 23,

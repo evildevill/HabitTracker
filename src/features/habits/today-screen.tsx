@@ -1,11 +1,12 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { ArrowUpRight, CheckCircle2, Sparkles } from "lucide-react-native";
 import Svg, { Circle } from "react-native-svg";
 import { AppBackground } from "../../components/ui/app-background";
 import { BrandMark } from "../../components/ui/brand-mark";
 import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
-import { color, colors, geometry, surfaces } from "../../design/tokens";
+import { color, colors, geometry, monoFont, roundedFont, surfaces } from "../../design/tokens";
 import { HabitRow } from "./habit-row";
 import type { Habit } from "./types";
 
@@ -54,7 +55,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
           />
         </View>
 
-        <View style={styles.hero}>
+        <LinearGradient colors={[colors.ink, colors.brandDark]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
           <View pointerEvents="none" style={styles.heroOrb} />
           <View pointerEvents="none" style={styles.heroOrbSmall} />
           <View style={styles.heroTop}>
@@ -104,7 +105,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
               </View>
             </View>
           </View>
-        </View>
+        </LinearGradient>
 
         <View style={styles.sectionHeader}>
           <View>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontWeight: "800",
     letterSpacing: 1.4,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   datePill: {
     flexDirection: "row",
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "800",
     letterSpacing: -0.4,
-    fontFamily: "sans-serif-rounded",
+    fontFamily: roundedFont,
   },
   heroSparkle: {
     width: 34,

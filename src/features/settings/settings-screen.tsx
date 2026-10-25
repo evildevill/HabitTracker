@@ -1,10 +1,10 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Bell, ChevronRight, CircleHelp, Moon, ShieldCheck, Smartphone } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { BrandMark } from "../../components/ui/brand-mark";
 import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
-import { color, colors, surfaces } from "../../design/tokens";
+import { color, colors, monoFont, surfaces } from "../../design/tokens";
 
 const items = [
   { icon: Bell, title: "Reminders", subtitle: "Choose when a habit nudges you", status: "NEXT" },
@@ -43,7 +43,7 @@ export function SettingsScreen() {
           {items.map((item) => {
             const Icon = item.icon;
             return (
-              <Pressable key={item.title} accessibilityRole="button" style={({ pressed }) => [styles.settingRow, pressed && styles.pressed]}>
+              <View key={item.title} style={styles.settingRow}>
                 <View style={styles.settingIcon}><Icon size={19} color={colors.brand} /></View>
                 <View style={styles.settingCopy}>
                   <Text style={styles.settingTitle}>{item.title}</Text>
@@ -51,7 +51,7 @@ export function SettingsScreen() {
                 </View>
                 <View style={styles.statusPill}><Text style={styles.statusText}>{item.status}</Text></View>
                 <ChevronRight size={16} color={color("secondary", 0.65)} />
-              </Pressable>
+              </View>
             );
           })}
         </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: "900",
     letterSpacing: 1.5,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   heading: {
     marginBottom: 24,

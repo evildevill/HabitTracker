@@ -9,7 +9,7 @@ import {
 } from "lucide-react-native";
 import type { ComponentType } from "react";
 import type { Habit } from "./types";
-import { color, colors, geometry, surfaces } from "../../design/tokens";
+import { color, colors, geometry, roundedFont, surfaces } from "../../design/tokens";
 
 const iconByHabit = {
   water: Droplets,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "800",
     letterSpacing: -0.25,
-    fontFamily: "sans-serif-rounded",
+    fontFamily: roundedFont,
   },
   completedTitle: {
     color: colors.secondary,
