@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowUpRight, Check, Circle, Sparkles } from "lucide-react-native";
+import { ArrowUpRight, Check, Sparkles } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { ScreenHeading } from "../../components/ui/screen-heading";
 import { color, colors, surfaces } from "../../design/tokens";
