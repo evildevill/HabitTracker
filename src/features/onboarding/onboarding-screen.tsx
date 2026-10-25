@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
-import { ArrowLeft, ArrowRight, Check, Droplets, Footprints, BookOpen, Moon, Sun, Brain, Heart, Sparkles, Zap } from "lucide-react-native";
+import { ArrowLeft, ArrowRight, Check, Sun, Brain, Heart, Zap } from "lucide-react-native";
 import type { ComponentType } from "react";
 import { color, colors, surfaces } from "../../design/tokens";
 import type { Habit, HabitIcon } from "../habits/types";
