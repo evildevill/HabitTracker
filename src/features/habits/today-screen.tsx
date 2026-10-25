@@ -1,116 +1,79 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowRight, CheckCircle2, Target } from "lucide-react-native";
+import { ArrowUpRight, Check, Circle, Sparkles } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
-import { BrandMark } from "../../components/ui/brand-mark";
-import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
 import { color, colors, surfaces } from "../../design/tokens";
 import { HabitRow } from "./habit-row";
 import type { Habit } from "./types";
 
-type TodayScreenProps = {
-  habits: Habit[];
-  onToggleHabit: (id: string) => void;
-  onViewAll: () => void;
-};
+type TodayScreenProps = { habits: Habit[]; onToggleHabit: (id: string) => void; onViewAll: () => void };
 
 export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenProps) {
   const completed = habits.filter((habit) => habit.completed).length;
   const total = habits.length;
   const progress = total === 0 ? 0 : completed / total;
-  const todayLabel = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "short",
-    day: "numeric",
-  });
+  const now = new Date();
+  const day = now.toLocaleDateString("en-US", { weekday: "long" });
+  const date = now.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+  const greeting = now.getHours() < 12 ? "Good morning" : now.getHours() < 18 ? "Good afternoon" : "Good evening";
 
   return (
     <AppBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
-        <View style={styles.topBar}>
-          <View style={styles.brandLockup}>
-            <BrandMark size={36} />
-            <View style={styles.brandCopy}>
-              <Text style={styles.brandName}>Habit Tracker</Text>
-              <Text style={styles.brandCaption}>Build a life that feels good.</Text>
-            </View>
-          </View>
-          <Text style={styles.date}>{todayLabel}</Text>
+        <View style={styles.topLine}>
+          <View style={styles.wordmark}><View style={styles.brandDot} /><Text style={styles.brandName}>little by little</Text></View>
+          <View style={styles.dateStamp}><Text style={styles.dateDay}>{day}</Text><Text style={styles.dateNumber}>{date}</Text></View>
         </View>
 
         <View style={styles.heading}>
-          <ScreenHeading eyebrow="YOUR DAILY CHECK-IN" title="Today" subtitle="Make a little room for what matters." />
+          <Text style={styles.greeting}>{greeting},</Text>
+          <ScreenHeading eyebrow="A FRESH PAGE" title="Today." subtitle="Make today feel like your own." />
         </View>
 
-        <GlassCard style={styles.progressCard} shadow={false}>
-          <View style={styles.progressTop}>
-            <View style={styles.progressLabelWrap}>
-              <View style={styles.progressIcon}>
-                <Target size={17} color={colors.brand} strokeWidth={1.9} />
-              </View>
-              <View style={styles.progressCopy}>
-                <Text style={styles.progressTitle}>Daily progress</Text>
-                <Text style={styles.progressSubtitle}>
-                  {completed === total && total > 0 ? "Everything checked off. Nice work." : "Every small action counts."}
-                </Text>
-              </View>
+        <View style={styles.hero}>
+          <View style={styles.heroTop}>
+            <View style={styles.heroCopy}>
+              <Text style={styles.heroEyebrow}>YOUR DAILY RHYTHM</Text>
+              <Text style={styles.heroTitle}>{completed === total && total > 0 ? "You did it." : completed === 0 ? "Start where you are." : "Look at you go."}</Text>
+              <Text style={styles.heroSubtitle}>{completed === total && total > 0 ? "Every promise, kept." : total - completed + " small " + (total - completed === 1 ? "promise" : "promises") + " left today."}</Text>
             </View>
-            <Text style={styles.percent}>{Math.round(progress * 100)}%</Text>
+            <View style={styles.ring}>
+              <Text style={styles.ringPercent}>{Math.round(progress * 100)}<Text style={styles.ringUnit}>%</Text></Text>
+              <Text style={styles.ringLabel}>DONE</Text>
+            </View>
           </View>
-          <View style={styles.track}>
-            <View style={[styles.fill, { width: (progress * 100) + "%" }]} />
-          </View>
-          <View style={styles.progressBottom}>
-            <Text style={styles.progressCount}><Text style={styles.progressCountStrong}>{completed}</Text> of {total} habits complete</Text>
-            <Text style={styles.remaining}>{Math.max(total - completed, 0)} left</Text>
-          </View>
-        </GlassCard>
+          <View style={styles.progressTrack}><View style={[styles.progressFill, { width: (progress * 100) + "%" }]} /></View>
+          <View style={styles.heroBottom}><Text style={styles.heroCount}>{String(completed).padStart(2, "0")} <Text style={styles.heroMuted}>/ {String(total).padStart(2, "0")} habits</Text></Text><Text style={styles.heroFootnote}>PROGRESS, NOT PERFECTION</Text></View>
+          <View pointerEvents="none" style={styles.heroOrb} />
+        </View>
 
         <View style={styles.sectionHeader}>
-          <View>
-            <Text style={styles.sectionTitle}>Your habits</Text>
-            <Text style={styles.sectionSubtitle}>One check-in at a time</Text>
-          </View>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="View all habits"
-            onPress={onViewAll}
-            style={({ pressed }) => [styles.viewAll, pressed && styles.pressed]}
-          >
-            <Text style={styles.viewAllText}>See all</Text>
-            <ArrowRight size={16} color={colors.brand} strokeWidth={1.8} />
+          <View><Text style={styles.sectionKicker}>THE LITTLE THINGS</Text><Text style={styles.sectionTitle}>Your habits</Text></View>
+          <Pressable accessibilityRole="button" accessibilityLabel="View all habits" onPress={onViewAll} style={({ pressed }) => [styles.viewAll, pressed && styles.pressed]}>
+            <Text style={styles.viewAllText}>All habits</Text><ArrowUpRight size={16} color={colors.brand} strokeWidth={2} />
           </Pressable>
         </View>
 
-        <View style={styles.habitList}>
-          {habits.length === 0 ? (
-            <GlassCard style={styles.emptyCard} shadow={false}>
-              <View style={styles.emptyIcon}><CheckCircle2 size={25} color={colors.brand} strokeWidth={1.8} /></View>
-              <Text style={styles.emptyTitle}>Start with one small habit</Text>
-              <Text style={styles.emptyBody}>Choose something simple you can return to every day.</Text>
-              <Pressable onPress={onViewAll} style={({ pressed }) => [styles.emptyButton, pressed && styles.pressed]}>
-                <Text style={styles.emptyButtonText}>Create your first habit</Text>
-              </Pressable>
-            </GlassCard>
-          ) : habits.slice(0, 5).map((habit) => (
-            <HabitRow key={habit.id} habit={habit} onToggle={onToggleHabit} compact />
-          ))}
-        </View>
-
-        {habits.length > 5 ? (
-          <Pressable onPress={onViewAll} style={({ pressed }) => [styles.moreHabits, pressed && styles.pressed]}>
-            <Text style={styles.moreHabitsText}>View {habits.length - 5} more habits</Text>
-            <ArrowRight size={15} color={colors.brand} />
-          </Pressable>
-        ) : null}
-
-        <View style={styles.footerNote}>
-          <View style={styles.footerIcon}><CheckCircle2 size={17} color={colors.brand} strokeWidth={1.8} /></View>
-          <View style={styles.footerCopy}>
-            <Text style={styles.footerTitle}>Consistency, not perfection.</Text>
-            <Text style={styles.footerBody}>If today gets messy, you can begin again tomorrow.</Text>
+        {habits.length === 0 ? (
+          <View style={styles.empty}>
+            <View style={styles.emptyMark}><Sparkles size={22} color={colors.brand} strokeWidth={1.7} /></View>
+            <Text style={styles.emptyTitle}>Make room for a good thing.</Text>
+            <Text style={styles.emptyBody}>Choose one small habit to begin. You can build from there.</Text>
+            <Pressable onPress={onViewAll} style={({ pressed }) => [styles.emptyButton, pressed && styles.pressed]}><Text style={styles.emptyButtonText}>Create your first habit</Text></Pressable>
           </View>
-        </View>
+        ) : (
+          <View style={styles.habitList}>
+            {habits.slice(0, 5).map((habit, index) => (
+              <View key={habit.id} style={styles.habitItem}>
+                <Text style={[styles.index, habit.completed && styles.indexDone]}>{String(index + 1).padStart(2, "0")}</Text>
+                <View style={styles.rowWrap}><HabitRow habit={habit} onToggle={onToggleHabit} compact /></View>
+              </View>
+            ))}
+          </View>
+        )}
+        {habits.length > 5 ? <Pressable onPress={onViewAll} style={styles.more}><Text style={styles.moreText}>+ {habits.length - 5} more in your routine</Text></Pressable> : null}
+
+        <View style={styles.note}><View style={styles.noteIcon}><Check size={15} color={colors.brand} strokeWidth={2.2} /></View><View style={styles.noteCopy}><Text style={styles.noteTitle}>Small steps still move you forward.</Text><Text style={styles.noteBody}>A gentle reminder: showing up is enough to begin.</Text></View></View>
         <View style={styles.bottomSpacer} />
       </ScrollView>
     </AppBackground>
@@ -118,47 +81,56 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
 }
 
 const styles = StyleSheet.create({
-  content: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 28 },
-  topBar: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 30 },
-  brandLockup: { flexDirection: "row", alignItems: "center", gap: 10 },
-  brandCopy: { gap: 3 },
-  brandName: { color: colors.ink, fontSize: 13, fontWeight: "700", letterSpacing: -0.2 },
-  brandCaption: { color: colors.secondary, fontSize: 11, fontWeight: "400" },
-  date: { color: colors.secondary, fontSize: 11, fontWeight: "600" },
-  heading: { marginBottom: 22 },
-  progressCard: { padding: 18, borderRadius: 22, marginBottom: 30, gap: 16 },
-  progressTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
-  progressLabelWrap: { flexDirection: "row", alignItems: "center", gap: 11, flex: 1 },
-  progressIcon: { width: 40, height: 40, borderRadius: 14, backgroundColor: color("mint", 0.18), alignItems: "center", justifyContent: "center" },
-  progressCopy: { flex: 1, gap: 4 },
-  progressTitle: { color: colors.ink, fontSize: 14, fontWeight: "700", letterSpacing: -0.2 },
-  progressSubtitle: { color: colors.secondary, fontSize: 11, lineHeight: 16 },
-  percent: { color: colors.brand, fontSize: 21, fontWeight: "700", letterSpacing: -0.6 },
-  track: { height: 7, borderRadius: 99, backgroundColor: color("brand", 0.1), overflow: "hidden" },
-  fill: { height: 7, borderRadius: 99, backgroundColor: colors.brand },
-  progressBottom: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  progressCount: { color: colors.secondary, fontSize: 12 },
-  progressCountStrong: { color: colors.ink, fontWeight: "700" },
-  remaining: { color: colors.secondary, fontSize: 11, fontWeight: "500" },
+  content: { paddingHorizontal: 22, paddingTop: 12, paddingBottom: 30 },
+  topLine: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 26 },
+  wordmark: { flexDirection: "row", alignItems: "center", gap: 8 },
+  brandDot: { width: 11, height: 11, borderRadius: 4, backgroundColor: colors.brand, transform: [{ rotate: "45deg" }] },
+  brandName: { color: colors.ink, fontSize: 13, fontWeight: "700", letterSpacing: -0.25 },
+  dateStamp: { alignItems: "flex-end", gap: 2 },
+  dateDay: { color: colors.secondary, fontSize: 10, fontWeight: "600", letterSpacing: 0.4 },
+  dateNumber: { color: colors.ink, fontSize: 12, fontWeight: "700" },
+  heading: { marginBottom: 21, gap: 3 },
+  greeting: { color: colors.secondary, fontSize: 13, fontWeight: "500" },
+  hero: { backgroundColor: colors.brandDark, borderRadius: 25, padding: 20, marginBottom: 31, overflow: "hidden" },
+  heroTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 20 },
+  heroCopy: { flex: 1, gap: 7 },
+  heroEyebrow: { color: color("paper", 0.68), fontSize: 9, fontWeight: "700", letterSpacing: 1.3 },
+  heroTitle: { color: colors.paper, fontSize: 24, fontWeight: "800", letterSpacing: -0.8, lineHeight: 29 },
+  heroSubtitle: { color: color("paper", 0.72), fontSize: 12, lineHeight: 17 },
+  ring: { width: 79, height: 79, borderRadius: 40, borderWidth: 1.5, borderColor: color("paper", 0.27), backgroundColor: color("paper", 0.07), alignItems: "center", justifyContent: "center" },
+  ringPercent: { color: colors.paper, fontSize: 23, fontWeight: "800", letterSpacing: -1 },
+  ringUnit: { fontSize: 12, fontWeight: "600" },
+  ringLabel: { color: color("paper", 0.64), fontSize: 8, fontWeight: "700", letterSpacing: 1 },
+  progressTrack: { height: 5, backgroundColor: color("paper", 0.16), borderRadius: 8, overflow: "hidden" },
+  progressFill: { height: 5, backgroundColor: color("sand"), borderRadius: 8 },
+  heroBottom: { marginTop: 13, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 },
+  heroCount: { color: colors.paper, fontSize: 14, fontWeight: "800" },
+  heroMuted: { color: color("paper", 0.63), fontSize: 11, fontWeight: "500" },
+  heroFootnote: { color: color("paper", 0.58), fontSize: 8, fontWeight: "700", letterSpacing: 0.7 },
+  heroOrb: { position: "absolute", width: 140, height: 140, borderRadius: 70, right: -76, top: -80, borderWidth: 1, borderColor: color("paper", 0.09) },
   sectionHeader: { flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 14 },
-  sectionTitle: { color: colors.ink, fontSize: 21, fontWeight: "700", letterSpacing: -0.55 },
-  sectionSubtitle: { color: colors.secondary, fontSize: 12, marginTop: 4 },
-  viewAll: { flexDirection: "row", alignItems: "center", gap: 5, paddingVertical: 7, paddingLeft: 8 },
-  viewAllText: { color: colors.brand, fontSize: 12, fontWeight: "600" },
+  sectionKicker: { color: colors.secondary, fontSize: 9, fontWeight: "700", letterSpacing: 1.2, marginBottom: 5 },
+  sectionTitle: { color: colors.ink, fontSize: 25, fontWeight: "800", letterSpacing: -0.9 },
+  viewAll: { flexDirection: "row", alignItems: "center", gap: 4, paddingVertical: 6, paddingLeft: 8 },
+  viewAllText: { color: colors.brand, fontSize: 12, fontWeight: "700" },
   pressed: { opacity: 0.75, transform: [{ scale: 0.985 }] },
   habitList: { gap: 9 },
-  emptyCard: { alignItems: "center", paddingHorizontal: 24, paddingVertical: 27, gap: 10 },
-  emptyIcon: { width: 48, height: 48, borderRadius: 16, backgroundColor: color("mint", 0.16), alignItems: "center", justifyContent: "center", marginBottom: 2 },
-  emptyTitle: { color: colors.ink, fontSize: 17, fontWeight: "700", textAlign: "center", letterSpacing: -0.3 },
-  emptyBody: { color: colors.secondary, fontSize: 13, lineHeight: 19, textAlign: "center" },
-  emptyButton: { backgroundColor: colors.ink, borderRadius: 13, minHeight: 42, paddingHorizontal: 17, alignItems: "center", justifyContent: "center", marginTop: 6 },
-  emptyButtonText: { color: colors.paper, fontSize: 12, fontWeight: "600" },
-  moreHabits: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, paddingVertical: 15 },
-  moreHabitsText: { color: colors.brand, fontSize: 12, fontWeight: "600" },
-  footerNote: { flexDirection: "row", alignItems: "center", gap: 11, borderTopWidth: 1, borderTopColor: surfaces.mutedBorder, marginTop: 19, paddingTop: 17, paddingHorizontal: 2 },
-  footerIcon: { width: 34, height: 34, borderRadius: 12, backgroundColor: color("mint", 0.16), alignItems: "center", justifyContent: "center" },
-  footerCopy: { flex: 1, gap: 4 },
-  footerTitle: { color: colors.ink, fontSize: 12, fontWeight: "600" },
-  footerBody: { color: colors.secondary, fontSize: 11, lineHeight: 16 },
-  bottomSpacer: { height: 92 },
+  habitItem: { flexDirection: "row", alignItems: "center", gap: 9 },
+  index: { width: 20, color: color("secondary", 0.68), fontSize: 9, fontWeight: "700", letterSpacing: 0.2 },
+  indexDone: { color: colors.brand },
+  rowWrap: { flex: 1 },
+  empty: { alignItems: "center", paddingHorizontal: 22, paddingVertical: 26, backgroundColor: color("paper", 0.72), borderRadius: 21, borderWidth: 1, borderColor: surfaces.border, gap: 10 },
+  emptyMark: { width: 45, height: 45, borderRadius: 16, backgroundColor: color("brand", 0.1), alignItems: "center", justifyContent: "center" },
+  emptyTitle: { color: colors.ink, fontSize: 17, fontWeight: "750", textAlign: "center", letterSpacing: -0.4 },
+  emptyBody: { color: colors.secondary, fontSize: 12, lineHeight: 18, textAlign: "center" },
+  emptyButton: { backgroundColor: colors.brand, borderRadius: 12, minHeight: 42, paddingHorizontal: 17, alignItems: "center", justifyContent: "center", marginTop: 4 },
+  emptyButtonText: { color: colors.paper, fontSize: 12, fontWeight: "700" },
+  more: { alignItems: "center", paddingVertical: 14 },
+  moreText: { color: colors.brand, fontSize: 12, fontWeight: "700" },
+  note: { flexDirection: "row", alignItems: "center", gap: 11, borderTopWidth: 1, borderTopColor: surfaces.mutedBorder, marginTop: 23, paddingTop: 17 },
+  noteIcon: { width: 30, height: 30, borderRadius: 10, backgroundColor: color("brand", 0.1), alignItems: "center", justifyContent: "center" },
+  noteCopy: { flex: 1, gap: 3 },
+  noteTitle: { color: colors.ink, fontSize: 11, fontWeight: "700" },
+  noteBody: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
+  bottomSpacer: { height: 88 },
 });
