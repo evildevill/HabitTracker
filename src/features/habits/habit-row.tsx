@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import * as Haptics from "expo-haptics";
 import {
   BookOpen,
   Check,
@@ -9,7 +10,7 @@ import {
 } from "lucide-react-native";
 import type { ComponentType } from "react";
 import type { Habit } from "./types";
-import { color, colors, geometry, roundedFont, surfaces } from "../../design/tokens";
+import { color, colors, geometry, surfaces } from "../../design/tokens";
 
 const iconByHabit = {
   water: Droplets,
@@ -28,27 +29,37 @@ type HabitRowProps = {
 export function HabitRow({ habit, onToggle, compact = false }: HabitRowProps) {
   const Icon = iconByHabit[habit.icon];
 
+  const handlePress = () => {
+    const feedback = habit.completed
+      ? Haptics.ImpactFeedbackStyle.Light
+      : Haptics.ImpactFeedbackStyle.Medium;
+    void Haptics.impactAsync(feedback).catch(() => undefined);
+    onToggle(habit.id);
+  };
+
   return (
     <Pressable
       accessibilityRole="checkbox"
       accessibilityLabel={habit.title}
+      accessibilityHint={habit.completed ? "Mark this habit as not complete" : "Mark this habit as complete"}
       accessibilityState={{ checked: habit.completed }}
-      onPress={() => onToggle(habit.id)}
+      onPress={handlePress}
       style={({ pressed }) => [
-        styles.row,
-        compact && styles.compactRow,
-        habit.completed && styles.completedRow,
+        styles.card,
+        compact && styles.compactCard,
+        habit.completed && styles.completedCard,
         pressed && styles.pressed,
       ]}
     >
+      <View style={[styles.accent, { backgroundColor: color(habit.accent, habit.completed ? 0.45 : 1) }]} />
       <View style={[
         styles.iconTile,
         {
-          backgroundColor: color(habit.accent, 0.14),
-          borderColor: color(habit.accent, 0.25),
+          backgroundColor: color(habit.accent, habit.completed ? 0.08 : 0.13),
+          borderColor: color(habit.accent, habit.completed ? 0.12 : 0.2),
         },
       ]}>
-        <Icon size={22} color={color(habit.accent)} strokeWidth={1.8} />
+        <Icon size={21} color={color(habit.accent)} strokeWidth={1.9} />
       </View>
       <View style={styles.copy}>
         <Text numberOfLines={1} style={[styles.title, habit.completed && styles.completedTitle]}>
@@ -56,44 +67,53 @@ export function HabitRow({ habit, onToggle, compact = false }: HabitRowProps) {
         </Text>
         <Text numberOfLines={1} style={styles.subtitle}>{habit.subtitle}</Text>
       </View>
-      <View style={[
-        styles.check,
-        habit.completed && styles.checked,
-      ]}>
-        {habit.completed ? <Check size={17} color={colors.ink} strokeWidth={3} /> : null}
+      <View style={[styles.check, habit.completed && styles.checked]}>
+        {habit.completed ? <Check size={16} color={colors.paper} strokeWidth={2.8} /> : null}
       </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  row: {
-    minHeight: 82,
+  card: {
+    minHeight: 78,
     flexDirection: "row",
     alignItems: "center",
     gap: 13,
-    paddingHorizontal: 14,
+    paddingLeft: 12,
+    paddingRight: 15,
     paddingVertical: 12,
-    borderRadius: 22,
+    borderRadius: 20,
     backgroundColor: surfaces.card,
     borderWidth: 1,
     borderColor: surfaces.border,
+    overflow: "hidden",
   },
-  compactRow: {
-    minHeight: 74,
-    borderRadius: 20,
+  compactCard: {
+    minHeight: 72,
+    borderRadius: 18,
   },
-  completedRow: {
-    backgroundColor: color("paper", 0.72),
+  completedCard: {
+    backgroundColor: color("mint", 0.07),
+    borderColor: color("brand", 0.12),
+  },
+  accent: {
+    position: "absolute",
+    left: 0,
+    top: 14,
+    bottom: 14,
+    width: 3,
+    borderTopRightRadius: 3,
+    borderBottomRightRadius: 3,
   },
   pressed: {
     opacity: 0.86,
-    transform: [{ scale: 0.985 }],
+    transform: [{ scale: 0.99 }],
   },
   iconTile: {
-    width: geometry.habitIcon,
-    height: geometry.habitIcon,
-    borderRadius: geometry.habitIcon * 0.28,
+    width: 46,
+    height: 46,
+    borderRadius: 15,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -105,24 +125,22 @@ const styles = StyleSheet.create({
   title: {
     color: colors.ink,
     fontSize: 15,
-    fontWeight: "600",
+    fontWeight: "650",
     letterSpacing: -0.25,
-    fontFamily: roundedFont,
   },
   completedTitle: {
     color: colors.secondary,
-    textDecorationLine: "line-through",
   },
   subtitle: {
     color: colors.secondary,
     fontSize: 12,
-    fontWeight: "500",
+    fontWeight: "400",
     lineHeight: 16,
   },
   check: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 27,
+    height: 27,
+    borderRadius: 10,
     borderWidth: 1.5,
     borderColor: color("ink", 0.17),
     backgroundColor: colors.paper,
@@ -130,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   checked: {
-    backgroundColor: colors.citrus,
-    borderColor: colors.citrus,
+    backgroundColor: colors.brand,
+    borderColor: colors.brand,
   },
 });
