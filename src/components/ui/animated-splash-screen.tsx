@@ -40,8 +40,8 @@ const color = (token: ColorToken, opacity = 1): string => {
 };
 
 const palette = Object.fromEntries(
-  Object.keys(RGB).map((token) => [token, color(token)])
-);
+  (Object.keys(RGB) as ColorToken[]).map((token) => [token, color(token)])
+) as Record<ColorToken, string>;
 
 const SIGNAL_LABELS = ["SHOW UP", "STAY STEADY", "KEEP GOING"] as const;
 type SignalIndex = 0 | 1 | 2;
