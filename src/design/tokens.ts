@@ -39,14 +39,14 @@ export const surfaces = {
 } as const;
 
 export const typography = {
-  eyebrow: 11,
-  screenTitle: 36,
+  eyebrow: 12,
+  screenTitle: 34,
   screenSubtitle: 15,
-  count: 12,
+  count: 13,
   searchIcon: 15,
   emptyStateIcon: 32,
   emptyStateTitle: 19,
-  emptyStateBody: 13,
+  emptyStateBody: 14,
   wordmark: 29,
 } as const;
 

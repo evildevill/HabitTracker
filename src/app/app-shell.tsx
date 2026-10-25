@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   modalEyebrow: {
     color: colors.brand,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.8,
     fontFamily: monoFont,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   },
   fieldLabel: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.2,
     marginBottom: 10,

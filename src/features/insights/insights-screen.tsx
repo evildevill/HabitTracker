@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   topLabel: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   featureEyebrow: {
     color: colors.citrus,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   comingSoonText: {
     color: colors.secondary,
-    fontSize: 8,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,

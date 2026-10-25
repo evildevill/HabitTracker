@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   topLabel: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -137,13 +137,13 @@ const styles = StyleSheet.create({
   },
   versionText: {
     color: colors.citrus,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.2,
   },
   sectionTitle: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: colors.secondary,
-    fontSize: 7,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.7,
     fontFamily: monoFont,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   footer: {
     textAlign: "center",
     color: color("secondary", 0.75),
-    fontSize: 8,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.7,
     fontFamily: monoFont,

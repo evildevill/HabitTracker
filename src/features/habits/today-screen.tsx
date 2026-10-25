@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   brandCaption: {
     color: colors.secondary,
-    fontSize: 8,
+    fontSize: 10,
     fontWeight: "600",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   datePillText: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 1.2,
     fontFamily: monoFont,
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   },
   heroEyebrow: {
     color: colors.citrus,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   },
   ringLabel: {
     color: color("paper", 0.6),
-    fontSize: 7,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
   },
   sectionEyebrow: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,

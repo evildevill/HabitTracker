@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   topLabel: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     color: colors.citrus,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   listCount: {
     color: colors.secondary,
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: "700",
     letterSpacing: 0.5,
     fontFamily: monoFont,
