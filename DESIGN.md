@@ -257,3 +257,14 @@ The React Native implementation uses a native system sans-serif family for scree
 Iconography uses a consistent Lucide line style with moderate stroke width and functional, recognizable symbols. Do not use sparkle or sparkles icons anywhere in the app, including empty states, decorative cards, navigation, and splash screens.
 
 The add-habit modal uses a keyboard-avoiding container on both platforms, a scrollable form body, and android.softwareKeyboardLayoutMode set to resize. Keep the input and primary action reachable when the keyboard is open; verify on both Android and iOS before calling the behavior complete.
+
+
+## 12. Product UI refinement — 2026-10-25
+
+The animated splash screen is intentionally preserved. Inside the app, prefer a quieter editorial layout: the canvas remains the soft green-tinted background, the primary cards use the paper surface and subtle border, and dark ink surfaces are reserved for a single important summary per screen. Avoid decorative orbs, repeated uppercase labels, excessive tracking, and cards nested inside cards.
+
+Habit cards use a compact category tile, a restrained accent rail, clear title/subtitle hierarchy, and a distinct completion control. Completed habits use a subtle mint-tinted surface and brand-colored check control; do not rely on strikethrough alone to communicate completion. Keep card heights consistent and the entire row accessible as a checkbox.
+
+Interaction feedback uses `expo-haptics`: medium impact when completing a habit, light impact when unchecking it, selection feedback when opening the add-habit flow or changing tabs, and success notification feedback after creating a habit. Feedback calls are non-blocking and failures are safely ignored so interaction is never blocked.
+
+The app shell uses `SafeAreaView` and `SafeAreaProvider` from `react-native-safe-area-context`, not the deprecated React Native `SafeAreaView`. The add-habit sheet remains keyboard-aware and scrollable. Verify both the keyboard layout and haptics on physical iOS and Android devices before describing them as device-tested.
