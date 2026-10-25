@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import * as Haptics from "expo-haptics";
 import { CalendarDays, ChartNoAxesColumnIncreasing, CircleCheck, SlidersHorizontal } from "lucide-react-native";
 import type { ComponentType } from "react";
 import { color, colors, geometry, roundedFont, surfaces } from "../design/tokens";
@@ -36,7 +37,10 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
               accessibilityRole="tab"
               accessibilityLabel={tab.label}
               accessibilityState={{ selected }}
-              onPress={() => onSelect(tab.key)}
+              onPress={() => {
+                if (!selected) void Haptics.selectionAsync().catch(() => undefined);
+                onSelect(tab.key);
+              }}
               style={({ pressed }) => [
                 styles.tab,
                 { width: selected ? geometry.selectedTabWidth : geometry.unselectedTabWidth },
