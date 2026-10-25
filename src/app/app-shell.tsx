@@ -4,7 +4,6 @@ import {
   Modal,
   Platform,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -12,6 +11,8 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as Haptics from "expo-haptics";
 import { X } from "lucide-react-native";
 import { colors, monoFont, surfaces } from "../design/tokens";
 import { initialHabits, type Habit } from "../features/habits/types";
@@ -38,6 +39,7 @@ export function AppShell() {
   const addHabit = () => {
     const title = newHabitTitle.trim();
     if (!title) return;
+    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
 
     setHabits((current) => [
       ...current,
