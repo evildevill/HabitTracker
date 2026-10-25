@@ -1,14 +1,12 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowUpRight, ChartNoAxesColumnIncreasing, CircleCheck } from "lucide-react-native";
+import { ChartNoAxesColumnIncreasing, CircleCheck, Clock3 } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
-import { color, colors, monoFont, roundedFont, surfaces } from "../../design/tokens";
+import { color, colors, surfaces } from "../../design/tokens";
 import type { Habit } from "../habits/types";
 
-type InsightsScreenProps = {
-  habits: Habit[];
-};
+type InsightsScreenProps = { habits: Habit[] };
 
 export function InsightsScreen({ habits }: InsightsScreenProps) {
   const completed = habits.filter((habit) => habit.completed).length;
@@ -17,56 +15,43 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
   return (
     <AppBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
-        <View style={styles.topLine}>
-          <View style={styles.topMark}><ChartNoAxesColumnIncreasing size={18} color={colors.brand} /></View>
-          <Text style={styles.topLabel}>A CLEARER VIEW OF YOU</Text>
-        </View>
         <View style={styles.heading}>
-          <ScreenHeading
-            eyebrow="Your progress"
-            title="Insights"
-            subtitle="A clearer view of your consistency."
-          />
+          <ScreenHeading eyebrow="YOUR PROGRESS" title="Insights" subtitle="Notice the effort you're putting in." />
         </View>
 
-        <View style={styles.featureCard}>
-          <View style={styles.featureOrb} />
-          <View style={styles.featureTop}>
-            <View style={styles.featureIcon}><ChartNoAxesColumnIncreasing size={19} color={colors.citrus} strokeWidth={1.8} /></View>
-            <Text style={styles.featureEyebrow}>TODAY, SO FAR</Text>
+        <View style={styles.summaryCard}>
+          <View style={styles.summaryTop}>
+            <View style={styles.summaryIcon}><ChartNoAxesColumnIncreasing size={18} color={colors.brand} strokeWidth={1.9} /></View>
+            <Text style={styles.summaryEyebrow}>TODAY AT A GLANCE</Text>
           </View>
-          <Text style={styles.featureTitle}>Showing up is the win.</Text>
-          <Text style={styles.featureBody}>Your consistency story begins with the choices you make today. No pressure to be perfect.</Text>
-          <View style={styles.featureDivider} />
-          <View style={styles.featureStatRow}>
-            <View>
-              <Text style={styles.featureStat}>{completed}<Text style={styles.featureStatMuted}> / {habits.length}</Text></Text>
-              <Text style={styles.featureStatCaption}>habits completed</Text>
+          <Text style={styles.summaryTitle}>{percent === 100 && habits.length > 0 ? "You showed up for yourself." : "Showing up is progress."}</Text>
+          <Text style={styles.summaryBody}>You have completed {completed} of {habits.length} habits today. Keep your focus on the next small action.</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.statBlock}>
+              <Text style={styles.statValue}>{completed}<Text style={styles.statMuted}>/{habits.length}</Text></Text>
+              <Text style={styles.statLabel}>Completed</Text>
             </View>
-            <View style={styles.featurePercent}>
-              <Text style={styles.featurePercentText}>{percent}%</Text>
+            <View style={styles.statDivider} />
+            <View style={styles.statBlock}>
+              <Text style={styles.statValue}>{percent}%</Text>
+              <Text style={styles.statLabel}>Today's progress</Text>
             </View>
           </View>
-          <View style={styles.featureTrack}>
-            <View style={[styles.featureFill, { width: percent + "%" }]} />
-          </View>
+          <View style={styles.track}><View style={[styles.fill, { width: percent + "%" }]} /></View>
         </View>
 
-        <View style={styles.sectionTitleRow}>
+        <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Your patterns</Text>
-          <View style={styles.comingSoon}><Text style={styles.comingSoonText}>BUILDING</Text></View>
+          <View style={styles.soonPill}><Text style={styles.soonText}>COMING LATER</Text></View>
         </View>
 
-        <GlassCard style={styles.emptyCard} shadow={false}>
-          <View style={styles.emptyIcon}>
-            <ChartNoAxesColumnIncreasing size={26} color={colors.brand} />
-          </View>
-          <Text style={styles.emptyTitle}>Your story is just beginning.</Text>
-          <Text style={styles.emptyBody}>As you check in over time, this space will help you spot streaks, weekly patterns, and the habits that are becoming part of you.</Text>
-          <View style={styles.emptyFoot}>
-            <CircleCheck size={16} color={colors.brand} />
-            <Text style={styles.emptyFootText}>One day at a time</Text>
-            <ArrowUpRight size={15} color={colors.brand} />
+        <GlassCard style={styles.futureCard} shadow={false}>
+          <View style={styles.futureIcon}><Clock3 size={21} color={colors.brand} strokeWidth={1.8} /></View>
+          <Text style={styles.futureTitle}>A clearer picture takes time</Text>
+          <Text style={styles.futureBody}>Weekly consistency, streaks, and trends will become more useful as you build a longer history. For now, this view only shows today's check-ins—no made-up statistics.</Text>
+          <View style={styles.futureFooter}>
+            <CircleCheck size={16} color={colors.brand} strokeWidth={1.9} />
+            <Text style={styles.futureFooterText}>Your progress starts with today</Text>
           </View>
         </GlassCard>
         <View style={styles.bottomSpacer} />
@@ -76,205 +61,31 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 28,
-  },
-  topLine: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 9,
-    marginBottom: 26,
-  },
-  topMark: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
-    backgroundColor: colors.paper,
-    borderWidth: 1,
-    borderColor: surfaces.border,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  topLabel: {
-    color: colors.secondary,
-    fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 0.5,
-    fontFamily: monoFont,
-  },
-  heading: {
-    marginBottom: 23,
-  },
-  featureCard: {
-    backgroundColor: colors.ink,
-    borderRadius: 26,
-    padding: 22,
-    overflow: "hidden",
-    marginBottom: 30,
-  },
-  featureOrb: {
-    position: "absolute",
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    right: -80,
-    top: -90,
-    borderWidth: 1,
-    borderColor: color("paper", 0.1),
-    backgroundColor: color("brand", 0.12),
-  },
-  featureTop: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginBottom: 20,
-  },
-  featureIcon: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
-    backgroundColor: color("paper", 0.1),
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  featureEyebrow: {
-    color: colors.citrus,
-    fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 0.5,
-    fontFamily: monoFont,
-  },
-  featureTitle: {
-    color: colors.paper,
-    fontSize: 25,
-    fontWeight: "700",
-    letterSpacing: -0.8,
-    lineHeight: 30,
-    marginBottom: 8,
-  },
-  featureBody: {
-    color: color("paper", 0.72),
-    fontSize: 13,
-    lineHeight: 20,
-    maxWidth: 310,
-  },
-  featureDivider: {
-    height: 1,
-    backgroundColor: color("paper", 0.13),
-    marginVertical: 20,
-  },
-  featureStatRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 13,
-  },
-  featureStat: {
-    color: colors.paper,
-    fontSize: 29,
-    fontWeight: "700",
-    letterSpacing: -0.7,
-  },
-  featureStatMuted: {
-    color: color("paper", 0.45),
-    fontSize: 17,
-    fontWeight: "700",
-  },
-  featureStatCaption: {
-    color: color("paper", 0.65),
-    fontSize: 11,
-    marginTop: 2,
-  },
-  featurePercent: {
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    backgroundColor: color("paper", 0.1),
-  },
-  featurePercentText: {
-    color: colors.citrus,
-    fontSize: 12,
-    fontWeight: "700",
-  },
-  featureTrack: {
-    height: 5,
-    borderRadius: 999,
-    backgroundColor: color("paper", 0.15),
-    overflow: "hidden",
-  },
-  featureFill: {
-    height: 5,
-    borderRadius: 999,
-    backgroundColor: colors.citrus,
-  },
-  sectionTitleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 13,
-  },
-  sectionTitle: {
-    color: colors.ink,
-    fontSize: 21,
-    fontWeight: "700",
-    letterSpacing: -0.6,
-  },
-  comingSoon: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 999,
-    backgroundColor: color("sand", 0.35),
-  },
-  comingSoonText: {
-    color: colors.secondary,
-    fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 0.5,
-    fontFamily: monoFont,
-  },
-  emptyCard: {
-    paddingHorizontal: 22,
-    paddingVertical: 25,
-    gap: 12,
-  },
-  emptyIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 18,
-    backgroundColor: color("mint", 0.16),
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 3,
-  },
-  emptyTitle: {
-    color: colors.ink,
-    fontSize: 18,
-    fontWeight: "700",
-    letterSpacing: -0.4,
-  },
-  emptyBody: {
-    color: colors.secondary,
-    fontSize: 13,
-    lineHeight: 20,
-  },
-  emptyFoot: {
-    borderTopWidth: 1,
-    borderTopColor: surfaces.mutedBorder,
-    paddingTop: 14,
-    marginTop: 4,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  emptyFootText: {
-    flex: 1,
-    color: colors.brand,
-    fontSize: 11,
-    fontWeight: "600",
-  },
-  bottomSpacer: {
-    height: 90,
-  },
+  content: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 },
+  heading: { marginBottom: 25 },
+  summaryCard: { borderRadius: 23, padding: 20, backgroundColor: colors.ink, marginBottom: 30, gap: 12 },
+  summaryTop: { flexDirection: "row", alignItems: "center", gap: 10 },
+  summaryIcon: { width: 37, height: 37, borderRadius: 13, backgroundColor: color("paper", 0.1), alignItems: "center", justifyContent: "center" },
+  summaryEyebrow: { color: colors.citrus, fontSize: 10, fontWeight: "700", letterSpacing: 0.7 },
+  summaryTitle: { color: colors.paper, fontSize: 23, fontWeight: "700", letterSpacing: -0.7, lineHeight: 29, marginTop: 3 },
+  summaryBody: { color: color("paper", 0.72), fontSize: 12, lineHeight: 18 },
+  statsRow: { flexDirection: "row", alignItems: "center", gap: 20, marginTop: 7 },
+  statBlock: { gap: 4 },
+  statValue: { color: colors.paper, fontSize: 25, fontWeight: "700", letterSpacing: -0.6 },
+  statMuted: { color: color("paper", 0.5), fontSize: 16, fontWeight: "600" },
+  statLabel: { color: color("paper", 0.66), fontSize: 11 },
+  statDivider: { width: 1, height: 38, backgroundColor: color("paper", 0.16) },
+  track: { height: 6, borderRadius: 99, backgroundColor: color("paper", 0.14), overflow: "hidden", marginTop: 4 },
+  fill: { height: 6, borderRadius: 99, backgroundColor: colors.citrus },
+  sectionHeader: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 13 },
+  sectionTitle: { color: colors.ink, fontSize: 21, fontWeight: "700", letterSpacing: -0.5 },
+  soonPill: { paddingHorizontal: 9, paddingVertical: 6, borderRadius: 999, backgroundColor: color("sand", 0.3) },
+  soonText: { color: colors.secondary, fontSize: 9, fontWeight: "700", letterSpacing: 0.5 },
+  futureCard: { padding: 20, borderRadius: 22, gap: 12 },
+  futureIcon: { width: 45, height: 45, borderRadius: 15, backgroundColor: color("mint", 0.17), alignItems: "center", justifyContent: "center" },
+  futureTitle: { color: colors.ink, fontSize: 17, fontWeight: "700", letterSpacing: -0.3 },
+  futureBody: { color: colors.secondary, fontSize: 12, lineHeight: 19 },
+  futureFooter: { flexDirection: "row", alignItems: "center", gap: 8, borderTopWidth: 1, borderTopColor: surfaces.mutedBorder, paddingTop: 14, marginTop: 3 },
+  futureFooterText: { color: colors.brand, fontSize: 11, fontWeight: "600" },
+  bottomSpacer: { height: 92 },
 });
