@@ -51,11 +51,12 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
   const rise = useRef(new Animated.Value(0)).current;
   const artScale = useRef(new Animated.Value(1)).current;
   const stepRef = useRef(step);
+  const selectedRef = useRef(selected);
   const swipeResponder = useRef(PanResponder.create({
     onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dx) > 32 && Math.abs(gesture.dx) > Math.abs(gesture.dy) * 1.25,
     onPanResponderRelease: (_, gesture) => {
       if (Math.abs(gesture.dx) < 55 || Math.abs(gesture.dx) < Math.abs(gesture.dy) * 1.25) return;
-      if (gesture.dx < 0 && stepRef.current < 2 && !(stepRef.current === 1 && selected.length === 0)) {
+      if (gesture.dx < 0 && stepRef.current < 2 && !(stepRef.current === 1 && selectedRef.current.length === 0)) {
         void Haptics.selectionAsync().catch(() => undefined);
         setStep((current) => Math.min(2, current + 1));
       } else if (gesture.dx > 0 && stepRef.current > 0) {
@@ -65,6 +66,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
     },
   })).current;
   stepRef.current = step;
+  selectedRef.current = selected;
 
   useEffect(() => {
     let active = true;
