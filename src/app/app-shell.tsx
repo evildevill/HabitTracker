@@ -15,7 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import { X } from "lucide-react-native";
 import { colors, monoFont, surfaces } from "../design/tokens";
-import { initialHabits, type Habit } from "../features/habits/types";
+import type { Habit } from "../features/habits/types";
+import { OnboardingScreen } from "../features/onboarding/onboarding-screen";
 import { TodayScreen } from "../features/habits/today-screen";
 import { HabitsScreen } from "../features/habits/habits-screen";
 import { InsightsScreen } from "../features/insights/insights-screen";
@@ -24,7 +25,8 @@ import { TabBar, type TabKey } from "../navigation/tab-bar";
 
 export function AppShell() {
   const [activeTab, setActiveTab] = useState<TabKey>("today");
-  const [habits, setHabits] = useState<Habit[]>(initialHabits);
+  const [habits, setHabits] = useState<Habit[]>([]);
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
 
@@ -61,7 +63,15 @@ export function AppShell() {
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.safeArea}>
-        {activeTab === "today" ? (
+        {showOnboarding ? (
+          <OnboardingScreen
+            onComplete={(selectedHabits) => {
+              setHabits(selectedHabits);
+              setShowOnboarding(false);
+              setActiveTab("today");
+            }}
+          />
+        ) : activeTab === "today" ? (
           <TodayScreen
             habits={habits}
             onToggleHabit={toggleHabit}
@@ -76,9 +86,13 @@ export function AppShell() {
         ) : activeTab === "insights" ? (
           <InsightsScreen habits={habits} />
         ) : (
-          <SettingsScreen />
+          <SettingsScreen onRestartOnboarding={() => {
+            setHabits([]);
+            setActiveTab("today");
+            setShowOnboarding(true);
+          }} />
         )}
-        <TabBar activeTab={activeTab} onSelect={setActiveTab} />
+        {!showOnboarding ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
       </SafeAreaView>
 
       <Modal
