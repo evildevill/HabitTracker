@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   lastSettingRow: { borderBottomWidth: 0 },
   settingIcon: { width: 39, height: 39, borderRadius: 13, backgroundColor: color("mint", 0.16), alignItems: "center", justifyContent: "center" },
   settingCopy: { flex: 1, gap: 4 },
-  settingTitle: { color: colors.ink, fontSize: 13, fontWeight: "650" },
+  settingTitle: { color: colors.ink, fontSize: 13, fontWeight: "600" },
   settingSubtitle: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
   statusPill: { paddingHorizontal: 7, paddingVertical: 5, borderRadius: 8, backgroundColor: color("sand", 0.28) },
   statusText: { color: colors.secondary, fontSize: 9, fontWeight: "700", letterSpacing: 0.3 },
