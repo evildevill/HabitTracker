@@ -17,6 +17,9 @@ importers:
       expo-linear-gradient:
         specifier: ^58.0.3
         version: 58.0.3(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+      expo-haptics:
+        specifier: ~58.0.7
+        version: 58.0.7(expo@58.0.19)
       lucide-react-native:
         specifier: ^0.577.0
         version: 0.577.0(react-native-svg@15.16.0(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
@@ -26,6 +29,9 @@ importers:
       react-native:
         specifier: 0.88.0
         version: 0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
+      react-native-safe-area-context:
+        specifier: ~5.10.1
+        version: 5.10.1(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       react-native-svg:
         specifier: 15.16.0
         version: 15.16.0(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
@@ -3659,6 +3665,10 @@ snapshots:
       expo: 58.0.19(@babel/core@7.29.7(supports-color@8.1.1))(@expo/dom-webview@58.0.2)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
       react: 19.3.0
 
+  expo-haptics@58.0.7(expo@58.0.19):
+    dependencies:
+      expo: 58.0.19(@babel/core@7.29.7(supports-color@8.1.1))(@expo/dom-webview@58.0.2)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
+
   expo-linear-gradient@58.0.3(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
     dependencies:
       expo: 58.0.19(@babel/core@7.29.7(supports-color@8.1.1))(@expo/dom-webview@58.0.2)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
@@ -4338,6 +4348,11 @@ snapshots:
       - utf-8-validate
 
   react-is@18.3.1: {}
+
+  react-native-safe-area-context@5.10.1(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
+    dependencies:
+      react: 19.3.0
+      react-native: react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
 
   react-native-svg@15.16.0(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
     dependencies:
