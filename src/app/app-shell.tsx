@@ -54,7 +54,7 @@ export function AppShell() {
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.canvas} />
+      <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.safeArea}>
         {activeTab === "today" ? (
           <TodayScreen
@@ -73,9 +73,8 @@ export function AppShell() {
         ) : (
           <SettingsScreen />
         )}
+        <TabBar activeTab={activeTab} onSelect={setActiveTab} />
       </SafeAreaView>
-
-      <TabBar activeTab={activeTab} onSelect={setActiveTab} />
 
       <Modal
         visible={addModalVisible}
