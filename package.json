@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "expo": "~57.0.25",
+    "expo": "~57.0.31",
     "expo-linear-gradient": "^57.0.2",
     "lucide-react-native": "^0.577.0",
     "react": "19.2.3",
