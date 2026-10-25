@@ -47,8 +47,6 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
   const [selected, setSelected] = useState<string[]>(["balanced"]);
   const [reduceMotion, setReduceMotion] = useState(false);
   const progress = useRef(new Animated.Value(0)).current;
-  const fade = useRef(new Animated.Value(1)).current;
-  const rise = useRef(new Animated.Value(0)).current;
   const artScale = useRef(new Animated.Value(1)).current;
   const stepRef = useRef(step);
   const selectedRef = useRef(selected);
@@ -77,20 +75,16 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
 
   useEffect(() => {
     if (reduceMotion) {
-      fade.setValue(1); rise.setValue(0);
       artScale.setValue(1);
       progress.setValue(step / 2);
       return;
     }
-    fade.setValue(0); rise.setValue(12);
     artScale.setValue(0.96);
     Animated.parallel([
-      Animated.timing(fade, { toValue: 1, duration: 340, useNativeDriver: true }),
-      Animated.spring(rise, { toValue: 0, speed: 18, bounciness: 3, useNativeDriver: true }),
       Animated.spring(artScale, { toValue: 1, speed: 15, bounciness: 4, useNativeDriver: true }),
       Animated.spring(progress, { toValue: step / 2, speed: 18, bounciness: 0, useNativeDriver: false }),
     ]).start();
-  }, [step, reduceMotion, fade, rise, artScale, progress]);
+  }, [step, reduceMotion, artScale, progress]);
 
   const togglePreset = (id: string) => {
     void Haptics.selectionAsync().catch(() => undefined);
@@ -122,10 +116,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
         <View style={styles.progressTrack}><Animated.View style={[styles.progressFill, { width: progress.interpolate({ inputRange: [0, 1], outputRange: ["12%", "100%"] }) }]} /></View>
       </View>
 
-      <Animated.View
-        {...swipeResponder.panHandlers}
-        style={[styles.main, { opacity: fade, transform: [{ translateY: rise }] }]}
-      >
+      <View {...swipeResponder.panHandlers} style={styles.main}>
         {step === 0 ? (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
             <Animated.View style={[styles.introArt, { transform: [{ scale: artScale }] }]}>
@@ -171,7 +162,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
             <View style={styles.promiseRow}><View style={styles.promiseDot}><Check size={13} color={colors.brand} strokeWidth={2.8} /></View><Text style={styles.promiseText}>Consistency is built gently, not all at once.</Text></View>
           </ScrollView>
         )}
-      </Animated.View>
+      </View>
 
       <View style={styles.footer}>
         {step > 0 ? <Pressable accessibilityRole="button" accessibilityLabel="Go back" onPress={back} style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}><ArrowLeft size={19} color={colors.ink} /><Text style={styles.backText}>Back</Text></Pressable> : <View style={styles.backPlaceholder} />}
