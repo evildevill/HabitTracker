@@ -21,6 +21,7 @@ import { TodayScreen } from "../features/habits/today-screen";
 import { HabitsScreen } from "../features/habits/habits-screen";
 import { InsightsScreen } from "../features/insights/insights-screen";
 import { SettingsScreen } from "../features/settings/settings-screen";
+import { LegalScreen, type LegalDocument } from "../features/settings/legal-screen";
 import { TabBar, type TabKey } from "../navigation/tab-bar";
 
 export function AppShell() {
@@ -29,6 +30,7 @@ export function AppShell() {
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
+  const [legalDocument, setLegalDocument] = useState<LegalDocument | null>(null);
 
   const toggleHabit = (id: string) => {
     setHabits((current) =>
@@ -71,6 +73,8 @@ export function AppShell() {
               setActiveTab("today");
             }}
           />
+        ) : legalDocument ? (
+          <LegalScreen document={legalDocument} onBack={() => setLegalDocument(null)} />
         ) : activeTab === "today" ? (
           <TodayScreen
             habits={habits}
@@ -86,13 +90,17 @@ export function AppShell() {
         ) : activeTab === "insights" ? (
           <InsightsScreen habits={habits} />
         ) : (
-          <SettingsScreen onRestartOnboarding={() => {
-            setHabits([]);
-            setActiveTab("today");
-            setShowOnboarding(true);
-          }} />
+          <SettingsScreen
+            onOpenLegal={setLegalDocument}
+            onRestartOnboarding={() => {
+              setHabits([]);
+              setActiveTab("today");
+              setLegalDocument(null);
+              setShowOnboarding(true);
+            }}
+          />
         )}
-        {!showOnboarding ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
+        {!showOnboarding && !legalDocument ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
       </SafeAreaView>
 
       <Modal

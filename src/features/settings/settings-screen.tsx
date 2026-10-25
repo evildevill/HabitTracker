@@ -1,10 +1,11 @@
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Bell, ChevronRight, CircleHelp, Moon, ShieldCheck, Smartphone, RotateCcw } from "lucide-react-native";
+import { Bell, ChevronRight, CircleHelp, FileText, Moon, ShieldCheck, RotateCcw } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { BrandMark } from "../../components/ui/brand-mark";
 import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
 import { color, colors, surfaces } from "../../design/tokens";
+import type { LegalDocument } from "./legal-screen";
 
 const items = [
   { icon: Bell, title: "Reminders", subtitle: "Choose when a habit nudges you", status: "SOON" },
@@ -13,9 +14,12 @@ const items = [
   { icon: CircleHelp, title: "Help & feedback", subtitle: "Questions, ideas, and support", status: "SOON" },
 ];
 
-type SettingsScreenProps = { onRestartOnboarding: () => void };
+type SettingsScreenProps = {
+  onRestartOnboarding: () => void;
+  onOpenLegal: (document: LegalDocument) => void;
+};
 
-export function SettingsScreen({ onRestartOnboarding }: SettingsScreenProps) {
+export function SettingsScreen({ onRestartOnboarding, onOpenLegal }: SettingsScreenProps) {
   return (
     <AppBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
@@ -48,6 +52,36 @@ export function SettingsScreen({ onRestartOnboarding }: SettingsScreenProps) {
               </View>
             );
           })}
+        </View>
+
+        <Text style={[styles.sectionLabel, styles.startOverLabel]}>LEGAL & PRIVACY</Text>
+        <View style={styles.settingsList}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Read Privacy Policy"
+            onPress={() => onOpenLegal("privacy")}
+            style={({ pressed }) => [styles.settingRow, pressed && styles.resetPressed]}
+          >
+            <View style={styles.settingIcon}><ShieldCheck size={18} color={colors.brand} strokeWidth={1.8} /></View>
+            <View style={styles.settingCopy}>
+              <Text style={styles.settingTitle}>Privacy Policy</Text>
+              <Text style={styles.settingSubtitle}>How your information is handled</Text>
+            </View>
+            <ChevronRight size={16} color={color("secondary", 0.55)} />
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Read Terms of Service"
+            onPress={() => onOpenLegal("terms")}
+            style={({ pressed }) => [styles.settingRow, styles.lastSettingRow, pressed && styles.resetPressed]}
+          >
+            <View style={styles.settingIcon}><FileText size={18} color={colors.brand} strokeWidth={1.8} /></View>
+            <View style={styles.settingCopy}>
+              <Text style={styles.settingTitle}>Terms of Service</Text>
+              <Text style={styles.settingSubtitle}>The terms for using Habit Tracker</Text>
+            </View>
+            <ChevronRight size={16} color={color("secondary", 0.55)} />
+          </Pressable>
         </View>
 
         <Text style={[styles.sectionLabel, styles.startOverLabel]}>START OVER</Text>
