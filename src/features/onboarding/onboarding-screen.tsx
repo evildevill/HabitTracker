@@ -134,7 +134,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
               <View style={styles.artLeafOne} /><View style={styles.artLeafTwo} />
               <View style={styles.artNote}><Text style={styles.artNoteTop}>YOUR NEXT CHAPTER</Text><Text style={styles.artNoteTitle}>Small steps.{ "\n" }Real change.</Text><View style={styles.artLine} /><Text style={styles.artNoteFoot}>ONE DAY AT A TIME</Text></View>
               <View style={styles.artStamp}><Check size={18} color={colors.ink} strokeWidth={2.8} /></View>
-            </View>
+            </Animated.View>
             <Text style={styles.kicker}>A ROUTINE THAT FITS YOU</Text>
             <Text accessibilityRole="header" style={styles.title}>Become who you want to be, one little habit at a time.</Text>
             <Text style={styles.body}>No streak pressure. No perfect days required. Just a few small things that matter to you.</Text>
