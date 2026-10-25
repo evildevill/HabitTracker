@@ -165,7 +165,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
             <Animated.View style={[styles.finishArt, { transform: [{ scale: artScale }] }]}>
               <View style={styles.finishHalo} />
               <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{new Set(PRESETS.filter((preset) => selected.includes(preset.id)).flatMap((preset) => preset.habits.map((habit) => habit.title.trim().toLowerCase()))).size}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
-            </View>
+            </Animated.View>
             <Text style={styles.kicker}>NOT A NEW YOU. JUST A NEXT STEP.</Text>
             <Text accessibilityRole="header" style={styles.title}>Your routine, your pace.</Text>
             <Text style={styles.body}>Your habits will be waiting on your Today screen. You can change, remove, or add to them whenever life changes.</Text>
