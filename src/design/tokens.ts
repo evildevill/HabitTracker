@@ -63,5 +63,6 @@ export const geometry = {
   tabDockRadius: 24,
 } as const;
 
-export const roundedFont = Platform.select({ ios: "System", android: "sans-serif-rounded", default: "System" });
-export const monoFont = Platform.select({ ios: "Menlo", android: "monospace", default: "monospace" });
+export const systemFont = Platform.select({ ios: "System", android: "sans-serif", default: "System" });
+export const roundedFont = systemFont;
+export const monoFont = systemFont;

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { BarChart3, ListChecks, Settings, Sun } from "lucide-react-native";
+import { CalendarDays, ChartNoAxesColumnIncreasing, CircleCheck, SlidersHorizontal } from "lucide-react-native";
 import type { ComponentType } from "react";
 import { color, colors, geometry, roundedFont, surfaces } from "../design/tokens";
 
@@ -12,10 +12,10 @@ type TabDefinition = {
 };
 
 const tabs: TabDefinition[] = [
-  { key: "today", label: "Today", icon: Sun },
-  { key: "habits", label: "Habits", icon: ListChecks },
-  { key: "insights", label: "Insights", icon: BarChart3 },
-  { key: "settings", label: "Settings", icon: Settings },
+  { key: "today", label: "Today", icon: CalendarDays },
+  { key: "habits", label: "Habits", icon: CircleCheck },
+  { key: "insights", label: "Insights", icon: ChartNoAxesColumnIncreasing },
+  { key: "settings", label: "Settings", icon: SlidersHorizontal },
 ];
 
 type TabBarProps = {
@@ -45,9 +45,9 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
               ]}
             >
               <Icon
-                size={16}
-                color={selected ? colors.citrus : colors.secondary}
-                strokeWidth={2.5}
+                size={18}
+                color={selected ? colors.paper : colors.secondary}
+                strokeWidth={1.8}
               />
               {selected ? <Text style={styles.selectedLabel}>{tab.label}</Text> : null}
             </Pressable>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   selectedLabel: {
     color: colors.paper,
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "600",
     fontFamily: roundedFont,
   },
   pressed: {

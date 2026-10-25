@@ -12,7 +12,7 @@ export function ScreenHeading({ eyebrow, title, subtitle, count }: ScreenHeading
   return (
     <View style={styles.container}>
       <View style={styles.eyebrowRow}>
-        <Text style={styles.eyebrow}>{eyebrow.toUpperCase()}</Text>
+        <Text style={styles.eyebrow}>{eyebrow}</Text>
         {count ? (
           <View style={styles.countPill}>
             <Text style={styles.count}>{count}</Text>
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
   eyebrow: {
     color: colors.brand,
     fontSize: typography.eyebrow,
-    fontWeight: "900",
-    letterSpacing: 2,
+    fontWeight: "600",
+    letterSpacing: 0.6,
     fontFamily: monoFont,
   },
   countPill: {
@@ -52,21 +52,21 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontSize: typography.count,
     fontWeight: "700",
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   title: {
     color: colors.ink,
     fontSize: typography.screenTitle,
-    fontWeight: "900",
-    letterSpacing: -1.3,
-    lineHeight: 42,
+    fontWeight: "700",
+    letterSpacing: -0.8,
+    lineHeight: 40,
     fontFamily: roundedFont,
   },
   subtitle: {
     color: colors.secondary,
-    fontSize: typography.screenSubtitle,
-    fontWeight: "500",
-    lineHeight: 23,
-    fontFamily: "sans-serif-rounded",
+    fontSize: 16,
+    fontWeight: "400",
+    lineHeight: 24,
+    fontFamily: roundedFont,
   },
 });

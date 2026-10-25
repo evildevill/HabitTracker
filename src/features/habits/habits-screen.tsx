@@ -24,9 +24,9 @@ export function HabitsScreen({ habits, onToggleHabit, onAddHabit }: HabitsScreen
         </View>
         <View style={styles.heading}>
           <ScreenHeading
-            eyebrow="THE DAILY PRACTICE"
+            eyebrow="Your routine"
             title="Habits"
-            subtitle="Make the good things easier to repeat."
+            subtitle="Make good habits easier to repeat."
             count={String(habits.length).padStart(2, "0")}
           />
         </View>
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   topLabel: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.5,
+    fontWeight: "700",
+    letterSpacing: 0.5,
     fontFamily: monoFont,
   },
   heading: {
@@ -119,14 +119,14 @@ const styles = StyleSheet.create({
   summaryLabel: {
     color: colors.citrus,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.5,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
   },
   summaryTitle: {
     color: colors.paper,
     fontSize: 20,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.5,
   },
   summaryBody: {
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   summaryNumber: {
     color: colors.citrus,
     fontSize: 15,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   listHeader: {
     flexDirection: "row",
@@ -158,15 +158,15 @@ const styles = StyleSheet.create({
   listTitle: {
     color: colors.ink,
     fontSize: 21,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.6,
   },
   listCount: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.2,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
   },
   list: {
     gap: 10,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   addTitle: {
     color: colors.ink,
     fontSize: 14,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   addSubtitle: {
     color: colors.secondary,

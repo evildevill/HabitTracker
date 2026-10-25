@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { ArrowUpRight, CheckCircle2, Sparkles } from "lucide-react-native";
+import { ArrowRight, ArrowUpRight, CheckCircle2, Target } from "lucide-react-native";
 import Svg, { Circle } from "react-native-svg";
 import { AppBackground } from "../../components/ui/app-background";
 import { BrandMark } from "../../components/ui/brand-mark";
@@ -25,7 +25,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
     weekday: "long",
     month: "long",
     day: "numeric",
-  }).toUpperCase();
+  });
 
   return (
     <AppBackground>
@@ -37,21 +37,21 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
           <View style={styles.brandLockup}>
             <BrandMark size={38} />
             <View style={styles.brandCopy}>
-              <Text style={styles.brandName}>HABIT TRACKER</Text>
-              <Text style={styles.brandCaption}>A BETTER DAY, BY DESIGN</Text>
+              <Text style={styles.brandName}>Habit Tracker</Text>
+              <Text style={styles.brandCaption}>A little better, every day</Text>
             </View>
           </View>
           <View style={styles.datePill}>
             <View style={styles.dateDot} />
-            <Text style={styles.datePillText}>TODAY</Text>
+            <Text style={styles.datePillText}>Today</Text>
           </View>
         </View>
 
         <View style={styles.headingWrap}>
           <ScreenHeading
             eyebrow={todayLabel}
-            title="Make it count."
-            subtitle="Small promises. Kept daily."
+            title="Today"
+            subtitle="Small steps, done consistently."
           />
         </View>
 
@@ -60,11 +60,11 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
           <View pointerEvents="none" style={styles.heroOrbSmall} />
           <View style={styles.heroTop}>
             <View style={styles.heroLabelWrap}>
-              <Text style={styles.heroEyebrow}>DAILY MOMENTUM</Text>
+              <Text style={styles.heroEyebrow}>Your progress</Text>
               <Text style={styles.heroTitle}>Your daily rhythm</Text>
             </View>
-            <View style={styles.heroSparkle}>
-              <Sparkles size={17} color={colors.citrus} />
+            <View style={styles.heroIcon}>
+              <Target size={18} color={colors.citrus} strokeWidth={1.8} />
             </View>
           </View>
           <View style={styles.heroBottom}>
@@ -109,7 +109,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
 
         <View style={styles.sectionHeader}>
           <View>
-            <Text style={styles.sectionEyebrow}>SHOW UP FOR YOURSELF</Text>
+            <Text style={styles.sectionEyebrow}>One day at a time</Text>
             <Text style={styles.sectionTitle}>Your habits</Text>
           </View>
           <Pressable
@@ -118,8 +118,8 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
             onPress={onViewAll}
             style={({ pressed }) => [styles.viewAllButton, pressed && styles.pressed]}
           >
-            <Text style={styles.viewAllText}>VIEW ALL</Text>
-            <ArrowUpRight size={15} color={colors.brand} />
+            <Text style={styles.viewAllText}>View all</Text>
+            <ArrowRight size={16} color={colors.brand} strokeWidth={1.8} />
           </Pressable>
         </View>
 
@@ -147,7 +147,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
 
         <View style={styles.footerNote}>
           <View style={styles.footerIcon}>
-            <Sparkles size={17} color={colors.brand} />
+            <CheckCircle2 size={18} color={colors.brand} strokeWidth={1.8} />
           </View>
           <View style={styles.footerCopy}>
             <Text style={styles.footerTitle}>Progress over perfection.</Text>
@@ -183,14 +183,14 @@ const styles = StyleSheet.create({
   brandName: {
     color: colors.ink,
     fontSize: 11,
-    fontWeight: "900",
-    letterSpacing: 1.5,
+    fontWeight: "700",
+    letterSpacing: 0.5,
   },
   brandCaption: {
     color: colors.secondary,
     fontSize: 8,
-    fontWeight: "800",
-    letterSpacing: 1.4,
+    fontWeight: "600",
+    letterSpacing: 0.5,
     fontFamily: monoFont,
   },
   datePill: {
@@ -213,9 +213,9 @@ const styles = StyleSheet.create({
   datePillText: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: 1.2,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   headingWrap: {
     marginBottom: 22,
@@ -258,18 +258,18 @@ const styles = StyleSheet.create({
   heroEyebrow: {
     color: colors.citrus,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.8,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
   },
   heroTitle: {
     color: colors.paper,
     fontSize: 19,
-    fontWeight: "800",
+    fontWeight: "600",
     letterSpacing: -0.4,
     fontFamily: roundedFont,
   },
-  heroSparkle: {
+  heroIcon: {
     width: 34,
     height: 34,
     borderRadius: 12,
@@ -293,10 +293,10 @@ const styles = StyleSheet.create({
   progressCount: {
     color: colors.paper,
     fontSize: 34,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -1.2,
     lineHeight: 38,
-    fontFamily: "sans-serif-rounded",
+    fontFamily: roundedFont,
   },
   progressSlash: {
     color: color("paper", 0.55),
@@ -342,15 +342,15 @@ const styles = StyleSheet.create({
   ringPercent: {
     color: colors.paper,
     fontSize: 18,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.5,
   },
   ringLabel: {
     color: color("paper", 0.6),
     fontSize: 7,
-    fontWeight: "900",
-    letterSpacing: 1.3,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
   },
   sectionHeader: {
     flexDirection: "row",
@@ -361,17 +361,17 @@ const styles = StyleSheet.create({
   sectionEyebrow: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.4,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
     marginBottom: 5,
   },
   sectionTitle: {
     color: colors.ink,
     fontSize: 23,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.7,
-    fontFamily: "sans-serif-rounded",
+    fontFamily: roundedFont,
   },
   viewAllButton: {
     flexDirection: "row",
@@ -383,9 +383,9 @@ const styles = StyleSheet.create({
   viewAllText: {
     color: colors.brand,
     fontSize: 10,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: 1,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   pressed: {
     opacity: 0.78,
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     color: colors.ink,
     fontSize: 19,
-    fontWeight: "800",
+    fontWeight: "600",
     textAlign: "center",
   },
   emptyBody: {
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
   emptyButtonText: {
     color: colors.paper,
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   moreHabits: {
     flexDirection: "row",
@@ -435,7 +435,7 @@ const styles = StyleSheet.create({
   moreHabitsText: {
     color: colors.brand,
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   footerNote: {
     flexDirection: "row",
@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
   footerTitle: {
     color: colors.ink,
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   footerBody: {
     color: colors.secondary,

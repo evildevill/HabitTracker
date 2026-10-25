@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowUpRight, ChartNoAxesColumnIncreasing, CircleCheck, Sparkles } from "lucide-react-native";
+import { ArrowUpRight, ChartNoAxesColumnIncreasing, CircleCheck } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { GlassCard } from "../../components/ui/glass-card";
 import { ScreenHeading } from "../../components/ui/screen-heading";
@@ -23,16 +23,16 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
         </View>
         <View style={styles.heading}>
           <ScreenHeading
-            eyebrow="YOUR PROGRESS"
+            eyebrow="Your progress"
             title="Insights"
-            subtitle="Notice the small wins. They add up."
+            subtitle="A clearer view of your consistency."
           />
         </View>
 
         <View style={styles.featureCard}>
           <View style={styles.featureOrb} />
           <View style={styles.featureTop}>
-            <View style={styles.featureIcon}><Sparkles size={18} color={colors.citrus} /></View>
+            <View style={styles.featureIcon}><ChartNoAxesColumnIncreasing size={19} color={colors.citrus} strokeWidth={1.8} /></View>
             <Text style={styles.featureEyebrow}>TODAY, SO FAR</Text>
           </View>
           <Text style={styles.featureTitle}>Showing up is the win.</Text>
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
   topLabel: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.5,
+    fontWeight: "700",
+    letterSpacing: 0.5,
     fontFamily: monoFont,
   },
   heading: {
@@ -142,14 +142,14 @@ const styles = StyleSheet.create({
   featureEyebrow: {
     color: colors.citrus,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.6,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
   },
   featureTitle: {
     color: colors.paper,
     fontSize: 25,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.8,
     lineHeight: 30,
     marginBottom: 8,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   featureStat: {
     color: colors.paper,
     fontSize: 29,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.7,
   },
   featureStatMuted: {
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   featurePercentText: {
     color: colors.citrus,
     fontSize: 12,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   featureTrack: {
     height: 5,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: colors.ink,
     fontSize: 21,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.6,
   },
   comingSoon: {
@@ -230,9 +230,9 @@ const styles = StyleSheet.create({
   comingSoonText: {
     color: colors.secondary,
     fontSize: 8,
-    fontWeight: "900",
-    letterSpacing: 1.2,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
   },
   emptyCard: {
     paddingHorizontal: 22,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     color: colors.ink,
     fontSize: 18,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.4,
   },
   emptyBody: {
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.brand,
     fontSize: 11,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   bottomSpacer: {
     height: 90,

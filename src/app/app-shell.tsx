@@ -1,8 +1,11 @@
 import { useState } from "react";
 import {
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -10,7 +13,7 @@ import {
   View,
 } from "react-native";
 import { X } from "lucide-react-native";
-import { colors, surfaces } from "../design/tokens";
+import { colors, monoFont, surfaces } from "../design/tokens";
 import { initialHabits, type Habit } from "../features/habits/types";
 import { TodayScreen } from "../features/habits/today-screen";
 import { HabitsScreen } from "../features/habits/habits-screen";
@@ -89,7 +92,17 @@ export function AppShell() {
             onPress={() => setAddModalVisible(false)}
             style={StyleSheet.absoluteFill}
           />
+          <KeyboardAvoidingView
+            style={styles.keyboardAvoider}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+          >
           <View style={styles.modalCard}>
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="on-drag"
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.modalScrollContent}
+            >
             <View style={styles.modalHeader}>
               <View style={styles.modalHeadingCopy}>
                 <Text style={styles.modalEyebrow}>START SMALL</Text>
@@ -139,7 +152,9 @@ export function AppShell() {
                 <Text style={styles.createText}>Create habit</Text>
               </Pressable>
             </View>
+            </ScrollView>
           </View>
+          </KeyboardAvoidingView>
         </View>
       </Modal>
     </View>
@@ -159,7 +174,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     backgroundColor: "rgba(9, 20, 16, 0.42)",
   },
+  keyboardAvoider: {
+    flex: 1,
+    justifyContent: "flex-end",
+    width: "100%",
+  },
   modalCard: {
+    maxHeight: "92%",
     backgroundColor: colors.canvas,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -168,6 +189,9 @@ const styles = StyleSheet.create({
     paddingBottom: 34,
     borderWidth: 1,
     borderColor: surfaces.border,
+  },
+  modalScrollContent: {
+    paddingBottom: 2,
   },
   modalHeader: {
     flexDirection: "row",
@@ -181,14 +205,14 @@ const styles = StyleSheet.create({
   modalEyebrow: {
     color: colors.brand,
     fontSize: 9,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: 1.8,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   modalTitle: {
     color: colors.ink,
     fontSize: 29,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: -0.8,
   },
   closeButton: {
@@ -204,10 +228,10 @@ const styles = StyleSheet.create({
   fieldLabel: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: 1.2,
     marginBottom: 10,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   input: {
     height: 54,
@@ -244,7 +268,7 @@ const styles = StyleSheet.create({
   cancelText: {
     color: colors.ink,
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   createButton: {
     flex: 1.5,
@@ -260,7 +284,7 @@ const styles = StyleSheet.create({
   createText: {
     color: colors.paper,
     fontSize: 13,
-    fontWeight: "800",
+    fontWeight: "600",
   },
   pressed: {
     opacity: 0.8,

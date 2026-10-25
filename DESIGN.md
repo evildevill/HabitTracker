@@ -248,3 +248,12 @@ Updated 2026-10-25. The following pieces are implemented in the current TypeScri
 - Settings is a visual foundation; reminders, appearance controls, and durable storage are not implemented yet.
 
 Habit completion and custom habits currently live in React state for the active app session. Durable local persistence is the next core implementation step; do not describe this milestone as persisted or offline-safe until that storage layer is added and tested. The source tree remains TypeScript-only.
+
+
+## 11. UI refinement — 2026-10-25
+
+The React Native implementation uses a native system sans-serif family for screen headings, body copy, and compact labels. Avoid the monospaced/rounded font mix and oversized tracking used in the first dashboard pass. Keep heading weight around 600–700, use restrained letter spacing, and reserve uppercase labels for short metadata only.
+
+Iconography uses a consistent Lucide line style with moderate stroke width and functional, recognizable symbols. Do not use sparkle or sparkles icons anywhere in the app, including empty states, decorative cards, navigation, and splash screens.
+
+The add-habit modal uses a keyboard-avoiding container on both platforms, a scrollable form body, and android.softwareKeyboardLayoutMode set to resize. Keep the input and primary action reachable when the keyboard is open; verify on both Android and iOS before calling the behavior complete.

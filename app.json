@@ -18,7 +18,8 @@
       },
       "package": "com.habittrackerwasiii.app",
       "versionCode": 2,
-      "permissions": []
+      "permissions": [],
+      "softwareKeyboardLayoutMode": "resize"
     },
     "web": {
       "favicon": "./assets/favicon.png"

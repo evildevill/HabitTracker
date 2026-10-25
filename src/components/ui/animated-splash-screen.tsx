@@ -48,13 +48,13 @@ type SignalIndex = 0 | 1 | 2;
 
 const roundedFont = Platform.select({
   ios: "System",
-  android: "sans-serif-rounded",
+  android: "sans-serif",
   default: "System",
 });
 
 const monoFont = Platform.select({
-  ios: "Menlo",
-  android: "monospace",
+  ios: "System",
+  android: "sans-serif",
   default: "monospace",
 });
 
@@ -386,17 +386,17 @@ const styles = StyleSheet.create({
   wordmark: {
     color: palette.ink,
     fontFamily: roundedFont,
-    fontSize: 29,
-    fontWeight: "900",
-    letterSpacing: 7,
+    fontSize: 28,
+    fontWeight: "700",
+    letterSpacing: 2.8,
     textAlign: "center",
   },
   tagline: {
     color: palette.brand,
     fontFamily: monoFont,
-    fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 2.4,
+    fontSize: 10,
+    fontWeight: "600",
+    letterSpacing: 1.1,
     textAlign: "center",
   },
   signalBlock: {
@@ -418,9 +418,9 @@ const styles = StyleSheet.create({
   signalLabel: {
     color: palette.secondary,
     fontFamily: monoFont,
-    fontSize: 8,
-    fontWeight: "900",
-    letterSpacing: 2,
+    fontSize: 10,
+    fontWeight: "600",
+    letterSpacing: 0.8,
     textAlign: "center",
   },
 });

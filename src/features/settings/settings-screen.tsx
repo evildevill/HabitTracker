@@ -23,9 +23,9 @@ export function SettingsScreen() {
         </View>
         <View style={styles.heading}>
           <ScreenHeading
-            eyebrow="YOUR SPACE"
+            eyebrow="Your space"
             title="Settings"
-            subtitle="A good routine should fit your life."
+            subtitle="Make your routine work for you."
           />
         </View>
 
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   topLabel: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.5,
+    fontWeight: "700",
+    letterSpacing: 0.5,
     fontFamily: monoFont,
   },
   heading: {
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   profileTitle: {
     color: colors.paper,
     fontSize: 16,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   profileSubtitle: {
     color: color("paper", 0.65),
@@ -138,15 +138,15 @@ const styles = StyleSheet.create({
   versionText: {
     color: colors.citrus,
     fontSize: 9,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: 1.2,
   },
   sectionTitle: {
     color: colors.secondary,
     fontSize: 9,
-    fontWeight: "900",
-    letterSpacing: 1.5,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+    fontFamily: monoFont,
     marginBottom: 12,
   },
   settingsList: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   settingTitle: {
     color: colors.ink,
     fontSize: 13,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   settingSubtitle: {
     color: colors.secondary,
@@ -197,9 +197,9 @@ const styles = StyleSheet.create({
   statusText: {
     color: colors.secondary,
     fontSize: 7,
-    fontWeight: "900",
+    fontWeight: "700",
     letterSpacing: 0.7,
-    fontFamily: "monospace",
+    fontFamily: monoFont,
   },
   pressed: {
     opacity: 0.8,
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   noteTitle: {
     color: colors.ink,
     fontSize: 13,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   noteBody: {
     color: colors.secondary,
@@ -236,9 +236,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: color("secondary", 0.75),
     fontSize: 8,
-    fontWeight: "900",
-    letterSpacing: 1.7,
-    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 0.7,
+    fontFamily: monoFont,
     marginTop: 25,
   },
   bottomSpacer: {

@@ -48,7 +48,7 @@ export function HabitRow({ habit, onToggle, compact = false }: HabitRowProps) {
           borderColor: color(habit.accent, 0.25),
         },
       ]}>
-        <Icon size={22} color={color(habit.accent)} strokeWidth={2.2} />
+        <Icon size={22} color={color(habit.accent)} strokeWidth={1.8} />
       </View>
       <View style={styles.copy}>
         <Text numberOfLines={1} style={[styles.title, habit.completed && styles.completedTitle]}>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.ink,
     fontSize: 15,
-    fontWeight: "800",
+    fontWeight: "600",
     letterSpacing: -0.25,
     fontFamily: roundedFont,
   },
