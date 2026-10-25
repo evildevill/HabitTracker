@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
   iconTile: { width: 43, height: 43, borderRadius: 14, alignItems: "center", justifyContent: "center" },
   copy: { flex: 1, gap: 5 },
-  title: { color: colors.ink, fontSize: 14, fontWeight: "650", letterSpacing: -0.2 },
+  title: { color: colors.ink, fontSize: 14, fontWeight: "600", letterSpacing: -0.2 },
   doneTitle: { color: colors.secondary },
   subtitle: { color: colors.secondary, fontSize: 11, fontWeight: "400", lineHeight: 15 },
   check: { width: 27, height: 27, borderRadius: 9, borderWidth: 1.5, borderColor: color("brand", 0.32), backgroundColor: colors.paper, alignItems: "center", justifyContent: "center" },
