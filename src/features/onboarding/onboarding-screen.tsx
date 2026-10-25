@@ -79,7 +79,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
     const chosen = PRESETS.filter((preset) => selected.includes(preset.id));
     const deduped = new Map<string, Habit>();
     chosen.forEach((preset) => preset.habits.forEach((habit) => {
-      deduped.set(habit.id, { ...habit, completed: false });
+      deduped.set(habit.title.trim().toLowerCase(), { ...habit, completed: false });
     }));
     const result = Array.from(deduped.values());
     if (result.length === 0) return;
@@ -139,7 +139,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
             <View style={styles.finishArt}>
               <View style={styles.finishHalo} />
-              <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{selected.reduce((sum, id) => sum + (PRESETS.find((p) => p.id === id)?.habits.length || 0), 0)}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
+              <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{new Set(PRESETS.filter((preset) => selected.includes(preset.id)).flatMap((preset) => preset.habits.map((habit) => habit.title.trim().toLowerCase()))).size}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
             </View>
             <Text style={styles.kicker}>NOT A NEW YOU. JUST A NEXT STEP.</Text>
             <Text accessibilityRole="header" style={styles.title}>Your routine, your pace.</Text>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   presetIcon: { width: 43, height: 43, borderRadius: 14, alignItems: "center", justifyContent: "center" },
   presetCopy: { flex: 1, gap: 5 },
   presetTitleRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5 },
-  presetTitle: { color: colors.ink, fontSize: 14, fontWeight: "750", letterSpacing: -0.25, flexShrink: 1 },
+  presetTitle: { color: colors.ink, fontSize: 14, fontWeight: "700", letterSpacing: -0.25, flexShrink: 1 },
   presetCount: { color: colors.secondary, fontSize: 9, fontWeight: "700" },
   presetDescription: { color: colors.secondary, fontSize: 11, lineHeight: 16 },
   previewRow: { flexDirection: "row", flexWrap: "wrap", gap: 5, marginTop: 3 },
