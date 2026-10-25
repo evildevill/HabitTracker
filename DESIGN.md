@@ -171,7 +171,7 @@ These values are reference values. Implement only interactions that fit the chos
 
 ## 6. Launch screen and motion
 
-The animated Habit Tracker launch experience is implemented in `src/components/ui/animated-splash-screen.tsx` and is mounted by `App.js`. It adapts the layered-card reveal used in the Acadora and Noor Al-Qalb iOS apps to React Native / Expo.
+The animated Habit Tracker launch experience is implemented in `src/components/ui/animated-splash-screen.tsx` and is mounted by `App.tsx`. It adapts the layered-card reveal used in the Acadora and Noor Al-Qalb iOS apps to React Native / Expo.
 
 ### Exact visual specification
 
@@ -232,3 +232,39 @@ The implementation should preserve these behaviors where the corresponding UI ex
 ## Scope
 
 This document is for the Habit Tracker rebuild. It replaces course, lecture, and learning terminology from the original reference with Habit Tracker concepts. The shared visual values above are retained from the original design reference and should be verified against the final Habit Tracker implementation as it is built.
+
+
+## 10. React Native implementation status
+
+Updated 2026-10-25. The following pieces are implemented in the current TypeScript app:
+
+- Exact normalized RGB palette and shared typography/geometry references: `src/design/tokens.ts`.
+- Layered app background, brand mark, glass card, and screen heading: `src/components/ui/`.
+- Animated launch remains mounted by `App.tsx`; its 1750ms handoff and Reduce Motion behavior are preserved.
+- Four-tab navigation (Today, Habits, Insights, Settings): `src/navigation/tab-bar.tsx`.
+- Today progress overview and habit check-ins: `src/features/habits/today-screen.tsx` and `src/features/habits/habit-row.tsx`.
+- Habit list and add-habit dialog: `src/features/habits/habits-screen.tsx` and `src/app/app-shell.tsx`.
+- Insights currently reports today's check-ins and deliberately avoids fabricated historical statistics.
+- Settings is a visual foundation; reminders, appearance controls, and durable storage are not implemented yet.
+
+Habit completion and custom habits currently live in React state for the active app session. Durable local persistence is the next core implementation step; do not describe this milestone as persisted or offline-safe until that storage layer is added and tested. The source tree remains TypeScript-only.
+
+
+## 11. UI refinement — 2026-10-25
+
+The React Native implementation uses a native system sans-serif family for screen headings, body copy, and compact labels. Avoid the monospaced/rounded font mix and oversized tracking used in the first dashboard pass. Keep heading weight around 600–700, use restrained letter spacing, and reserve uppercase labels for short metadata only.
+
+Iconography uses a consistent Lucide line style with moderate stroke width and functional, recognizable symbols. Do not use sparkle or sparkles icons anywhere in the app, including empty states, decorative cards, navigation, and splash screens.
+
+The add-habit modal uses a keyboard-avoiding container on both platforms, a scrollable form body, and android.softwareKeyboardLayoutMode set to resize. Keep the input and primary action reachable when the keyboard is open; verify on both Android and iOS before calling the behavior complete.
+
+
+## 12. Product UI refinement — 2026-10-25
+
+The animated splash screen is intentionally preserved. Inside the app, prefer a quieter editorial layout: the canvas remains the soft green-tinted background, the primary cards use the paper surface and subtle border, and dark ink surfaces are reserved for a single important summary per screen. Avoid decorative orbs, repeated uppercase labels, excessive tracking, and cards nested inside cards.
+
+Habit cards use a compact category tile, a restrained accent rail, clear title/subtitle hierarchy, and a distinct completion control. Completed habits use a subtle mint-tinted surface and brand-colored check control; do not rely on strikethrough alone to communicate completion. Keep card heights consistent and the entire row accessible as a checkbox.
+
+Interaction feedback uses `expo-haptics`: medium impact when completing a habit, light impact when unchecking it, selection feedback when opening the add-habit flow or changing tabs, and success notification feedback after creating a habit. Feedback calls are non-blocking and failures are safely ignored so interaction is never blocked.
+
+The app shell uses `SafeAreaView` and `SafeAreaProvider` from `react-native-safe-area-context`, not the deprecated React Native `SafeAreaView`. The add-habit sheet remains keyboard-aware and scrollable. Verify both the keyboard layout and haptics on physical iOS and Android devices before describing them as device-tested.
