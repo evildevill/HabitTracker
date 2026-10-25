@@ -1,0 +1,107 @@
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { BarChart3, ListChecks, Settings, Sun } from "lucide-react-native";
+import type { ComponentType } from "react";
+import { color, colors, geometry, surfaces } from "../design/tokens";
+
+export type TabKey = "today" | "habits" | "insights" | "settings";
+
+type TabDefinition = {
+  key: TabKey;
+  label: string;
+  icon: ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+};
+
+const tabs: TabDefinition[] = [
+  { key: "today", label: "Today", icon: Sun },
+  { key: "habits", label: "Habits", icon: ListChecks },
+  { key: "insights", label: "Insights", icon: BarChart3 },
+  { key: "settings", label: "Settings", icon: Settings },
+];
+
+type TabBarProps = {
+  activeTab: TabKey;
+  onSelect: (tab: TabKey) => void;
+};
+
+export function TabBar({ activeTab, onSelect }: TabBarProps) {
+  return (
+    <View style={styles.positioner}>
+      <View style={styles.dock}>
+        {tabs.map((tab) => {
+          const selected = activeTab === tab.key;
+          const Icon = tab.icon;
+          return (
+            <Pressable
+              key={tab.key}
+              accessibilityRole="tab"
+              accessibilityLabel={tab.label}
+              accessibilityState={{ selected }}
+              onPress={() => onSelect(tab.key)}
+              style={({ pressed }) => [
+                styles.tab,
+                { width: selected ? geometry.selectedTabWidth : geometry.unselectedTabWidth },
+                selected && styles.selectedTab,
+                pressed && styles.pressed,
+              ]}
+            >
+              <Icon
+                size={16}
+                color={selected ? colors.citrus : colors.secondary}
+                strokeWidth={2.5}
+              />
+              {selected ? <Text style={styles.selectedLabel}>{tab.label}</Text> : null}
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  positioner: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 8,
+    alignItems: "center",
+    paddingHorizontal: 12,
+  },
+  dock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    padding: 8,
+    borderRadius: geometry.tabDockRadius,
+    backgroundColor: color("paper", 0.94),
+    borderWidth: 1,
+    borderColor: surfaces.border,
+    shadowColor: colors.ink,
+    shadowOpacity: 0.14,
+    shadowRadius: 22,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 8,
+  },
+  tab: {
+    height: geometry.tabHeight,
+    borderRadius: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 7,
+    overflow: "hidden",
+  },
+  selectedTab: {
+    backgroundColor: colors.ink,
+  },
+  selectedLabel: {
+    color: colors.paper,
+    fontSize: 12,
+    fontWeight: "800",
+    fontFamily: "sans-serif-rounded",
+  },
+  pressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.975 }],
+  },
+});

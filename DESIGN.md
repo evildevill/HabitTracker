@@ -171,7 +171,7 @@ These values are reference values. Implement only interactions that fit the chos
 
 ## 6. Launch screen and motion
 
-The animated Habit Tracker launch experience is implemented in `src/components/ui/animated-splash-screen.tsx` and is mounted by `App.js`. It adapts the layered-card reveal used in the Acadora and Noor Al-Qalb iOS apps to React Native / Expo.
+The animated Habit Tracker launch experience is implemented in `src/components/ui/animated-splash-screen.tsx` and is mounted by `App.tsx`. It adapts the layered-card reveal used in the Acadora and Noor Al-Qalb iOS apps to React Native / Expo.
 
 ### Exact visual specification
 
@@ -232,3 +232,19 @@ The implementation should preserve these behaviors where the corresponding UI ex
 ## Scope
 
 This document is for the Habit Tracker rebuild. It replaces course, lecture, and learning terminology from the original reference with Habit Tracker concepts. The shared visual values above are retained from the original design reference and should be verified against the final Habit Tracker implementation as it is built.
+
+
+## 10. React Native implementation status
+
+Updated 2026-10-25. The following pieces are implemented in the current TypeScript app:
+
+- Exact normalized RGB palette and shared typography/geometry references: `src/design/tokens.ts`.
+- Layered app background, brand mark, glass card, and screen heading: `src/components/ui/`.
+- Animated launch remains mounted by `App.tsx`; its 1750ms handoff and Reduce Motion behavior are preserved.
+- Four-tab navigation (Today, Habits, Insights, Settings): `src/navigation/tab-bar.tsx`.
+- Today progress overview and habit check-ins: `src/features/habits/today-screen.tsx` and `src/features/habits/habit-row.tsx`.
+- Habit list and add-habit dialog: `src/features/habits/habits-screen.tsx` and `src/app/app-shell.tsx`.
+- Insights currently reports today's check-ins and deliberately avoids fabricated historical statistics.
+- Settings is a visual foundation; reminders, appearance controls, and durable storage are not implemented yet.
+
+Habit completion and custom habits currently live in React state for the active app session. Durable local persistence is the next core implementation step; do not describe this milestone as persisted or offline-safe until that storage layer is added and tested. The source tree remains TypeScript-only.
