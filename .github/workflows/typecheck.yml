@@ -1,4 +1,5 @@
 name: TypeScript check
+# pnpm/action-setup reads the exact packageManager version from package.json.
 
 on:
   push:
