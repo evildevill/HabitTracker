@@ -86,7 +86,11 @@ export function AppShell() {
         ) : activeTab === "insights" ? (
           <InsightsScreen habits={habits} />
         ) : (
-          <SettingsScreen />
+          <SettingsScreen onRestartOnboarding={() => {
+            setHabits([]);
+            setActiveTab("today");
+            setShowOnboarding(true);
+          }} />
         )}
         {!showOnboarding ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
       </SafeAreaView>

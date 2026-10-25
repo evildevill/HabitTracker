@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AccessibilityInfo, Animated, PanResponder, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { ArrowLeft, ArrowRight, Check, Sun, Brain, Heart, Zap } from "lucide-react-native";
 import type { ComponentType } from "react";
@@ -46,9 +46,27 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[]>(["balanced"]);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const progress = useRef(new Animated.Value(0)).current;
   const fade = useRef(new Animated.Value(1)).current;
   const rise = useRef(new Animated.Value(0)).current;
-  const progress = useRef(new Animated.Value(0)).current;
+  const artScale = useRef(new Animated.Value(1)).current;
+  const stepRef = useRef(step);
+  const selectedRef = useRef(selected);
+  const swipeResponder = useRef(PanResponder.create({
+    onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dx) > 32 && Math.abs(gesture.dx) > Math.abs(gesture.dy) * 1.25,
+    onPanResponderRelease: (_, gesture) => {
+      if (Math.abs(gesture.dx) < 55 || Math.abs(gesture.dx) < Math.abs(gesture.dy) * 1.25) return;
+      if (gesture.dx < 0 && stepRef.current < 2 && !(stepRef.current === 1 && selectedRef.current.length === 0)) {
+        void Haptics.selectionAsync().catch(() => undefined);
+        setStep((current) => Math.min(2, current + 1));
+      } else if (gesture.dx > 0 && stepRef.current > 0) {
+        void Haptics.selectionAsync().catch(() => undefined);
+        setStep((current) => Math.max(0, current - 1));
+      }
+    },
+  })).current;
+  stepRef.current = step;
+  selectedRef.current = selected;
 
   useEffect(() => {
     let active = true;
@@ -60,16 +78,19 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
   useEffect(() => {
     if (reduceMotion) {
       fade.setValue(1); rise.setValue(0);
+      artScale.setValue(1);
       progress.setValue(step / 2);
       return;
     }
     fade.setValue(0); rise.setValue(12);
+    artScale.setValue(0.96);
     Animated.parallel([
       Animated.timing(fade, { toValue: 1, duration: 340, useNativeDriver: true }),
       Animated.spring(rise, { toValue: 0, speed: 18, bounciness: 3, useNativeDriver: true }),
+      Animated.spring(artScale, { toValue: 1, speed: 15, bounciness: 4, useNativeDriver: true }),
       Animated.spring(progress, { toValue: step / 2, speed: 18, bounciness: 0, useNativeDriver: false }),
     ]).start();
-  }, [step, reduceMotion, fade, rise, progress]);
+  }, [step, reduceMotion, fade, rise, artScale, progress]);
 
   const togglePreset = (id: string) => {
     void Haptics.selectionAsync().catch(() => undefined);
@@ -101,15 +122,18 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
         <View style={styles.progressTrack}><Animated.View style={[styles.progressFill, { width: progress.interpolate({ inputRange: [0, 1], outputRange: ["12%", "100%"] }) }]} /></View>
       </View>
 
-      <Animated.View style={[styles.main, { opacity: fade, transform: [{ translateY: rise }] }]}>
+      <Animated.View
+        {...swipeResponder.panHandlers}
+        style={[styles.main, { opacity: fade, transform: [{ translateY: rise }] }]}
+      >
         {step === 0 ? (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            <View style={styles.introArt}>
+            <Animated.View style={[styles.introArt, { transform: [{ scale: artScale }] }]}>
               <View style={styles.artSun} />
               <View style={styles.artLeafOne} /><View style={styles.artLeafTwo} />
               <View style={styles.artNote}><Text style={styles.artNoteTop}>YOUR NEXT CHAPTER</Text><Text style={styles.artNoteTitle}>Small steps.{ "\n" }Real change.</Text><View style={styles.artLine} /><Text style={styles.artNoteFoot}>ONE DAY AT A TIME</Text></View>
               <View style={styles.artStamp}><Check size={18} color={colors.ink} strokeWidth={2.8} /></View>
-            </View>
+            </Animated.View>
             <Text style={styles.kicker}>A ROUTINE THAT FITS YOU</Text>
             <Text accessibilityRole="header" style={styles.title}>Become who you want to be, one little habit at a time.</Text>
             <Text style={styles.body}>No streak pressure. No perfect days required. Just a few small things that matter to you.</Text>
@@ -137,10 +161,10 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
           </ScrollView>
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            <View style={styles.finishArt}>
+            <Animated.View style={[styles.finishArt, { transform: [{ scale: artScale }] }]}>
               <View style={styles.finishHalo} />
               <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{new Set(PRESETS.filter((preset) => selected.includes(preset.id)).flatMap((preset) => preset.habits.map((habit) => habit.title.trim().toLowerCase()))).size}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
-            </View>
+            </Animated.View>
             <Text style={styles.kicker}>NOT A NEW YOU. JUST A NEXT STEP.</Text>
             <Text accessibilityRole="header" style={styles.title}>Your routine, your pace.</Text>
             <Text style={styles.body}>Your habits will be waiting on your Today screen. You can change, remove, or add to them whenever life changes.</Text>
