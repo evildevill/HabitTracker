@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, Animated, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AccessibilityInfo, Animated, PanResponder, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { ArrowLeft, ArrowRight, Check, Sun, Brain, Heart, Zap } from "lucide-react-native";
 import type { ComponentType } from "react";
@@ -49,6 +49,23 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
   const fade = useRef(new Animated.Value(1)).current;
   const rise = useRef(new Animated.Value(0)).current;
   const progress = useRef(new Animated.Value(0)).current;
+  const slide = useRef(new Animated.Value(0)).current;
+  const artScale = useRef(new Animated.Value(1)).current;
+  const stepRef = useRef(step);
+  const swipeResponder = useRef(PanResponder.create({
+    onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dx) > 32 && Math.abs(gesture.dx) > Math.abs(gesture.dy) * 1.25,
+    onPanResponderRelease: (_, gesture) => {
+      if (Math.abs(gesture.dx) < 55 || Math.abs(gesture.dx) < Math.abs(gesture.dy) * 1.25) return;
+      if (gesture.dx < 0 && stepRef.current < 2 && !(stepRef.current === 1 && selected.length === 0)) {
+        void Haptics.selectionAsync().catch(() => undefined);
+        setStep((current) => Math.min(2, current + 1));
+      } else if (gesture.dx > 0 && stepRef.current > 0) {
+        void Haptics.selectionAsync().catch(() => undefined);
+        setStep((current) => Math.max(0, current - 1));
+      }
+    },
+  })).current;
+  stepRef.current = step;
 
   useEffect(() => {
     let active = true;
@@ -101,10 +118,10 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
         <View style={styles.progressTrack}><Animated.View style={[styles.progressFill, { width: progress.interpolate({ inputRange: [0, 1], outputRange: ["12%", "100%"] }) }]} /></View>
       </View>
 
-      <Animated.View style={[styles.main, { opacity: fade, transform: [{ translateY: rise }] }]}>
+      <Animated.View {...swipeResponder.panHandlers} style={[styles.main, { opacity: fade, transform: [{ translateY: rise }, { translateX: slide }] }]}>
         {step === 0 ? (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            <View style={styles.introArt}>
+            <Animated.View style={[styles.introArt, { transform: [{ scale: artScale }] }]}>
               <View style={styles.artSun} />
               <View style={styles.artLeafOne} /><View style={styles.artLeafTwo} />
               <View style={styles.artNote}><Text style={styles.artNoteTop}>YOUR NEXT CHAPTER</Text><Text style={styles.artNoteTitle}>Small steps.{ "\n" }Real change.</Text><View style={styles.artLine} /><Text style={styles.artNoteFoot}>ONE DAY AT A TIME</Text></View>
@@ -137,7 +154,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
           </ScrollView>
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            <View style={styles.finishArt}>
+            <Animated.View style={[styles.finishArt, { transform: [{ scale: artScale }] }]}>
               <View style={styles.finishHalo} />
               <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{new Set(PRESETS.filter((preset) => selected.includes(preset.id)).flatMap((preset) => preset.habits.map((habit) => habit.title.trim().toLowerCase()))).size}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
             </View>
