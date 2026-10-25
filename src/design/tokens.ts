@@ -37,5 +37,6 @@ export const geometry = {
   unselectedTabWidth: 43, tabHeight: 44, tabDockRadius: 24,
 } as const;
 export const systemFont = Platform.select({ ios: "System", android: "sans-serif", default: "System" });
-export const roundedFont = systemFont;
-export const monoFont = systemFont;
+// Match Acadora’s rounded display typography and monospaced labels where the platform exposes them.
+export const roundedFont = Platform.select({ ios: "Avenir Next", android: "sans-serif-rounded", default: "sans-serif" });
+export const monoFont = Platform.select({ ios: "Menlo", android: "monospace", default: "monospace" });
