@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatedSplashScreen } from "./src/components/ui/animated-splash-screen";
 import { AppShell } from "./src/app/app-shell";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const SPLASH_DURATION_MS = 1750;
 
@@ -16,5 +17,9 @@ export default function App() {
     return <AnimatedSplashScreen />;
   }
 
-  return <AppShell />;
+  return (
+    <SafeAreaProvider>
+      <AppShell />
+    </SafeAreaProvider>
+  );
 }
