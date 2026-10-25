@@ -29,6 +29,18 @@
         "projectId": "ab0bafd3-c5f4-44d6-8f87-0b399225a043"
       }
     },
-    "owner": "wasii"
+    "owner": "wasii",
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "targetSdkVersion": 36,
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
+        }
+      ]
+    ]
   }
 }
