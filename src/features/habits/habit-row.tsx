@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.ink,
     fontSize: 15,
-    fontWeight: "650",
+    fontWeight: "600",
     letterSpacing: -0.25,
   },
   completedTitle: {
