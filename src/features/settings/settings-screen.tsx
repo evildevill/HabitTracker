@@ -50,7 +50,7 @@ export function SettingsScreen({ onRestartOnboarding }: SettingsScreenProps) {
           })}
         </View>
 
-        <Text style={styles.sectionLabel}>START OVER</Text>
+        <Text style={[styles.sectionLabel, styles.startOverLabel]}>START OVER</Text>
         <Pressable
           accessibilityRole="button"
           onPress={() => Alert.alert(
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   versionPill: { backgroundColor: color("paper", 0.1), borderRadius: 999, paddingHorizontal: 9, paddingVertical: 6 },
   versionText: { color: colors.citrus, fontSize: 10, fontWeight: "700" },
   sectionLabel: { color: colors.secondary, fontSize: 10, fontWeight: "700", letterSpacing: 0.65, marginBottom: 11 },
+  startOverLabel: { marginTop: 24 },
   settingsList: { borderRadius: 22, backgroundColor: color("paper", 0.92), borderWidth: 1, borderColor: surfaces.border, overflow: "hidden" },
   settingRow: { minHeight: 75, flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 12, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: surfaces.mutedBorder },
   lastSettingRow: { borderBottomWidth: 0 },
