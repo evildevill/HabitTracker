@@ -92,7 +92,7 @@ const termsSections: LegalSection[] = [
   {
     title: "Disclaimer and limitation",
     paragraphs: [
-      "The app is provided on an "as available" basis to the extent permitted by law. We make no guarantee that it will be uninterrupted, error-free, or suitable for every purpose.",
+      "The app is provided on an “as available” basis to the extent permitted by law. We make no guarantee that it will be uninterrupted, error-free, or suitable for every purpose.",
       "To the extent permitted by applicable law, WasiiLabs will not be liable for indirect, incidental, special, or consequential loss arising from use of the app, including loss of session data. Nothing in these terms excludes rights or liability that cannot legally be excluded.",
     ],
   },
