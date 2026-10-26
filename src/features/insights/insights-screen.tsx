@@ -9,6 +9,7 @@ import type { Habit } from "../habits/types";
 type InsightsScreenProps = { habits: Habit[] };
 
 export function InsightsScreen({ habits }: InsightsScreenProps) {
+  const styles = createStyles();
   const completed = habits.filter((habit) => habit.completed).length;
   const percent = habits.length === 0 ? 0 : Math.round((completed / habits.length) * 100);
 
@@ -60,7 +61,7 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 },
   heading: { marginBottom: 25 },
   summaryCard: { borderRadius: 23, padding: 20, backgroundColor: colors.ink, marginBottom: 30, gap: 12 },
@@ -88,4 +89,4 @@ const styles = StyleSheet.create({
   futureFooter: { flexDirection: "row", alignItems: "center", gap: 8, borderTopWidth: 1, borderTopColor: surfaces.mutedBorder, paddingTop: 14, marginTop: 3 },
   futureFooterText: { color: colors.brand, fontSize: 11, fontWeight: "600" },
   bottomSpacer: { height: 92 },
-});
+}); }
