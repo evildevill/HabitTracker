@@ -105,6 +105,7 @@ const termsSections: LegalSection[] = [
 ];
 
 function LegalSectionView({ section, index }: { section: LegalSection; index: number }) {
+  const styles = createStyles();
   return (
     <View style={styles.section} key={section.title}>
       <View style={styles.sectionHeading}>
@@ -125,6 +126,7 @@ function LegalSectionView({ section, index }: { section: LegalSection; index: nu
 }
 
 export function LegalScreen({ document, onBack }: LegalScreenProps) {
+  const styles = createStyles();
   const isPrivacy = document === "privacy";
   const sections = isPrivacy ? privacySections : termsSections;
   const Icon = isPrivacy ? LockKeyhole : Scale;
@@ -196,7 +198,7 @@ export function LegalScreen({ document, onBack }: LegalScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   root: { flex: 1 },
   topBar: { minHeight: 52, flexDirection: "row", alignItems: "center", paddingHorizontal: 20, gap: 12 },
   backButton: { width: 40, height: 40, borderRadius: 14, backgroundColor: color("paper", 0.94), borderWidth: 1, borderColor: surfaces.border, alignItems: "center", justifyContent: "center" },
@@ -232,4 +234,4 @@ const styles = StyleSheet.create({
   email: { color: colors.brand, fontSize: 12, lineHeight: 23, fontWeight: "600" },
   footer: { color: color("secondary", 0.75), textAlign: "center", fontFamily: monoFont, fontSize: 9, fontWeight: "700", letterSpacing: 0.9, marginTop: 22 },
   bottomSpacer: { height: 34 },
-});
+}); }
