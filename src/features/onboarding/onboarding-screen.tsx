@@ -43,6 +43,7 @@ const PRESETS: Preset[] = [
 
 type OnboardingProps = { onComplete: (habits: Habit[]) => void };
 export function OnboardingScreen({ onComplete }: OnboardingProps) {
+  const styles = createStyles();
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[]>(["balanced"]);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -174,7 +175,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.canvas, paddingTop: 12 },
   topWash: { position: "absolute", top: -100, right: -95, width: 290, height: 290, borderRadius: 145, backgroundColor: color("mint", 0.12) },
   header: { paddingHorizontal: 24, paddingTop: 9, paddingBottom: 18, gap: 17 },
@@ -237,4 +238,4 @@ const styles = StyleSheet.create({
   primaryText: { color: colors.paper, fontSize: 13, fontWeight: "700" },
   disabledButton: { opacity: 0.35 },
   pressed: { opacity: 0.82, transform: [{ scale: 0.985 }] },
-});
+}); }
