@@ -1,5 +1,5 @@
 import { AppText as Text } from "../../components/ui/app-text";
-import { Pressable, ScrollView, StyleSheet, Text as NativeText, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { ArrowLeft, Check, Moon, Sun } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { ScreenHeading } from "../../components/ui/screen-heading";
