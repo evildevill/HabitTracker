@@ -51,7 +51,7 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
             >
               <Icon
                 size={18}
-                color={selected ? colors.paper : colors.secondary}
+                color={selected ? colors.onStrong : colors.secondary}
                 strokeWidth={1.8}
               />
               {selected ? <Text style={styles.selectedLabel}>{tab.label}</Text> : null}
