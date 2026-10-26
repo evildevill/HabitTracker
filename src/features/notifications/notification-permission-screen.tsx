@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { BellRing, CalendarCheck2, Check, ChevronRight, Clock3, ShieldCheck, Sparkles } from "lucide-react-native";
 import { color, colors, surfaces } from "../../design/tokens";
@@ -29,7 +29,7 @@ export function NotificationPermissionScreen({ onFinish }: Props) {
           "You can enable them any time in your phone's Settings.",
           [
             { text: "Not now", style: "cancel", onPress: onFinish },
-            { text: "Open Settings", onPress: () => { void import("react-native").then(({ Linking }) => Linking.openSettings()); } },
+            { text: "Open Settings", onPress: () => { void Linking.openSettings(); } },
           ],
         );
       } else {
