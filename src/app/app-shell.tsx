@@ -38,12 +38,65 @@ export function AppShell() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [showNotificationOnboarding, setShowNotificationOnboarding] = useState(false);
-  const [showNotificationSettings, setShowNotificationSettings] = useState(false);\n  const [showAppearanceSettings, setShowAppearanceSettings] = useState(false);\n  const [appearanceMode, setAppearanceMode] = useState<AppearanceMode>("system");\n  const [, setPaletteVersion] = useState(0);\n  const systemScheme = useColorScheme();\n  const [transitioning, setTransitioning] = useState(false);\n  const [transitionDark, setTransitionDark] = useState(false);\n  const transitionScale = useRef(new Animated.Value(0.001)).current;\n  const transitionFade = useRef(new Animated.Value(1)).current;\n  const reduceMotion = useRef(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  const [showAppearanceSettings, setShowAppearanceSettings] = useState(false);
+  const [appearanceMode, setAppearanceMode] = useState<AppearanceMode>("system");
+  const [, setPaletteVersion] = useState(0);
+  const systemScheme = useColorScheme();
+  const [transitioning, setTransitioning] = useState(false);
+  const [transitionDark, setTransitionDark] = useState(false);
+  const transitionScale = useRef(new Animated.Value(0.001)).current;
+  const transitionFade = useRef(new Animated.Value(1)).current;
+  const reduceMotion = useRef(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
   const [legalDocument, setLegalDocument] = useState<LegalDocument | null>(null);
 
-  const isDark = appearanceMode === "system" ? systemScheme === "dark" : appearanceMode === "dark";\n\n  useEffect(() => {\n    let active = true;\n    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => { if (active) reduceMotion.current = enabled; }).catch(() => undefined);\n    const motionSubscription = AccessibilityInfo.addEventListener("reduceMotionChanged", (enabled) => { reduceMotion.current = enabled; });\n    AsyncStorage.getItem("habit-tracker.appearance").then((saved) => {\n      if (!active) return;\n      if (saved === "light" || saved === "dark" || saved === "system") setAppearanceMode(saved);\n    }).catch(() => undefined);\n    return () => { active = false; motionSubscription.remove(); };\n  }, []);\n\n  useEffect(() => {\n    refreshPalette(isDark);\n    setPaletteVersion((version) => version + 1);\n    Appearance.setColorScheme(appearanceMode === "system" ? "unspecified" : appearanceMode);\n  }, [appearanceMode, isDark]);\n\n  const changeAppearance = (next: AppearanceMode) => {\n    if (next === appearanceMode) { setShowAppearanceSettings(false); return; }\n    const nextDark = next === "system" ? systemScheme === "dark" : next === "dark";\n    void Haptics.selectionAsync().catch(() => undefined);\n    setTransitionDark(nextDark);\n    if (reduceMotion.current) {\n      setAppearanceMode(next);\n      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);\n      setShowAppearanceSettings(false);\n      return;\n    }\n    setTransitioning(true);\n    transitionScale.setValue(0.001);\n    transitionFade.setValue(1);\n    const { width, height } = Dimensions.get("window");\n    const reach = Math.sqrt(width * width + height * height) * 1.2;\n    Animated.timing(transitionScale, { toValue: reach / 50, duration: 760, useNativeDriver: true }).start(({ finished }) => {\n      if (!finished) return;\n      setAppearanceMode(next);\n      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);\n      setShowAppearanceSettings(false);\n      Animated.timing(transitionFade, { toValue: 0, duration: 240, useNativeDriver: true }).start(() => setTransitioning(false));\n    });\n  };\n\n  const toggleHabit = (id: string) => {
+  const isDark = appearanceMode === "system" ? systemScheme === "dark" : appearanceMode === "dark";
+
+  useEffect(() => {
+    let active = true;
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => { if (active) reduceMotion.current = enabled; }).catch(() => undefined);
+    const motionSubscription = AccessibilityInfo.addEventListener("reduceMotionChanged", (enabled) => { reduceMotion.current = enabled; });
+    AsyncStorage.getItem("habit-tracker.appearance").then((saved) => {
+      if (!active) return;
+      if (saved === "light" || saved === "dark" || saved === "system") setAppearanceMode(saved);
+    }).catch(() => undefined);
+    return () => { active = false; motionSubscription.remove(); };
+  }, []);
+
+  useEffect(() => {
+    refreshPalette(isDark);
+    setPaletteVersion((version) => version + 1);
+    Appearance.setColorScheme(appearanceMode === "system" ? "unspecified" : appearanceMode);
+  }, [appearanceMode, isDark]);
+
+  const changeAppearance = (next: AppearanceMode) => {
+    if (next === appearanceMode) { setShowAppearanceSettings(false); return; }
+    const nextDark = next === "system" ? systemScheme === "dark" : next === "dark";
+    void Haptics.selectionAsync().catch(() => undefined);
+    setTransitionDark(nextDark);
+    if (reduceMotion.current) {
+      setAppearanceMode(next);
+      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
+      setShowAppearanceSettings(false);
+      return;
+    }
+    setTransitioning(true);
+    transitionScale.setValue(0.001);
+    transitionFade.setValue(1);
+    const { width, height } = Dimensions.get("window");
+    const reach = Math.sqrt(width * width + height * height) * 1.2;
+    Animated.timing(transitionScale, { toValue: reach / 50, duration: 760, useNativeDriver: true }).start(({ finished }) => {
+      if (!finished) return;
+      setAppearanceMode(next);
+      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
+      setShowAppearanceSettings(false);
+      Animated.timing(transitionFade, { toValue: 0, duration: 240, useNativeDriver: true }).start(() => setTransitioning(false));
+    });
+  };
+
+  const toggleHabit = (id: string) => {
     setHabits((current) =>
       current.map((habit) =>
         habit.id === id ? { ...habit, completed: !habit.completed } : habit
@@ -89,7 +142,9 @@ export function AppShell() {
           <NotificationPermissionScreen onFinish={() => setShowNotificationOnboarding(false)} />
         ) : legalDocument ? (
           <LegalScreen document={legalDocument} onBack={() => setLegalDocument(null)} />
-        ) : showAppearanceSettings ? (\n          <AppearanceScreen mode={appearanceMode} onSelect={changeAppearance} onBack={() => setShowAppearanceSettings(false)} />\n        ) : showNotificationSettings ? (
+        ) : showAppearanceSettings ? (
+          <AppearanceScreen mode={appearanceMode} onSelect={changeAppearance} onBack={() => setShowAppearanceSettings(false)} />
+        ) : showNotificationSettings ? (
           <NotificationSettingsScreen onBack={() => setShowNotificationSettings(false)} />
         ) : activeTab === "today" ? (
           <TodayScreen
@@ -108,7 +163,8 @@ export function AppShell() {
         ) : (
           <SettingsScreen
             onOpenLegal={setLegalDocument}
-            onOpenNotifications={() => setShowNotificationSettings(true)}\n            onOpenAppearance={() => setShowAppearanceSettings(true)}
+            onOpenNotifications={() => setShowNotificationSettings(true)}
+            onOpenAppearance={() => setShowAppearanceSettings(true)}
             onRestartOnboarding={() => {
               setHabits([]);
               setActiveTab("today");
