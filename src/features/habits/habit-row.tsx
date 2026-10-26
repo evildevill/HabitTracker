@@ -30,7 +30,7 @@ export function HabitRow({ habit, onToggle, compact = false }: HabitRowProps) {
         <Text numberOfLines={1} style={styles.subtitle}>{habit.subtitle}</Text>
       </View>
       <View style={[styles.check, habit.completed && styles.checked]}>
-        {habit.completed ? <Check size={16} color={colors.paper} strokeWidth={2.7} /> : null}
+        {habit.completed ? <Check size={16} color={colors.onStrong} strokeWidth={2.7} /> : null}
       </View>
     </Pressable>
   );
