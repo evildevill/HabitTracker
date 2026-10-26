@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { X } from "lucide-react-native";
 import { colors, monoFont, refreshPalette, surfaces } from "../design/tokens";
 import type { Habit } from "../features/habits/types";
+import type { HabitCompletionEvent } from "../features/insights/insights-screen";
 import { OnboardingScreen } from "../features/onboarding/onboarding-screen";
 import { TodayScreen } from "../features/habits/today-screen";
 import { HabitsScreen } from "../features/habits/habits-screen";
@@ -33,6 +34,8 @@ export function AppShell() {
   const styles = createStyles();
   const [activeTab, setActiveTab] = useState<TabKey>("today");
   const [habits, setHabits] = useState<Habit[]>([]);
+  const [completionEvents, setCompletionEvents] = useState<HabitCompletionEvent[]>([]);
+  const [completionHistoryLoaded, setCompletionHistoryLoaded] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [showNotificationOnboarding, setShowNotificationOnboarding] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
@@ -55,6 +58,39 @@ export function AppShell() {
   }, []);
 
   useEffect(() => {
+    let active = true;
+    AsyncStorage.getItem("habit-tracker.completion-history").then((saved) => {
+      if (!active || !saved) return;
+      try {
+        const parsed: unknown = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const valid = parsed.filter((event): event is HabitCompletionEvent =>
+            event !== null &&
+            typeof event === "object" &&
+            typeof event.habitId === "string" &&
+            typeof event.at === "number" &&
+            typeof event.completed === "boolean"
+          );
+          setCompletionEvents(valid.slice(-3650));
+        }
+      } catch {
+        // Ignore invalid or outdated local history.
+      }
+    }).catch(() => undefined).finally(() => {
+      if (active) setCompletionHistoryLoaded(true);
+    });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!completionHistoryLoaded) return;
+    void AsyncStorage.setItem(
+      "habit-tracker.completion-history",
+      JSON.stringify(completionEvents.slice(-3650)),
+    ).catch(() => undefined);
+  }, [completionEvents, completionHistoryLoaded]);
+
+  useEffect(() => {
     refreshPalette(isDark);
     setPaletteVersion((version) => version + 1);
     Appearance.setColorScheme(appearanceMode);
@@ -68,10 +104,12 @@ export function AppShell() {
   };
 
   const toggleHabit = (id: string) => {
+    const habit = habits.find((item) => item.id === id);
+    if (!habit) return;
+    const nextCompleted = !habit.completed;
+    setCompletionEvents((current) => [...current, { habitId: id, at: Date.now(), completed: nextCompleted }]);
     setHabits((current) =>
-      current.map((habit) =>
-        habit.id === id ? { ...habit, completed: !habit.completed } : habit
-      )
+      current.map((item) => item.id === id ? { ...item, completed: nextCompleted } : item)
     );
   };
 
@@ -130,7 +168,7 @@ export function AppShell() {
             onAddHabit={() => setAddModalVisible(true)}
           />
         ) : activeTab === "insights" ? (
-          <InsightsScreen habits={habits} />
+          <InsightsScreen habits={habits} completionEvents={completionEvents} />
         ) : (
           <SettingsScreen
             onOpenLegal={setLegalDocument}
@@ -138,6 +176,7 @@ export function AppShell() {
             onOpenAppearance={() => setShowAppearanceSettings(true)}
             onRestartOnboarding={() => {
               setHabits([]);
+              setCompletionEvents([]);
               setActiveTab("today");
               setLegalDocument(null);
               setShowNotificationOnboarding(false);
