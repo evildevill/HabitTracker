@@ -97,10 +97,10 @@ function createStyles() { return StyleSheet.create({
     overflow: "hidden",
   },
   selectedTab: {
-    backgroundColor: colors.brandDark,
+    backgroundColor: colors.strongSurface,
   },
   selectedLabel: {
-    color: colors.paper,
+    color: colors.onStrong,
     fontSize: 12,
     fontWeight: "600",
     fontFamily: roundedFont,
