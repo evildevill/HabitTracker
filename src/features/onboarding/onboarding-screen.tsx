@@ -110,7 +110,6 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
 
   return (
     <View style={styles.root}>
-      <View pointerEvents="none" style={styles.topWash} />
       <View style={styles.header}>
         <View style={styles.brandRow}><View style={styles.brandMark}><Check size={19} color={colors.citrus} strokeWidth={3} /></View><Text style={styles.brandName}>HABIT TRACKER</Text></View>
         <Text style={styles.stepLabel}>{step === 0 ? "A SMALL BEGINNING" : step === 1 ? "MAKE IT YOURS" : "READY WHEN YOU ARE"}</Text>
@@ -177,7 +176,6 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
 
 function createStyles() { return StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.canvas, paddingTop: 12 },
-  topWash: { position: "absolute", top: -100, right: -95, width: 290, height: 290, borderRadius: 145, backgroundColor: color("mint", 0.12) },
   header: { paddingHorizontal: 24, paddingTop: 9, paddingBottom: 18, gap: 17 },
   brandRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   brandMark: { width: 34, height: 34, borderRadius: 11, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center" },
@@ -191,7 +189,7 @@ function createStyles() { return StyleSheet.create({
   artSun: { position: "absolute", width: 184, height: 184, borderRadius: 92, backgroundColor: color("citrus", 0.48), top: 16, left: 20 },
   artLeafOne: { position: "absolute", width: 55, height: 95, borderTopLeftRadius: 50, borderBottomRightRadius: 50, backgroundColor: color("mint", 0.75), top: 0, right: 42, transform: [{ rotate: "22deg" }] },
   artLeafTwo: { position: "absolute", width: 34, height: 65, borderTopLeftRadius: 40, borderBottomRightRadius: 40, backgroundColor: color("brand", 0.28), top: 42, right: 15, transform: [{ rotate: "43deg" }] },
-  artNote: { width: "82%", minHeight: 171, padding: 19, borderRadius: 18, backgroundColor: colors.strongSurface, transform: [{ rotate: "-3deg" }], justifyContent: "center", shadowColor: colors.ink, shadowOpacity: 0.13, shadowRadius: 15, shadowOffset: { width: 0, height: 8 }, elevation: 3 },
+  artNote: { width: "82%", minHeight: 171, padding: 19, borderRadius: 18, backgroundColor: colors.strongSurface, transform: [{ rotate: "-3deg" }], justifyContent: "center" },
   artNoteTop: { color: colors.citrus, fontSize: 8, fontWeight: "800", letterSpacing: 1.7, marginBottom: 11 },
   artNoteTitle: { color: colors.onStrong, fontSize: 29, fontWeight: "800", letterSpacing: -1.1, lineHeight: 31 },
   artLine: { height: 1, backgroundColor: color("paper", 0.22), marginTop: 13, marginBottom: 8 },
@@ -205,7 +203,7 @@ function createStyles() { return StyleSheet.create({
   promiseText: { flex: 1, color: colors.ink, fontSize: 11, lineHeight: 17, fontWeight: "600" },
   presetList: { gap: 11, marginTop: 21 },
   preset: { flexDirection: "row", alignItems: "flex-start", gap: 12, padding: 13, borderRadius: 19, backgroundColor: color("paper", 0.82), borderWidth: 1, borderColor: surfaces.border },
-  presetActive: { borderColor: colors.brand, backgroundColor: colors.paper, shadowColor: colors.brand, shadowOpacity: 0.07, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 1 },
+  presetActive: { borderColor: colors.brand, backgroundColor: colors.paper },
   presetPressed: { transform: [{ scale: 0.985 }], opacity: 0.9 },
   presetIcon: { width: 43, height: 43, borderRadius: 14, alignItems: "center", justifyContent: "center" },
   presetCopy: { flex: 1, gap: 5 },
@@ -221,7 +219,7 @@ function createStyles() { return StyleSheet.create({
   selectionHint: { color: colors.secondary, fontSize: 10, marginTop: 15, textAlign: "center" },
   finishArt: { height: 285, alignItems: "center", justifyContent: "center", marginBottom: 17 },
   finishHalo: { position: "absolute", width: 245, height: 245, borderRadius: 123, backgroundColor: color("mint", 0.24) },
-  finishCard: { width: "90%", borderRadius: 23, backgroundColor: colors.paper, padding: 20, borderWidth: 1, borderColor: surfaces.border, shadowColor: colors.ink, shadowOpacity: 0.07, shadowRadius: 16, shadowOffset: { width: 0, height: 7 }, elevation: 2 },
+  finishCard: { width: "90%", borderRadius: 23, backgroundColor: colors.paper, padding: 20, borderWidth: 1, borderColor: surfaces.border },
   finishEyebrow: { color: colors.brand, fontSize: 8, fontWeight: "800", letterSpacing: 1.4 },
   finishBig: { color: colors.ink, fontSize: 51, lineHeight: 58, fontWeight: "800", letterSpacing: -2 },
   finishCaption: { color: colors.secondary, fontSize: 11, marginTop: -2 },
