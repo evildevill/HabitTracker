@@ -11,7 +11,7 @@ type LegalScreenProps = {
   onBack: () => void;
 };
 
-type LegalSection = { title: string; paragraphs: string[]; bullets?: string[] };
+type LegalSection = { title: string; paragraphs?: string[]; bullets?: string[] };
 
 const privacySections: LegalSection[] = [
   {
