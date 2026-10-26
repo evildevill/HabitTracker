@@ -9,6 +9,7 @@ import type { Habit } from "./types";
 type TodayScreenProps = { habits: Habit[]; onToggleHabit: (id: string) => void; onViewAll: () => void };
 
 export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenProps) {
+  const styles = createStyles();
   const completed = habits.filter((habit) => habit.completed).length;
   const total = habits.length;
   const progress = total === 0 ? 0 : completed / total;
@@ -80,7 +81,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 22, paddingTop: 12, paddingBottom: 30 },
   topLine: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 26 },
   wordmark: { flexDirection: "row", alignItems: "center", gap: 8 },
@@ -133,4 +134,4 @@ const styles = StyleSheet.create({
   noteTitle: { color: colors.ink, fontSize: 11, fontWeight: "700" },
   noteBody: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
   bottomSpacer: { height: 88 },
-});
+}); }
