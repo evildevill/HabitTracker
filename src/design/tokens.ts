@@ -12,6 +12,8 @@ export const RGB = {
   coral: [0.94, 0.43, 0.31],
   sky: [0.34, 0.62, 0.78],
   sand: [0.91, 0.82, 0.61],
+  strongSurface: [0.035, 0.23, 0.19],
+  onStrong: [0.985, 0.989, 0.982],
 } as const;
 
 const DARK_RGB = {
@@ -26,6 +28,8 @@ const DARK_RGB = {
   coral: [0.98, 0.53, 0.41],
   sky: [0.47, 0.72, 0.86],
   sand: [0.56, 0.49, 0.34],
+  strongSurface: [0.075, 0.15, 0.12],
+  onStrong: [0.94, 0.97, 0.95],
 } as const;
 
 export type ColorToken = keyof typeof RGB;
