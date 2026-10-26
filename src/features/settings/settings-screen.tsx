@@ -20,6 +20,7 @@ type SettingsScreenProps = {
 };
 
 export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotifications }: SettingsScreenProps) {
+  const styles = createStyles();
   return (
     <AppBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
@@ -133,7 +134,7 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 },
   heading: { marginBottom: 25 },
   profileCard: { flexDirection: "row", alignItems: "center", gap: 13, padding: 16, borderRadius: 22, backgroundColor: colors.ink, marginBottom: 30 },
@@ -165,4 +166,4 @@ const styles = StyleSheet.create({
   noteBody: { color: colors.secondary, fontSize: 11, lineHeight: 17 },
   footer: { textAlign: "center", color: color("secondary", 0.75), fontSize: 9, fontWeight: "700", letterSpacing: 0.7, marginTop: 25 },
   bottomSpacer: { height: 92 },
-});
+}); }
