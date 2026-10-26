@@ -1,4 +1,4 @@
-import { AppText as Text } from "../../components/ui";
+import { AppText as Text } from "../../components/ui/app-text";
 import { Alert, Pressable, ScrollView, StyleSheet, Text as NativeText, View } from "react-native";
 import { Bell, ChevronRight, CircleHelp, FileText, Moon, ShieldCheck, RotateCcw } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
