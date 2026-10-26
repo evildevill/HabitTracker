@@ -1,6 +1,6 @@
 import { AppText as Text } from "./";
 import { AppText as Text as NativeText } from "./";
-import { StyleSheet, Text as NativeText, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { color, colors, monoFont, roundedFont, typography } from "../../design/tokens";
 
 type ScreenHeadingProps = { eyebrow: string; title: string; subtitle: string; count?: string };
