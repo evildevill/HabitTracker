@@ -22,12 +22,16 @@ import { HabitsScreen } from "../features/habits/habits-screen";
 import { InsightsScreen } from "../features/insights/insights-screen";
 import { SettingsScreen } from "../features/settings/settings-screen";
 import { LegalScreen, type LegalDocument } from "../features/settings/legal-screen";
+import { NotificationPermissionScreen } from "../features/notifications/notification-permission-screen";
+import { NotificationSettingsScreen } from "../features/notifications/notification-settings-screen";
 import { TabBar, type TabKey } from "../navigation/tab-bar";
 
 export function AppShell() {
   const [activeTab, setActiveTab] = useState<TabKey>("today");
   const [habits, setHabits] = useState<Habit[]>([]);
   const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showNotificationOnboarding, setShowNotificationOnboarding] = useState(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
   const [legalDocument, setLegalDocument] = useState<LegalDocument | null>(null);
@@ -70,11 +74,16 @@ export function AppShell() {
             onComplete={(selectedHabits) => {
               setHabits(selectedHabits);
               setShowOnboarding(false);
+              setShowNotificationOnboarding(true);
               setActiveTab("today");
             }}
           />
+        ) : showNotificationOnboarding ? (
+          <NotificationPermissionScreen onFinish={() => setShowNotificationOnboarding(false)} />
         ) : legalDocument ? (
           <LegalScreen document={legalDocument} onBack={() => setLegalDocument(null)} />
+        ) : showNotificationSettings ? (
+          <NotificationSettingsScreen onBack={() => setShowNotificationSettings(false)} />
         ) : activeTab === "today" ? (
           <TodayScreen
             habits={habits}
@@ -92,15 +101,18 @@ export function AppShell() {
         ) : (
           <SettingsScreen
             onOpenLegal={setLegalDocument}
+            onOpenNotifications={() => setShowNotificationSettings(true)}
             onRestartOnboarding={() => {
               setHabits([]);
               setActiveTab("today");
               setLegalDocument(null);
+              setShowNotificationOnboarding(false);
+              setShowNotificationSettings(false);
               setShowOnboarding(true);
             }}
           />
         )}
-        {!showOnboarding && !legalDocument ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
+        {!showOnboarding && !showNotificationOnboarding && !showNotificationSettings && !legalDocument ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
       </SafeAreaView>
 
       <Modal

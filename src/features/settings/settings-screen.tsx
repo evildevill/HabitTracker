@@ -8,7 +8,6 @@ import { color, colors, surfaces } from "../../design/tokens";
 import type { LegalDocument } from "./legal-screen";
 
 const items = [
-  { icon: Bell, title: "Reminders", subtitle: "Choose when a habit nudges you", status: "SOON" },
   { icon: Moon, title: "Appearance", subtitle: "A calm interface for every day", status: "SOON" },
   { icon: ShieldCheck, title: "Your data", subtitle: "Private by design, no account needed", status: "INFO" },
   { icon: CircleHelp, title: "Help & feedback", subtitle: "Questions, ideas, and support", status: "SOON" },
@@ -17,9 +16,10 @@ const items = [
 type SettingsScreenProps = {
   onRestartOnboarding: () => void;
   onOpenLegal: (document: LegalDocument) => void;
+  onOpenNotifications: () => void;
 };
 
-export function SettingsScreen({ onRestartOnboarding, onOpenLegal }: SettingsScreenProps) {
+export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotifications }: SettingsScreenProps) {
   return (
     <AppBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
@@ -53,6 +53,20 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal }: SettingsScr
             );
           })}
         </View>
+
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Manage notifications"
+          onPress={onOpenNotifications}
+          style={({ pressed }) => [styles.notificationRow, pressed && styles.resetPressed]}
+        >
+          <View style={styles.settingIcon}><Bell size={18} color={colors.brand} strokeWidth={1.8} /></View>
+          <View style={styles.settingCopy}>
+            <Text style={styles.settingTitle}>Notifications</Text>
+            <Text style={styles.settingSubtitle}>Manage notification access and system settings</Text>
+          </View>
+          <ChevronRight size={16} color={color("secondary", 0.55)} />
+        </Pressable>
 
         <Text style={[styles.sectionLabel, styles.startOverLabel]}>LEGAL & PRIVACY</Text>
         <View style={styles.settingsList}>
@@ -140,6 +154,7 @@ const styles = StyleSheet.create({
   settingSubtitle: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
   statusPill: { paddingHorizontal: 7, paddingVertical: 5, borderRadius: 8, backgroundColor: color("sand", 0.28) },
   statusText: { color: colors.secondary, fontSize: 9, fontWeight: "700", letterSpacing: 0.3 },
+  notificationRow: { minHeight: 72, flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 12, paddingVertical: 12, borderRadius: 20, backgroundColor: color("paper", 0.92), borderWidth: 1, borderColor: surfaces.border, marginTop: 13 },
   resetRow: { minHeight: 72, flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 12, paddingVertical: 12, borderRadius: 20, backgroundColor: color("paper", 0.92), borderWidth: 1, borderColor: surfaces.border, marginBottom: 20 },
   resetIcon: { width: 39, height: 39, borderRadius: 13, backgroundColor: color("coral", 0.12), alignItems: "center", justifyContent: "center" },
   resetPressed: { opacity: 0.75, transform: [{ scale: 0.99 }] },
