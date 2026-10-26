@@ -1,3 +1,4 @@
+import { AppText as Text } from "../components/ui";
 import { useEffect, useState } from "react";
 import {
   Appearance,
@@ -8,7 +9,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
+  Text as NativeText,
   TextInput,
   View,
 } from "react-native";
