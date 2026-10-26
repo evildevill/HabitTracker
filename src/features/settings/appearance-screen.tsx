@@ -1,14 +1,13 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ArrowLeft, Check, ChevronRight, Monitor, Moon, Sun } from "lucide-react-native";
+import { ArrowLeft, Check, Moon, Sun } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { ScreenHeading } from "../../components/ui/screen-heading";
 import { color, colors, surfaces } from "../../design/tokens";
 
-export type AppearanceMode = "system" | "light" | "dark";
+export type AppearanceMode = "light" | "dark";
 type Props = { mode: AppearanceMode; onSelect: (mode: AppearanceMode) => void; onBack: () => void };
 
 const options: Array<{ id: AppearanceMode; title: string; subtitle: string; icon: typeof Sun }> = [
-  { id: "system", title: "System", subtitle: "Match your device appearance", icon: Monitor },
   { id: "light", title: "Light", subtitle: "Bright, calm, and clear", icon: Sun },
   { id: "dark", title: "Dark", subtitle: "A softer view for low light", icon: Moon },
 ];
@@ -47,8 +46,7 @@ export function AppearanceScreen({ mode, onSelect, onBack }: Props) {
         </View>
         <View style={styles.note}>
           <View style={styles.noteIcon}><Moon size={17} color={colors.brand} /></View>
-          <View style={styles.noteCopy}><Text style={styles.noteTitle}>A seamless change</Text><Text style={styles.noteBody}>Switching themes uses a soft expanding transition inspired by Noor Al-Qalb. Your choice is saved on this device.</Text></View>
-          <ChevronRight size={15} color={color("secondary", 0.5)} />
+          <View style={styles.noteCopy}><Text style={styles.noteTitle}>Your preference</Text><Text style={styles.noteBody}>Your appearance choice is saved on this device and stays selected when you reopen the app.</Text></View>
         </View>
       </ScrollView>
     </AppBackground>
