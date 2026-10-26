@@ -31,7 +31,15 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
     return { key: date.toISOString().slice(0, 10), label: range === 7 ? date.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 1) : date.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }), date };
   }), [range, start]);
 
-  const scopedEvents = completionEvents.filter((event) => event.at >= start && event.at < start + range * DAY_MS && event.completed);
+  const latestStateByHabitDay = new Map<string, HabitCompletionEvent>();
+  completionEvents
+    .filter((event) => event.at >= start && event.at < start + range * DAY_MS)
+    .sort((a, b) => a.at - b.at)
+    .forEach((event) => {
+      const key = event.habitId + ":" + new Date(event.at).toISOString().slice(0, 10);
+      latestStateByHabitDay.set(key, event);
+    });
+  const scopedEvents = Array.from(latestStateByHabitDay.values()).filter((event) => event.completed);
   const dayCounts = days.map((day) => scopedEvents.filter((event) => new Date(event.at).toISOString().slice(0, 10) === day.key).length);
   const completedToday = habits.filter((habit) => habit.completed).length;
   const todayPercent = habits.length ? Math.round((completedToday / habits.length) * 100) : 0;
