@@ -80,7 +80,7 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
         </View>
 
         <View style={styles.sectionHeader}>
-          <View><Text style={styles.sectionTitle}>Your patterns</Text><Text style={styles.sectionSubtitle}>Completion activity from this app session</Text></View>
+          <View><Text style={styles.sectionTitle}>Your patterns</Text><Text style={styles.sectionSubtitle}>Locally saved habit check-ins</Text></View>
         </View>
 
         <View style={styles.rangeControl} accessibilityLabel="Insight time range">
@@ -119,7 +119,7 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
             <View style={styles.emptyChart}>
               <View style={styles.emptyChartIcon}><TrendingUp size={21} color={colors.brand} /></View>
               <Text style={styles.emptyChartTitle}>Your chart starts with one check-in</Text>
-              <Text style={styles.emptyChartBody}>Mark a habit complete on Today. Your activity will appear here while this app session is open.</Text>
+              <Text style={styles.emptyChartBody}>Mark a habit complete on Today. Your activity will appear here as you complete habits. Check-ins are saved on this device.</Text>
             </View>
           )}
         </GlassCard>
@@ -155,7 +155,7 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
           )}
         </GlassCard>
 
-        <View style={styles.noteRow}><CircleCheck size={16} color={colors.brand} /><Text style={styles.noteText}>Insights use actual check-ins only. Historical streaks and long-term consistency need saved daily history, which this version doesn't yet store.</Text></View>
+        <View style={styles.noteRow}><CircleCheck size={16} color={colors.brand} /><Text style={styles.noteText}>Insights use actual check-ins saved on this device. Streaks and missed-day rates aren't shown because the app doesn't yet keep a complete daily record of every habit.</Text></View>
         <View style={styles.bottomSpacer} />
       </ScrollView>
     </AppBackground>
