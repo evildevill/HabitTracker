@@ -38,9 +38,9 @@ export function AppearanceScreen({ mode, onSelect, onBack }: Props) {
             const selected = mode === option.id;
             return (
               <Pressable key={option.id} accessibilityRole="radio" accessibilityState={{ selected }} onPress={() => onSelect(option.id)} style={({ pressed }) => [styles.option, selected && styles.optionSelected, pressed && styles.pressed]}>
-                <View style={[styles.optionIcon, selected && styles.optionIconSelected]}><Icon size={20} color={selected ? colors.paper : colors.brand} strokeWidth={1.8} /></View>
+                <View style={[styles.optionIcon, selected && styles.optionIconSelected]}><Icon size={20} color={selected ? colors.onStrong : colors.brand} strokeWidth={1.8} /></View>
                 <View style={styles.optionCopy}><Text style={styles.optionTitle}>{option.title}</Text><Text style={styles.optionSubtitle}>{option.subtitle}</Text></View>
-                <View style={[styles.radio, selected && styles.radioSelected]}>{selected ? <Check size={13} color={colors.paper} strokeWidth={3} /> : null}</View>
+                <View style={[styles.radio, selected && styles.radioSelected]}>{selected ? <Check size={13} color={colors.onStrong} strokeWidth={3} /> : null}</View>
               </Pressable>
             );
           })}
@@ -59,25 +59,25 @@ function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 34 },
   back: { flexDirection: "row", alignItems: "center", gap: 7, alignSelf: "flex-start", paddingVertical: 8, paddingRight: 14, marginBottom: 14 },
   backText: { color: colors.ink, fontSize: 12, fontWeight: "700" },
-  preview: { borderRadius: 25, backgroundColor: colors.brandDark, padding: 19, marginTop: 25, marginBottom: 29, overflow: "hidden" },
+  preview: { borderRadius: 25, backgroundColor: colors.strongSurface, padding: 19, marginTop: 25, marginBottom: 29, overflow: "hidden" },
   previewHeader: { flexDirection: "row", alignItems: "center", gap: 12 },
   previewMark: { width: 43, height: 43, borderRadius: 15, backgroundColor: color("paper", 0.12), alignItems: "center", justifyContent: "center" },
   previewDot: { width: 13, height: 13, borderRadius: 5, backgroundColor: colors.citrus, transform: [{ rotate: "45deg" }] },
   previewHeaderCopy: { flex: 1, gap: 4 },
   previewEyebrow: { color: color("paper", 0.62), fontSize: 9, fontWeight: "800", letterSpacing: 1 },
-  previewTitle: { color: colors.paper, fontSize: 23, fontWeight: "800", letterSpacing: -0.5 },
+  previewTitle: { color: colors.onStrong, fontSize: 23, fontWeight: "800", letterSpacing: -0.5 },
   previewSun: { width: 36, height: 36, borderRadius: 13, backgroundColor: color("paper", 0.12), alignItems: "center", justifyContent: "center" },
   previewProgress: { height: 6, borderRadius: 99, backgroundColor: color("paper", 0.17), overflow: "hidden", marginTop: 25 },
   previewProgressFill: { width: "50%", height: "100%", borderRadius: 99, backgroundColor: colors.citrus },
   previewFooter: { flexDirection: "row", justifyContent: "space-between", marginTop: 12 },
   previewFooterText: { color: color("paper", 0.65), fontSize: 9, fontWeight: "700", letterSpacing: 0.8 },
-  previewPercent: { color: colors.paper, fontSize: 10, fontWeight: "700" },
+  previewPercent: { color: colors.onStrong, fontSize: 10, fontWeight: "700" },
   sectionLabel: { color: colors.secondary, fontSize: 10, fontWeight: "800", letterSpacing: 0.9, marginBottom: 12 },
   options: { gap: 10 },
   option: { flexDirection: "row", alignItems: "center", gap: 12, padding: 13, borderRadius: 20, backgroundColor: color("paper", 0.9), borderWidth: 1, borderColor: surfaces.border, minHeight: 77 },
   optionSelected: { borderColor: color("brand", 0.65), backgroundColor: color("mint", 0.12) },
   optionIcon: { width: 43, height: 43, borderRadius: 14, backgroundColor: color("mint", 0.15), alignItems: "center", justifyContent: "center" },
-  optionIconSelected: { backgroundColor: colors.ink },
+  optionIconSelected: { backgroundColor: colors.strongSurface },
   optionCopy: { flex: 1, gap: 4 },
   optionTitle: { color: colors.ink, fontSize: 13, fontWeight: "800" },
   optionSubtitle: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
