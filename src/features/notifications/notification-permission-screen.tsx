@@ -1,7 +1,7 @@
 import { AppText as Text } from "../../components/ui";
 import { AppText as Text as NativeText } from "../../components/ui";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, Text as NativeText, View } from "react-native";
+import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { BellRing, CalendarCheck2, Check, ChevronRight, Clock3, ShieldCheck, Sparkles } from "lucide-react-native";
 import { color, colors, surfaces } from "../../design/tokens";
