@@ -8,7 +8,6 @@ import { color, colors, surfaces } from "../../design/tokens";
 import type { LegalDocument } from "./legal-screen";
 
 const items = [
-  { icon: Moon, title: "Appearance", subtitle: "A calm interface for every day", status: "SOON" },
   { icon: ShieldCheck, title: "Your data", subtitle: "Private by design, no account needed", status: "INFO" },
   { icon: CircleHelp, title: "Help & feedback", subtitle: "Questions, ideas, and support", status: "SOON" },
 ];
@@ -17,9 +16,10 @@ type SettingsScreenProps = {
   onRestartOnboarding: () => void;
   onOpenLegal: (document: LegalDocument) => void;
   onOpenNotifications: () => void;
+  onOpenAppearance: () => void;
 };
 
-export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotifications }: SettingsScreenProps) {
+export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotifications, onOpenAppearance }: SettingsScreenProps) {
   const styles = createStyles();
   return (
     <AppBackground>
@@ -39,6 +39,14 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
 
         <Text style={styles.sectionLabel}>YOUR PREFERENCES</Text>
         <View style={styles.settingsList}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Appearance settings" onPress={onOpenAppearance} style={({ pressed }) => [styles.settingRow, pressed && styles.resetPressed]}>
+            <View style={styles.settingIcon}><Moon size={18} color={colors.brand} strokeWidth={1.8} /></View>
+            <View style={styles.settingCopy}>
+              <Text style={styles.settingTitle}>Appearance</Text>
+              <Text style={styles.settingSubtitle}>Light, dark, or follow your system</Text>
+            </View>
+            <ChevronRight size={16} color={color("secondary", 0.55)} />
+          </Pressable>
           {items.map((item, index) => {
             const Icon = item.icon;
             return (
