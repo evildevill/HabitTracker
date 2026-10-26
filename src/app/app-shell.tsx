@@ -70,7 +70,7 @@ export function AppShell() {
   useEffect(() => {
     refreshPalette(isDark);
     setPaletteVersion((version) => version + 1);
-    Appearance.setColorScheme(appearanceMode === "system" ? "unspecified" : appearanceMode);
+    Appearance.setColorScheme(appearanceMode === "system" ? null : appearanceMode);
   }, [appearanceMode, isDark]);
 
   const changeAppearance = (next: AppearanceMode) => {
