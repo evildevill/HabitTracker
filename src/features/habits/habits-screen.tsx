@@ -14,6 +14,7 @@ type HabitsScreenProps = {
 };
 
 export function HabitsScreen({ habits, onToggleHabit, onAddHabit }: HabitsScreenProps) {
+  const styles = createStyles();
   const completed = habits.filter((habit) => habit.completed).length;
   const percent = habits.length === 0 ? 0 : Math.round((completed / habits.length) * 100);
 
@@ -78,7 +79,7 @@ export function HabitsScreen({ habits, onToggleHabit, onAddHabit }: HabitsScreen
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 18, paddingBottom: 28 },
   heading: { marginBottom: 24 },
   summaryCard: { padding: 18, borderRadius: 22, backgroundColor: color("paper", 0.94), borderWidth: 1, borderColor: surfaces.border, marginBottom: 29, gap: 12 },
@@ -97,11 +98,11 @@ const styles = StyleSheet.create({
   listCount: { color: colors.secondary, fontSize: 12, fontWeight: "600", paddingBottom: 2 },
   list: { gap: 9 },
   addButton: { minHeight: 76, marginTop: 15, paddingHorizontal: 13, paddingVertical: 12, borderRadius: 20, backgroundColor: color("mint", 0.1), borderWidth: 1, borderColor: color("brand", 0.15), flexDirection: "row", alignItems: "center", gap: 12 },
-  addIcon: { width: 43, height: 43, borderRadius: 14, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center" },
+  addIcon: { width: 43, height: 43, borderRadius: 14, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center" },
   addCopy: { flex: 1, gap: 4 },
   addTitle: { color: colors.ink, fontSize: 14, fontWeight: "700", letterSpacing: -0.15 },
   addSubtitle: { color: colors.secondary, fontSize: 11, lineHeight: 16 },
   addArrow: { width: 31, height: 31, borderRadius: 11, backgroundColor: color("paper", 0.85), alignItems: "center", justifyContent: "center" },
   pressed: { opacity: 0.78, transform: [{ scale: 0.99 }] },
   bottomSpacer: { height: 92 },
-});
+}); }

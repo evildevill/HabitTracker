@@ -9,6 +9,7 @@ import type { Habit } from "../habits/types";
 type InsightsScreenProps = { habits: Habit[] };
 
 export function InsightsScreen({ habits }: InsightsScreenProps) {
+  const styles = createStyles();
   const completed = habits.filter((habit) => habit.completed).length;
   const percent = habits.length === 0 ? 0 : Math.round((completed / habits.length) * 100);
 
@@ -45,7 +46,7 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
           <View style={styles.soonPill}><Text style={styles.soonText}>COMING LATER</Text></View>
         </View>
 
-        <GlassCard style={styles.futureCard} shadow={false}>
+        <GlassCard style={styles.futureCard}>
           <View style={styles.futureIcon}><Clock3 size={21} color={colors.brand} strokeWidth={1.8} /></View>
           <Text style={styles.futureTitle}>A clearer picture takes time</Text>
           <Text style={styles.futureBody}>Weekly consistency, streaks, and trends will become more useful as you build a longer history. For now, this view only shows today's check-ins—no made-up statistics.</Text>
@@ -60,18 +61,18 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 },
   heading: { marginBottom: 25 },
-  summaryCard: { borderRadius: 23, padding: 20, backgroundColor: colors.ink, marginBottom: 30, gap: 12 },
+  summaryCard: { borderRadius: 23, padding: 20, backgroundColor: colors.strongSurface, marginBottom: 30, gap: 12 },
   summaryTop: { flexDirection: "row", alignItems: "center", gap: 10 },
   summaryIcon: { width: 37, height: 37, borderRadius: 13, backgroundColor: color("paper", 0.1), alignItems: "center", justifyContent: "center" },
   summaryEyebrow: { color: colors.citrus, fontSize: 10, fontWeight: "700", letterSpacing: 0.7 },
-  summaryTitle: { color: colors.paper, fontSize: 23, fontWeight: "700", letterSpacing: -0.7, lineHeight: 29, marginTop: 3 },
+  summaryTitle: { color: colors.onStrong, fontSize: 23, fontWeight: "700", letterSpacing: -0.7, lineHeight: 29, marginTop: 3 },
   summaryBody: { color: color("paper", 0.72), fontSize: 12, lineHeight: 18 },
   statsRow: { flexDirection: "row", alignItems: "center", gap: 20, marginTop: 7 },
   statBlock: { gap: 4 },
-  statValue: { color: colors.paper, fontSize: 25, fontWeight: "700", letterSpacing: -0.6 },
+  statValue: { color: colors.onStrong, fontSize: 25, fontWeight: "700", letterSpacing: -0.6 },
   statMuted: { color: color("paper", 0.5), fontSize: 16, fontWeight: "600" },
   statLabel: { color: color("paper", 0.66), fontSize: 11 },
   statDivider: { width: 1, height: 38, backgroundColor: color("paper", 0.16) },
@@ -88,4 +89,4 @@ const styles = StyleSheet.create({
   futureFooter: { flexDirection: "row", alignItems: "center", gap: 8, borderTopWidth: 1, borderTopColor: surfaces.mutedBorder, paddingTop: 14, marginTop: 3 },
   futureFooterText: { color: colors.brand, fontSize: 11, fontWeight: "600" },
   bottomSpacer: { height: 92 },
-});
+}); }

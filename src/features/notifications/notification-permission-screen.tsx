@@ -8,6 +8,7 @@ import { getNotificationPermission, requestNotificationPermission } from "./noti
 type Props = { onFinish: () => void };
 
 export function NotificationPermissionScreen({ onFinish }: Props) {
+  const styles = createStyles();
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -46,7 +47,6 @@ export function NotificationPermissionScreen({ onFinish }: Props) {
 
   return (
     <View style={styles.root}>
-      <View pointerEvents="none" style={styles.wash} />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.topRow}>
           <View style={styles.brandMark}><Check size={19} color={colors.citrus} strokeWidth={3} /></View>
@@ -57,7 +57,7 @@ export function NotificationPermissionScreen({ onFinish }: Props) {
         <View style={styles.hero}>
           <View style={styles.orbitOuter} />
           <View style={styles.orbitInner} />
-          <View style={styles.bellBack}><BellRing size={42} color={colors.paper} strokeWidth={1.7} /></View>
+          <View style={styles.bellBack}><BellRing size={42} color={colors.onStrong} strokeWidth={1.7} /></View>
           <View style={styles.sparkleOne}><Sparkles size={19} color={colors.ink} strokeWidth={2} /></View>
           <View style={styles.sparkleTwo}><Check size={15} color={colors.ink} strokeWidth={3} /></View>
           <View style={styles.heroCaption}><Text style={styles.heroCaptionText}>A GENTLE NUDGE, WHEN IT MATTERS</Text></View>
@@ -100,19 +100,18 @@ export function NotificationPermissionScreen({ onFinish }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.canvas },
-  wash: { position: "absolute", top: -95, right: -90, width: 280, height: 280, borderRadius: 140, backgroundColor: color("mint", 0.18) },
   content: { paddingHorizontal: 24, paddingTop: 17, paddingBottom: 14, flexGrow: 1 },
   topRow: { flexDirection: "row", alignItems: "center", gap: 10 },
-  brandMark: { width: 34, height: 34, borderRadius: 11, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center" },
+  brandMark: { width: 34, height: 34, borderRadius: 11, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center" },
   brandName: { color: colors.ink, fontSize: 11, fontWeight: "900", letterSpacing: 1.3, flex: 1 },
   stepPill: { paddingHorizontal: 9, paddingVertical: 7, borderRadius: 9, backgroundColor: color("mint", 0.22) },
   stepText: { color: colors.brandDark, fontSize: 8, fontWeight: "800", letterSpacing: 0.7 },
   hero: { height: 210, marginTop: 13, marginBottom: 18, alignItems: "center", justifyContent: "center" },
   orbitOuter: { position: "absolute", width: 182, height: 182, borderRadius: 91, backgroundColor: color("citrus", 0.48), borderWidth: 1, borderColor: color("ink", 0.04) },
   orbitInner: { position: "absolute", width: 144, height: 144, borderRadius: 72, backgroundColor: color("mint", 0.4), borderWidth: 1, borderColor: color("paper", 0.7) },
-  bellBack: { width: 100, height: 100, borderRadius: 34, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-7deg" }], shadowColor: colors.ink, shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 6 },
+  bellBack: { width: 100, height: 100, borderRadius: 34, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-7deg" }] },
   sparkleOne: { position: "absolute", top: 37, right: "22%", width: 38, height: 38, borderRadius: 13, backgroundColor: colors.citrus, alignItems: "center", justifyContent: "center", transform: [{ rotate: "9deg" }] },
   sparkleTwo: { position: "absolute", bottom: 28, left: "22%", width: 31, height: 31, borderRadius: 11, backgroundColor: colors.paper, borderWidth: 1, borderColor: surfaces.border, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-9deg" }] },
   heroCaption: { position: "absolute", bottom: 0, backgroundColor: colors.paper, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 7, borderWidth: 1, borderColor: surfaces.border },
@@ -132,9 +131,9 @@ const styles = StyleSheet.create({
   footer: { paddingHorizontal: 24, paddingTop: 12, paddingBottom: 14, gap: 9, borderTopWidth: 1, borderTopColor: color("ink", 0.06), backgroundColor: color("canvas", 0.97) },
   skipButton: { height: 42, borderRadius: 14, alignItems: "center", justifyContent: "center" },
   skipText: { color: colors.secondary, fontSize: 13, fontWeight: "700" },
-  primaryButton: { height: 54, borderRadius: 17, backgroundColor: colors.ink, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 9 },
-  primaryText: { color: colors.paper, fontSize: 13, fontWeight: "700" },
+  primaryButton: { height: 54, borderRadius: 17, backgroundColor: colors.strongSurface, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 9 },
+  primaryText: { color: colors.onStrong, fontSize: 13, fontWeight: "700" },
   busy: { opacity: 0.75 },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
   footerHint: { color: color("secondary", 0.8), fontSize: 10, textAlign: "center" },
-});
+}); }

@@ -7,6 +7,7 @@ type BrandMarkProps = {
 };
 
 export function BrandMark({ size = geometry.brandMark }: BrandMarkProps) {
+  const styles = createStyles();
   return (
     <View
       accessibilityLabel="Habit Tracker"
@@ -37,11 +38,11 @@ export function BrandMark({ size = geometry.brandMark }: BrandMarkProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   mark: {
-    backgroundColor: colors.ink,
+    backgroundColor: colors.strongSurface,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
   },
-});
+}); }

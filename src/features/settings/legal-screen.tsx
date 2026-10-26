@@ -105,6 +105,7 @@ const termsSections: LegalSection[] = [
 ];
 
 function LegalSectionView({ section, index }: { section: LegalSection; index: number }) {
+  const styles = createStyles();
   return (
     <View style={styles.section} key={section.title}>
       <View style={styles.sectionHeading}>
@@ -125,6 +126,7 @@ function LegalSectionView({ section, index }: { section: LegalSection; index: nu
 }
 
 export function LegalScreen({ document, onBack }: LegalScreenProps) {
+  const styles = createStyles();
   const isPrivacy = document === "privacy";
   const sections = isPrivacy ? privacySections : termsSections;
   const Icon = isPrivacy ? LockKeyhole : Scale;
@@ -196,7 +198,7 @@ export function LegalScreen({ document, onBack }: LegalScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   root: { flex: 1 },
   topBar: { minHeight: 52, flexDirection: "row", alignItems: "center", paddingHorizontal: 20, gap: 12 },
   backButton: { width: 40, height: 40, borderRadius: 14, backgroundColor: color("paper", 0.94), borderWidth: 1, borderColor: surfaces.border, alignItems: "center", justifyContent: "center" },
@@ -204,14 +206,14 @@ const styles = StyleSheet.create({
   topLabel: { color: colors.secondary, fontFamily: monoFont, fontSize: 10, fontWeight: "700", letterSpacing: 1.1 },
   topSpacer: { flex: 1 },
   content: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 28 },
-  heroCard: { borderRadius: 26, padding: 21, backgroundColor: colors.ink, marginBottom: 16 },
+  heroCard: { borderRadius: 26, padding: 21, backgroundColor: colors.strongSurface, marginBottom: 16 },
   heroIcon: { width: 46, height: 46, borderRadius: 16, backgroundColor: color("mint", 0.16), alignItems: "center", justifyContent: "center", marginBottom: 19 },
   eyebrow: { color: colors.citrus, fontFamily: monoFont, fontSize: 9, fontWeight: "700", letterSpacing: 1.15, marginBottom: 9 },
-  title: { color: colors.paper, fontFamily: roundedFont, fontSize: 31, fontWeight: "700", letterSpacing: -0.8, marginBottom: 10 },
+  title: { color: colors.onStrong, fontFamily: roundedFont, fontSize: 31, fontWeight: "700", letterSpacing: -0.8, marginBottom: 10 },
   intro: { color: color("paper", 0.78), fontSize: 13, lineHeight: 20 },
   metaRow: { borderTopWidth: 1, borderTopColor: color("paper", 0.14), marginTop: 20, paddingTop: 14, flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   metaText: { color: color("paper", 0.55), fontFamily: monoFont, fontSize: 9, fontWeight: "700", letterSpacing: 0.8 },
-  metaDate: { color: colors.paper, fontSize: 11, fontWeight: "600" },
+  metaDate: { color: colors.onStrong, fontSize: 11, fontWeight: "600" },
   promiseCard: { flexDirection: "row", alignItems: "flex-start", gap: 11, borderRadius: 19, padding: 16, backgroundColor: color("mint", 0.14), borderWidth: 1, borderColor: color("brand", 0.12), marginBottom: 24 },
   promiseCopy: { flex: 1, gap: 5 },
   promiseTitle: { color: colors.ink, fontSize: 13, fontWeight: "700" },
@@ -232,4 +234,4 @@ const styles = StyleSheet.create({
   email: { color: colors.brand, fontSize: 12, lineHeight: 23, fontWeight: "600" },
   footer: { color: color("secondary", 0.75), textAlign: "center", fontFamily: monoFont, fontSize: 9, fontWeight: "700", letterSpacing: 0.9, marginTop: 22 },
   bottomSpacer: { height: 34 },
-});
+}); }

@@ -25,6 +25,7 @@ type TabBarProps = {
 };
 
 export function TabBar({ activeTab, onSelect }: TabBarProps) {
+  const styles = createStyles();
   return (
     <View style={styles.positioner}>
       <View style={styles.dock}>
@@ -50,7 +51,7 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
             >
               <Icon
                 size={18}
-                color={selected ? colors.paper : colors.secondary}
+                color={selected ? colors.onStrong : colors.secondary}
                 strokeWidth={1.8}
               />
               {selected ? <Text style={styles.selectedLabel}>{tab.label}</Text> : null}
@@ -62,7 +63,7 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   positioner: {
     position: "absolute",
     left: 0,
@@ -80,11 +81,6 @@ const styles = StyleSheet.create({
     backgroundColor: color("paper", 0.94),
     borderWidth: 1,
     borderColor: surfaces.border,
-    shadowColor: colors.ink,
-    shadowOpacity: 0.09,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 8,
   },
   tab: {
     height: geometry.tabHeight,
@@ -96,10 +92,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   selectedTab: {
-    backgroundColor: colors.brandDark,
+    backgroundColor: colors.strongSurface,
   },
   selectedLabel: {
-    color: colors.paper,
+    color: colors.onStrong,
     fontSize: 12,
     fontWeight: "600",
     fontFamily: roundedFont,
@@ -108,4 +104,4 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     transform: [{ scale: 0.975 }],
   },
-});
+}); }

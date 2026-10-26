@@ -8,7 +8,6 @@ import { color, colors, surfaces } from "../../design/tokens";
 import type { LegalDocument } from "./legal-screen";
 
 const items = [
-  { icon: Moon, title: "Appearance", subtitle: "A calm interface for every day", status: "SOON" },
   { icon: ShieldCheck, title: "Your data", subtitle: "Private by design, no account needed", status: "INFO" },
   { icon: CircleHelp, title: "Help & feedback", subtitle: "Questions, ideas, and support", status: "SOON" },
 ];
@@ -17,9 +16,11 @@ type SettingsScreenProps = {
   onRestartOnboarding: () => void;
   onOpenLegal: (document: LegalDocument) => void;
   onOpenNotifications: () => void;
+  onOpenAppearance: () => void;
 };
 
-export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotifications }: SettingsScreenProps) {
+export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotifications, onOpenAppearance }: SettingsScreenProps) {
+  const styles = createStyles();
   return (
     <AppBackground>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
@@ -38,6 +39,14 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
 
         <Text style={styles.sectionLabel}>YOUR PREFERENCES</Text>
         <View style={styles.settingsList}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Appearance settings" onPress={onOpenAppearance} style={({ pressed }) => [styles.settingRow, pressed && styles.resetPressed]}>
+            <View style={styles.settingIcon}><Moon size={18} color={colors.brand} strokeWidth={1.8} /></View>
+            <View style={styles.settingCopy}>
+              <Text style={styles.settingTitle}>Appearance</Text>
+              <Text style={styles.settingSubtitle}>Light, dark, or follow your system</Text>
+            </View>
+            <ChevronRight size={16} color={color("secondary", 0.55)} />
+          </Pressable>
           {items.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -119,7 +128,7 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
           <ChevronRight size={16} color={color("secondary", 0.55)} />
         </Pressable>
 
-        <GlassCard style={styles.noteCard} shadow={false}>
+        <GlassCard style={styles.noteCard}>
           <View style={styles.noteIcon}><ShieldCheck size={18} color={colors.brand} strokeWidth={1.8} /></View>
           <View style={styles.noteCopy}>
             <Text style={styles.noteTitle}>Your routine belongs to you.</Text>
@@ -133,13 +142,13 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 },
   heading: { marginBottom: 25 },
-  profileCard: { flexDirection: "row", alignItems: "center", gap: 13, padding: 16, borderRadius: 22, backgroundColor: colors.ink, marginBottom: 30 },
+  profileCard: { flexDirection: "row", alignItems: "center", gap: 13, padding: 16, borderRadius: 22, backgroundColor: colors.strongSurface, marginBottom: 30 },
   profileMark: { borderRadius: 16, padding: 5, backgroundColor: color("paper", 0.1) },
   profileCopy: { flex: 1, gap: 4 },
-  profileTitle: { color: colors.paper, fontSize: 15, fontWeight: "700", letterSpacing: -0.2 },
+  profileTitle: { color: colors.onStrong, fontSize: 15, fontWeight: "700", letterSpacing: -0.2 },
   profileSubtitle: { color: color("paper", 0.65), fontSize: 11 },
   versionPill: { backgroundColor: color("paper", 0.1), borderRadius: 999, paddingHorizontal: 9, paddingVertical: 6 },
   versionText: { color: colors.citrus, fontSize: 10, fontWeight: "700" },
@@ -165,4 +174,4 @@ const styles = StyleSheet.create({
   noteBody: { color: colors.secondary, fontSize: 11, lineHeight: 17 },
   footer: { textAlign: "center", color: color("secondary", 0.75), fontSize: 9, fontWeight: "700", letterSpacing: 0.7, marginTop: 25 },
   bottomSpacer: { height: 92 },
-});
+}); }

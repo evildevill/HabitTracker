@@ -9,6 +9,7 @@ import type { Habit } from "./types";
 type TodayScreenProps = { habits: Habit[]; onToggleHabit: (id: string) => void; onViewAll: () => void };
 
 export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenProps) {
+  const styles = createStyles();
   const completed = habits.filter((habit) => habit.completed).length;
   const total = habits.length;
   const progress = total === 0 ? 0 : completed / total;
@@ -80,7 +81,7 @@ export function TodayScreen({ habits, onToggleHabit, onViewAll }: TodayScreenPro
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 22, paddingTop: 12, paddingBottom: 30 },
   topLine: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 26 },
   wordmark: { flexDirection: "row", alignItems: "center", gap: 8 },
@@ -91,20 +92,20 @@ const styles = StyleSheet.create({
   dateNumber: { color: colors.ink, fontSize: 12, fontWeight: "700" },
   heading: { marginBottom: 21, gap: 3 },
   greeting: { color: colors.secondary, fontSize: 13, fontWeight: "500" },
-  hero: { backgroundColor: colors.brandDark, borderRadius: 25, padding: 20, marginBottom: 31, overflow: "hidden" },
+  hero: { backgroundColor: colors.strongSurface, borderRadius: 25, padding: 20, marginBottom: 31, overflow: "hidden" },
   heroTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 20 },
   heroCopy: { flex: 1, gap: 7 },
   heroEyebrow: { color: color("paper", 0.68), fontSize: 9, fontWeight: "700", letterSpacing: 1.3 },
-  heroTitle: { color: colors.paper, fontSize: 24, fontWeight: "800", letterSpacing: -0.8, lineHeight: 29 },
+  heroTitle: { color: colors.onStrong, fontSize: 24, fontWeight: "800", letterSpacing: -0.8, lineHeight: 29 },
   heroSubtitle: { color: color("paper", 0.72), fontSize: 12, lineHeight: 17 },
   ring: { width: 79, height: 79, borderRadius: 40, borderWidth: 1.5, borderColor: color("paper", 0.27), backgroundColor: color("paper", 0.07), alignItems: "center", justifyContent: "center" },
-  ringPercent: { color: colors.paper, fontSize: 23, fontWeight: "800", letterSpacing: -1 },
+  ringPercent: { color: colors.onStrong, fontSize: 23, fontWeight: "800", letterSpacing: -1 },
   ringUnit: { fontSize: 12, fontWeight: "600" },
   ringLabel: { color: color("paper", 0.64), fontSize: 8, fontWeight: "700", letterSpacing: 1 },
   progressTrack: { height: 5, backgroundColor: color("paper", 0.16), borderRadius: 8, overflow: "hidden" },
   progressFill: { height: 5, backgroundColor: color("sand"), borderRadius: 8 },
   heroBottom: { marginTop: 13, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 },
-  heroCount: { color: colors.paper, fontSize: 14, fontWeight: "800" },
+  heroCount: { color: colors.onStrong, fontSize: 14, fontWeight: "800" },
   heroMuted: { color: color("paper", 0.63), fontSize: 11, fontWeight: "500" },
   heroFootnote: { color: color("paper", 0.58), fontSize: 8, fontWeight: "700", letterSpacing: 0.7 },
   heroOrb: { position: "absolute", width: 140, height: 140, borderRadius: 70, right: -76, top: -80, borderWidth: 1, borderColor: color("paper", 0.09) },
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   emptyTitle: { color: colors.ink, fontSize: 17, fontWeight: "700", textAlign: "center", letterSpacing: -0.4 },
   emptyBody: { color: colors.secondary, fontSize: 12, lineHeight: 18, textAlign: "center" },
   emptyButton: { backgroundColor: colors.brand, borderRadius: 12, minHeight: 42, paddingHorizontal: 17, alignItems: "center", justifyContent: "center", marginTop: 4 },
-  emptyButtonText: { color: colors.paper, fontSize: 12, fontWeight: "700" },
+  emptyButtonText: { color: colors.onStrong, fontSize: 12, fontWeight: "700" },
   more: { alignItems: "center", paddingVertical: 14 },
   moreText: { color: colors.brand, fontSize: 12, fontWeight: "700" },
   note: { flexDirection: "row", alignItems: "center", gap: 11, borderTopWidth: 1, borderTopColor: surfaces.mutedBorder, marginTop: 23, paddingTop: 17 },
@@ -133,4 +134,4 @@ const styles = StyleSheet.create({
   noteTitle: { color: colors.ink, fontSize: 11, fontWeight: "700" },
   noteBody: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
   bottomSpacer: { height: 88 },
-});
+}); }

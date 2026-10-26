@@ -9,6 +9,7 @@ import { getNotificationPermission, requestNotificationPermission } from "./noti
 type Props = { onBack: () => void };
 
 export function NotificationSettingsScreen({ onBack }: Props) {
+  const styles = createStyles();
   const [granted, setGranted] = useState(false);
   const [canAskAgain, setCanAskAgain] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -96,14 +97,14 @@ export function NotificationSettingsScreen({ onBack }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 28 },
   back: { flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start", paddingVertical: 8, paddingRight: 14, marginBottom: 13 },
   backText: { color: colors.ink, fontSize: 12, fontWeight: "700" },
-  heroCard: { flexDirection: "row", gap: 13, padding: 17, borderRadius: 22, backgroundColor: colors.ink, marginTop: 23, marginBottom: 27 },
+  heroCard: { flexDirection: "row", gap: 13, padding: 17, borderRadius: 22, backgroundColor: colors.strongSurface, marginTop: 23, marginBottom: 27 },
   heroIcon: { width: 47, height: 47, borderRadius: 16, backgroundColor: color("paper", 0.12), alignItems: "center", justifyContent: "center" },
   heroCopy: { flex: 1, gap: 5 },
-  heroTitle: { color: colors.paper, fontSize: 14, fontWeight: "800" },
+  heroTitle: { color: colors.onStrong, fontSize: 14, fontWeight: "800" },
   heroBody: { color: color("paper", 0.72), fontSize: 11, lineHeight: 17 },
   sectionLabel: { color: colors.secondary, fontSize: 10, fontWeight: "800", letterSpacing: 0.8, marginBottom: 11 },
   statusCard: { flexDirection: "row", alignItems: "center", gap: 11, padding: 13, borderRadius: 21, backgroundColor: color("paper", 0.92), borderWidth: 1, borderColor: surfaces.border, marginBottom: 13 },
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   statusPillText: { color: colors.secondary, fontSize: 9, fontWeight: "800", letterSpacing: 0.4 },
   statusPillTextOn: { color: colors.brandDark },
   action: { flexDirection: "row", alignItems: "center", gap: 11, padding: 14, borderRadius: 20, backgroundColor: colors.paper, borderWidth: 1, borderColor: surfaces.border },
-  actionIcon: { width: 39, height: 39, borderRadius: 13, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center" },
+  actionIcon: { width: 39, height: 39, borderRadius: 13, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center" },
   actionCopy: { flex: 1, gap: 4 },
   actionTitle: { color: colors.ink, fontSize: 12, fontWeight: "700" },
   actionBody: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
@@ -130,4 +131,4 @@ const styles = StyleSheet.create({
   infoFootText: { color: colors.brandDark, fontSize: 10, fontWeight: "700" },
   pressed: { opacity: 0.8, transform: [{ scale: 0.99 }] },
   bottomSpacer: { height: 92 },
-});
+}); }
