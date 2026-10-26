@@ -81,11 +81,6 @@ function createStyles() { return StyleSheet.create({
     backgroundColor: color("paper", 0.94),
     borderWidth: 1,
     borderColor: surfaces.border,
-    shadowColor: colors.ink,
-    shadowOpacity: 0.09,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 8,
   },
   tab: {
     height: geometry.tabHeight,
