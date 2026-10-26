@@ -1,5 +1,5 @@
 import { AppText as Text } from "../../components/ui/app-text";
-import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Bell, ChevronRight, CircleHelp, FileText, Moon, ShieldCheck, RotateCcw } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { BrandMark } from "../../components/ui/brand-mark";
@@ -50,16 +50,38 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
           </Pressable>
           {items.map((item, index) => {
             const Icon = item.icon;
+            const isData = item.title === "Your data";
             return (
-              <View key={item.title} style={[styles.settingRow, index === items.length - 1 && styles.lastSettingRow]}>
+              <Pressable
+                key={item.title}
+                accessibilityRole="button"
+                accessibilityLabel={item.title}
+                onPress={() => {
+                  if (isData) {
+                    Alert.alert(
+                      "Your data stays yours",
+                      "Habit check-ins currently stay in the active app session and are cleared when you restart onboarding. Your appearance preference is saved on this device. No account is required.",
+                      [{ text: "Got it", style: "default" }],
+                    );
+                    return;
+                  }
+                  void Linking.openURL("mailto:support@hackerwasii.com?subject=Habit%20Tracker%20Help%20%26%20Feedback").catch(() => {
+                    Alert.alert("Can't open email", "Please email support@hackerwasii.com from your preferred mail app.");
+                  });
+                }}
+                style={({ pressed }) => [
+                  styles.settingRow,
+                  index === items.length - 1 && styles.lastSettingRow,
+                  pressed && styles.resetPressed,
+                ]}
+              >
                 <View style={styles.settingIcon}><Icon size={18} color={colors.brand} strokeWidth={1.8} /></View>
                 <View style={styles.settingCopy}>
                   <Text style={styles.settingTitle}>{item.title}</Text>
                   <Text style={styles.settingSubtitle}>{item.subtitle}</Text>
                 </View>
-                <View style={styles.statusPill}><Text style={styles.statusText}>{item.status}</Text></View>
                 <ChevronRight size={16} color={color("secondary", 0.55)} />
-              </View>
+              </Pressable>
             );
           })}
         </View>
