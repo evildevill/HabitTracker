@@ -47,7 +47,6 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
   const completedInRange = scopedEvents.length;
   const activeDays = new Set(scopedEvents.map((event) => localDayKey(new Date(event.at)))).size;
   const bestDayCount = Math.max(0, ...dayCounts);
-  const mostConsistentHabit = habits.map((habit) => ({ ...habit, count: scopedEvents.filter((event) => event.habitId === habit.id).length })).sort((a, b) => b.count - a.count)[0];
   const hasHistory = scopedEvents.length > 0;
   const habitCounts = habits.map((habit) => ({
     id: habit.id,
@@ -203,8 +202,8 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
           </View>
           {strongestHabit && strongestHabit.count > 0 ? (
             <>
-              <View style={styles.strongestRow}><Text style={styles.strongestName}>{strongestHabit.title}</Text><Text style={styles.strongestCount}>{strongestHabit.count} check-in{mostConsistentHabit.count === 1 ? "" : "s"}</Text></View>
-              <View style={styles.trackLight}><View style={[styles.fillLight, { width: Math.max(4, (mostConsistentHabit.count / Math.max(1, completedInRange)) * 100) + "%" }]} /></View>
+              <View style={styles.strongestRow}><Text style={styles.strongestName}>{strongestHabit.title}</Text><Text style={styles.strongestCount}>{strongestHabit.count} check-in{strongestHabit.count === 1 ? "" : "s"}</Text></View>
+              <View style={styles.trackLight}><View style={[styles.fillLight, { width: Math.max(4, (strongestHabit.count / Math.max(1, completedInRange)) * 100) + "%" }]} /></View>
               <Text style={styles.patternFootnote}>This is your most frequently completed habit in the selected range—not a long-term streak.</Text>
             </>
           ) : (
