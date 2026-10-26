@@ -27,6 +27,7 @@ import { NotificationSettingsScreen } from "../features/notifications/notificati
 import { TabBar, type TabKey } from "../navigation/tab-bar";
 
 export function AppShell() {
+  const styles = createStyles();
   const [activeTab, setActiveTab] = useState<TabKey>("today");
   const [habits, setHabits] = useState<Habit[]>([]);
   const [showOnboarding, setShowOnboarding] = useState(true);
@@ -197,7 +198,7 @@ export function AppShell() {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.canvas,
@@ -325,4 +326,4 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.8,
   },
-});
+}); }
