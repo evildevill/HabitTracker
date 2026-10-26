@@ -9,6 +9,7 @@ type GlassCardProps = {
 };
 
 export function GlassCard({ children, style, shadow = true }: GlassCardProps) {
+  const styles = createStyles();
   return (
     <View style={[styles.card, shadow ? styles.shadow : styles.noShadow, style]}>
       {children}
@@ -16,7 +17,7 @@ export function GlassCard({ children, style, shadow = true }: GlassCardProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   card: {
     borderRadius: geometry.glassCardRadius,
     backgroundColor: surfaces.card,
@@ -37,4 +38,4 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     elevation: 0,
   },
-});
+}); }
