@@ -40,7 +40,7 @@ export function BrandMark({ size = geometry.brandMark }: BrandMarkProps) {
 
 function createStyles() { return StyleSheet.create({
   mark: {
-    backgroundColor: colors.ink,
+    backgroundColor: colors.strongSurface,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
