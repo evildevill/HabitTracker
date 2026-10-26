@@ -1,4 +1,4 @@
-import { AppText as Text } from "../components/ui";
+import { AppText as Text } from "../components/ui/app-text";
 import { useEffect, useState } from "react";
 import {
   Appearance,
