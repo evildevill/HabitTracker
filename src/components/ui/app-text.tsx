@@ -7,7 +7,7 @@ export function AppText({ style, ...props }: AppTextProps) {
   return (
     <NativeText
       {...props}
-      style={[{ fontFamily: "SuperWaffles" }, style]}
+      style={[style, { fontFamily: "SuperWaffles" }]}
     />
   );
 }
