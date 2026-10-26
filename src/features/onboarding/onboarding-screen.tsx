@@ -1,4 +1,4 @@
-import { AppText as Text } from "../../components/ui";
+import { AppText as Text } from "../../components/ui/app-text";
 import { useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Animated, PanResponder, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
