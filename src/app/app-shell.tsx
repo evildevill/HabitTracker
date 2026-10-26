@@ -9,7 +9,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text as NativeText,
   TextInput,
   View,
 } from "react-native";
