@@ -8,7 +8,6 @@ import {
   Easing,
   Platform,
   StyleSheet,
-  Text as NativeText,
   View,
 } from "react-native";
 import { CalendarCheck2, CheckCircle2, Flame } from "lucide-react-native";
