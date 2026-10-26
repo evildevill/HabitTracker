@@ -41,7 +41,8 @@
           }
         }
       ],
-      "expo-notifications"
+      "expo-notifications",
+      "expo-system-ui"
     ]
   }
 }
