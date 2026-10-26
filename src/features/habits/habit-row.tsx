@@ -1,5 +1,4 @@
 import { AppText as Text } from "../../components/ui/app-text";
-import { AppText as Text as NativeText } from "../../components/ui";
 import { Pressable, StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { BookOpen, Check, Droplets, Dumbbell, Footprints, Moon } from "lucide-react-native";
