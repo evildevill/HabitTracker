@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  Animated,
+  Appearance,
+  Dimensions,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -10,11 +13,13 @@ import {
   Text,
   TextInput,
   View,
+  useColorScheme,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { X } from "lucide-react-native";
-import { colors, monoFont, surfaces } from "../design/tokens";
+import { colors, monoFont, refreshPalette, surfaces } from "../design/tokens";
 import type { Habit } from "../features/habits/types";
 import { OnboardingScreen } from "../features/onboarding/onboarding-screen";
 import { TodayScreen } from "../features/habits/today-screen";
@@ -24,6 +29,7 @@ import { SettingsScreen } from "../features/settings/settings-screen";
 import { LegalScreen, type LegalDocument } from "../features/settings/legal-screen";
 import { NotificationPermissionScreen } from "../features/notifications/notification-permission-screen";
 import { NotificationSettingsScreen } from "../features/notifications/notification-settings-screen";
+import { AppearanceScreen, type AppearanceMode } from "../features/settings/appearance-screen";
 import { TabBar, type TabKey } from "../navigation/tab-bar";
 
 export function AppShell() {
@@ -32,12 +38,12 @@ export function AppShell() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [showNotificationOnboarding, setShowNotificationOnboarding] = useState(false);
-  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);\n  const [showAppearanceSettings, setShowAppearanceSettings] = useState(false);\n  const [appearanceMode, setAppearanceMode] = useState<AppearanceMode>("system");\n  const systemScheme = useColorScheme();\n  const [transitioning, setTransitioning] = useState(false);\n  const [transitionDark, setTransitionDark] = useState(false);\n  const [transitionOpacity, setTransitionOpacity] = useState(new Animated.Value(1));\n  const transitionScale = useRef(new Animated.Value(0.001)).current;\n  const transitionFade = useRef(new Animated.Value(1)).current;\n  const reduceMotion = useRef(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
   const [legalDocument, setLegalDocument] = useState<LegalDocument | null>(null);
 
-  const toggleHabit = (id: string) => {
+  const isDark = appearanceMode === "system" ? systemScheme === "dark" : appearanceMode === "dark";\n\n  useEffect(() => {\n    let active = true;\n    AsyncStorage.getItem("habit-tracker.appearance").then((saved) => {\n      if (!active) return;\n      if (saved === "light" || saved === "dark" || saved === "system") setAppearanceMode(saved);\n    }).catch(() => undefined);\n    return () => { active = false; };\n  }, []);\n\n  useEffect(() => {\n    refreshPalette(isDark);\n    Appearance.setColorScheme(appearanceMode === "system" ? "unspecified" : appearanceMode);\n  }, [appearanceMode, isDark]);\n\n  const changeAppearance = (next: AppearanceMode) => {\n    if (next === appearanceMode) { setShowAppearanceSettings(false); return; }\n    const nextDark = next === "system" ? systemScheme === "dark" : next === "dark";\n    void Haptics.selectionAsync().catch(() => undefined);\n    setTransitionDark(nextDark);\n    if (reduceMotion.current) {\n      setAppearanceMode(next);\n      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);\n      setShowAppearanceSettings(false);\n      return;\n    }\n    setTransitioning(true);\n    transitionScale.setValue(0.001);\n    transitionFade.setValue(1);\n    const { width, height } = Dimensions.get("window");\n    const reach = Math.sqrt(width * width + height * height) * 1.2;\n    Animated.timing(transitionScale, { toValue: reach / 110, duration: 760, useNativeDriver: true }).start(({ finished }) => {\n      if (!finished) return;\n      setAppearanceMode(next);\n      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);\n      setShowAppearanceSettings(false);\n      Animated.timing(transitionFade, { toValue: 0, duration: 240, useNativeDriver: true }).start(() => setTransitioning(false));\n    });\n  };\n\n  const toggleHabit = (id: string) => {
     setHabits((current) =>
       current.map((habit) =>
         habit.id === id ? { ...habit, completed: !habit.completed } : habit
@@ -68,7 +74,7 @@ export function AppShell() {
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       <SafeAreaView style={styles.safeArea}>
         {showOnboarding ? (
           <OnboardingScreen
@@ -83,7 +89,7 @@ export function AppShell() {
           <NotificationPermissionScreen onFinish={() => setShowNotificationOnboarding(false)} />
         ) : legalDocument ? (
           <LegalScreen document={legalDocument} onBack={() => setLegalDocument(null)} />
-        ) : showNotificationSettings ? (
+        ) : showAppearanceSettings ? (\n          <AppearanceScreen mode={appearanceMode} onSelect={changeAppearance} onBack={() => setShowAppearanceSettings(false)} />\n        ) : showNotificationSettings ? (
           <NotificationSettingsScreen onBack={() => setShowNotificationSettings(false)} />
         ) : activeTab === "today" ? (
           <TodayScreen
@@ -102,7 +108,7 @@ export function AppShell() {
         ) : (
           <SettingsScreen
             onOpenLegal={setLegalDocument}
-            onOpenNotifications={() => setShowNotificationSettings(true)}
+            onOpenNotifications={() => setShowNotificationSettings(true)}\n            onOpenAppearance={() => setShowAppearanceSettings(true)}
             onRestartOnboarding={() => {
               setHabits([]);
               setActiveTab("today");
@@ -113,7 +119,7 @@ export function AppShell() {
             }}
           />
         )}
-        {!showOnboarding && !showNotificationOnboarding && !showNotificationSettings && !legalDocument ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
+        {!showOnboarding && !showNotificationOnboarding && !showNotificationSettings && !showAppearanceSettings && !legalDocument ? <TabBar activeTab={activeTab} onSelect={setActiveTab} /> : null}
       </SafeAreaView>
 
       <Modal
