@@ -153,8 +153,7 @@ export function OnboardingScreen({ onComplete }: OnboardingProps) {
         ) : (
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
             <Animated.View style={[styles.finishArt, { transform: [{ scale: artScale }] }]}>
-              <View style={styles.finishHalo} />
-              <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{new Set(PRESETS.filter((preset) => selected.includes(preset.id)).flatMap((preset) => preset.habits.map((habit) => habit.title.trim().toLowerCase()))).size}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
+                  <View style={styles.finishCard}><Text style={styles.finishEyebrow}>YOUR FIRST DAY</Text><Text style={styles.finishBig}>{new Set(PRESETS.filter((preset) => selected.includes(preset.id)).flatMap((preset) => preset.habits.map((habit) => habit.title.trim().toLowerCase()))).size}</Text><Text style={styles.finishCaption}>little habits to begin with</Text><View style={styles.finishDivider} />{PRESETS.filter((preset) => selected.includes(preset.id)).map((preset) => <View key={preset.id} style={styles.finishPreset}><View style={[styles.finishDot, { backgroundColor: colors[preset.accent] }]} /><Text style={styles.finishPresetName}>{preset.title}</Text><Text style={styles.finishPresetCount}>{preset.habits.length}</Text></View>)}</View>
             </Animated.View>
             <Text style={styles.kicker}>NOT A NEW YOU. JUST A NEXT STEP.</Text>
             <Text accessibilityRole="header" style={styles.title}>Your routine, your pace.</Text>
@@ -218,7 +217,6 @@ function createStyles() { return StyleSheet.create({
   selectorActive: { backgroundColor: colors.brand, borderColor: colors.brand },
   selectionHint: { color: colors.secondary, fontSize: 10, marginTop: 15, textAlign: "center" },
   finishArt: { height: 285, alignItems: "center", justifyContent: "center", marginBottom: 17 },
-  finishHalo: { position: "absolute", width: 245, height: 245, borderRadius: 123, backgroundColor: color("mint", 0.24) },
   finishCard: { width: "90%", borderRadius: 23, backgroundColor: colors.paper, padding: 20, borderWidth: 1, borderColor: surfaces.border },
   finishEyebrow: { color: colors.brand, fontSize: 8, fontWeight: "800", letterSpacing: 1.4 },
   finishBig: { color: colors.ink, fontSize: 51, lineHeight: 58, fontWeight: "800", letterSpacing: -2 },
