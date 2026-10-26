@@ -90,15 +90,17 @@ export function AppShell() {
     transitionFade.setValue(1);
     const { width, height } = Dimensions.get("window");
     const reach = Math.sqrt(width * width + height * height) * 1.2;
-    Animated.parallel([
-      Animated.timing(transitionScale, { toValue: reach / 50, duration: 760, useNativeDriver: true }),
-      Animated.timing(transitionParticles, { toValue: 1, duration: 760, useNativeDriver: true }),
-    ]).start(({ finished }) => {
-      if (!finished) return;
-      setAppearanceMode(next);
-      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
-      setShowAppearanceSettings(false);
-      Animated.timing(transitionFade, { toValue: 0, duration: 240, useNativeDriver: true }).start(() => setTransitioning(false));
+    requestAnimationFrame(() => {
+      Animated.parallel([
+        Animated.timing(transitionScale, { toValue: reach / 50, duration: 420, useNativeDriver: true }),
+        Animated.timing(transitionParticles, { toValue: 1, duration: 420, useNativeDriver: true }),
+      ]).start(({ finished }) => {
+        if (!finished) return;
+        setAppearanceMode(next);
+        void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
+        setShowAppearanceSettings(false);
+        Animated.timing(transitionFade, { toValue: 0, duration: 120, useNativeDriver: true }).start(() => setTransitioning(false));
+      });
     });
   };
 
@@ -398,13 +400,13 @@ function createStyles() { return StyleSheet.create({
     borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.ink,
+    backgroundColor: colors.strongSurface,
   },
   createButtonDisabled: {
     opacity: 0.4,
   },
   createText: {
-    color: colors.paper,
+    color: colors.onStrong,
     fontSize: 13,
     fontWeight: "600",
   },
