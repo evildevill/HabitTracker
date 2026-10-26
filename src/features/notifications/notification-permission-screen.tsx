@@ -113,7 +113,7 @@ function createStyles() { return StyleSheet.create({
   hero: { height: 210, marginTop: 13, marginBottom: 18, alignItems: "center", justifyContent: "center" },
   orbitOuter: { position: "absolute", width: 182, height: 182, borderRadius: 91, backgroundColor: color("citrus", 0.48), borderWidth: 1, borderColor: color("ink", 0.04) },
   orbitInner: { position: "absolute", width: 144, height: 144, borderRadius: 72, backgroundColor: color("mint", 0.4), borderWidth: 1, borderColor: color("paper", 0.7) },
-  bellBack: { width: 100, height: 100, borderRadius: 34, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-7deg" }], shadowColor: colors.ink, shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 6 },
+  bellBack: { width: 100, height: 100, borderRadius: 34, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-7deg" }], shadowColor: colors.ink, shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 6 },
   sparkleOne: { position: "absolute", top: 37, right: "22%", width: 38, height: 38, borderRadius: 13, backgroundColor: colors.citrus, alignItems: "center", justifyContent: "center", transform: [{ rotate: "9deg" }] },
   sparkleTwo: { position: "absolute", bottom: 28, left: "22%", width: 31, height: 31, borderRadius: 11, backgroundColor: colors.paper, borderWidth: 1, borderColor: surfaces.border, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-9deg" }] },
   heroCaption: { position: "absolute", bottom: 0, backgroundColor: colors.paper, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 7, borderWidth: 1, borderColor: surfaces.border },
