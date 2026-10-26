@@ -58,7 +58,7 @@ export function NotificationPermissionScreen({ onFinish }: Props) {
         <View style={styles.hero}>
           <View style={styles.orbitOuter} />
           <View style={styles.orbitInner} />
-          <View style={styles.bellBack}><BellRing size={42} color={colors.paper} strokeWidth={1.7} /></View>
+          <View style={styles.bellBack}><BellRing size={42} color={colors.onStrong} strokeWidth={1.7} /></View>
           <View style={styles.sparkleOne}><Sparkles size={19} color={colors.ink} strokeWidth={2} /></View>
           <View style={styles.sparkleTwo}><Check size={15} color={colors.ink} strokeWidth={3} /></View>
           <View style={styles.heroCaption}><Text style={styles.heroCaptionText}>A GENTLE NUDGE, WHEN IT MATTERS</Text></View>
