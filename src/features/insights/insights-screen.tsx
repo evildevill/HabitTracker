@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppText as Text } from "../../components/ui/app-text";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ChartNoAxesColumnIncreasing, CircleCheck, Clock3 } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { GlassCard } from "../../components/ui/glass-card";

@@ -1,4 +1,5 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppText as Text } from "../../components/ui/app-text";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { Plus, ListChecks } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";

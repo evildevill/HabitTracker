@@ -32,6 +32,14 @@
     "owner": "wasii",
     "plugins": [
       [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/SuperWaffles.ttf"
+          ]
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {

@@ -1,3 +1,4 @@
+import { AppText as Text } from "./app-text";
 import { useEffect, useRef, useState } from "react";
 import type { JSX } from "react";
 import {
@@ -6,7 +7,6 @@ import {
   Easing,
   Platform,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { CalendarCheck2, CheckCircle2, Flame } from "lucide-react-native";
