@@ -41,14 +41,33 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
       latestStateByHabitDay.set(key, event);
     });
   const scopedEvents = Array.from(latestStateByHabitDay.values()).filter((event) => event.completed);
-  const dayCounts = days.map((day) => scopedEvents.filter((event) => new Date(event.at).toISOString().slice(0, 10) === day.key).length);
+  const dayCounts = days.map((day) => scopedEvents.filter((event) => localDayKey(new Date(event.at)) === day.key).length);
   const completedToday = habits.filter((habit) => habit.completed).length;
   const todayPercent = habits.length ? Math.round((completedToday / habits.length) * 100) : 0;
   const completedInRange = scopedEvents.length;
-  const activeDays = new Set(scopedEvents.map((event) => new Date(event.at).toISOString().slice(0, 10))).size;
+  const activeDays = new Set(scopedEvents.map((event) => localDayKey(new Date(event.at)))).size;
   const bestDayCount = Math.max(0, ...dayCounts);
   const mostConsistentHabit = habits.map((habit) => ({ ...habit, count: scopedEvents.filter((event) => event.habitId === habit.id).length })).sort((a, b) => b.count - a.count)[0];
-  const hasHistory = completionEvents.length > 0;
+  const hasHistory = scopedEvents.length > 0;
+  const habitCounts = habits.map((habit) => ({
+    id: habit.id,
+    title: habit.title,
+    count: scopedEvents.filter((event) => event.habitId === habit.id).length,
+  })).sort((a, b) => b.count - a.count);
+  const strongestHabit = habitCounts.find((habit) => habit.count > 0);
+  const weakestHabit = [...habitCounts].reverse().find((habit) => habit.count < (strongestHabit?.count ?? 0));
+  const weekdayTotals = Array.from({ length: 7 }, (_, weekday) => {
+    const weekdayDays = days.filter((day) => day.date.getDay() === weekday);
+    return {
+      weekday,
+      label: new Date(2024, 0, weekday + 7).toLocaleDateString(undefined, { weekday: "short" }),
+      count: weekdayDays.reduce((sum, day) => sum + (dayCounts.find((_, index) => days[index].key === day.key) ?? 0), 0),
+      availableDays: weekdayDays.length,
+    };
+  });
+  const strongestWeekday = weekdayTotals.filter((day) => day.availableDays > 0).sort((a, b) => b.count / b.availableDays - a.count / a.availableDays)[0];
+  const possibleCheckIns = habits.length * range;
+  const consistency = possibleCheckIns ? Math.round((completedInRange / possibleCheckIns) * 100) : 0;
   const chartWidth = 320;
   const chartHeight = 154;
   const chartTop = 16;
@@ -139,19 +158,71 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
           </GlassCard>
         </View>
 
+        <View style={styles.metricsGrid}>
+          <GlassCard style={styles.metricCard}>
+            <View style={styles.metricIcon}><Target size={17} color={colors.brand} /></View>
+            <Text style={styles.metricValue}>{consistency}%</Text>
+            <Text style={styles.metricLabel}>Check-in rate</Text>
+            <Text style={styles.metricHint}>Against all habits × {range} days</Text>
+          </GlassCard>
+          <GlassCard style={styles.metricCard}>
+            <View style={styles.metricIcon}><TrendingUp size={17} color={colors.brand} /></View>
+            <Text style={styles.metricValue}>{bestDayCount}</Text>
+            <Text style={styles.metricLabel}>Best day</Text>
+            <Text style={styles.metricHint}>Most check-ins in one day</Text>
+          </GlassCard>
+        </View>
+
+        <GlassCard style={styles.patternCard}>
+          <View style={styles.patternTop}>
+            <View style={styles.metricIcon}><ChartNoAxesColumnIncreasing size={18} color={colors.brand} /></View>
+            <View style={styles.patternCopy}><Text style={styles.cardTitle}>When you show up</Text><Text style={styles.cardSubtitle}>Average check-ins by weekday in this range</Text></View>
+          </View>
+          {hasHistory ? (
+            <View style={styles.weekdayBars}>
+              {weekdayTotals.map((day) => {
+                const peak = Math.max(1, ...weekdayTotals.map((item) => item.availableDays ? item.count / item.availableDays : 0));
+                const ratio = day.availableDays ? (day.count / day.availableDays) / peak : 0;
+                return (
+                  <View key={day.weekday} style={styles.weekdayColumn}>
+                    <Text style={styles.weekdayValue}>{day.availableDays ? day.count : "–"}</Text>
+                    <View style={styles.weekdayTrack}><View style={[styles.weekdayFill, { height: Math.max(3, ratio * 48), opacity: day.availableDays ? 1 : 0.25 }]} /></View>
+                    <Text style={styles.weekdayLabel}>{day.label.slice(0, 1)}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          ) : <Text style={styles.patternEmpty}>Your weekday rhythm will appear after you record a few check-ins.</Text>}
+          {strongestWeekday && strongestWeekday.count > 0 ? <Text style={styles.patternFootnote}>Your most active weekday in this range is {strongestWeekday.label}.</Text> : null}
+        </GlassCard>
+
         <GlassCard style={styles.patternCard}>
           <View style={styles.patternTop}>
             <View style={styles.metricIcon}><Flame size={18} color={colors.coral} /></View>
             <View style={styles.patternCopy}><Text style={styles.cardTitle}>Your strongest habit</Text><Text style={styles.cardSubtitle}>Based on recorded completions</Text></View>
           </View>
-          {mostConsistentHabit && mostConsistentHabit.count > 0 ? (
+          {strongestHabit && strongestHabit.count > 0 ? (
             <>
-              <View style={styles.strongestRow}><Text style={styles.strongestName}>{mostConsistentHabit.title}</Text><Text style={styles.strongestCount}>{mostConsistentHabit.count} check-in{mostConsistentHabit.count === 1 ? "" : "s"}</Text></View>
+              <View style={styles.strongestRow}><Text style={styles.strongestName}>{strongestHabit.title}</Text><Text style={styles.strongestCount}>{strongestHabit.count} check-in{mostConsistentHabit.count === 1 ? "" : "s"}</Text></View>
               <View style={styles.trackLight}><View style={[styles.fillLight, { width: Math.max(4, (mostConsistentHabit.count / Math.max(1, completedInRange)) * 100) + "%" }]} /></View>
               <Text style={styles.patternFootnote}>This is your most frequently completed habit in the selected range—not a long-term streak.</Text>
             </>
           ) : (
             <Text style={styles.patternEmpty}>Complete a habit and we'll highlight which one you're returning to most often.</Text>
+          )}
+        </GlassCard>
+
+        <GlassCard style={styles.patternCard}>
+          <View style={styles.patternTop}>
+            <View style={styles.metricIcon}><Target size={18} color={colors.coral} /></View>
+            <View style={styles.patternCopy}><Text style={styles.cardTitle}>Habit to give attention</Text><Text style={styles.cardSubtitle}>A gentle nudge, not a judgement</Text></View>
+          </View>
+          {weakestHabit && weakestHabit.count === 0 ? (
+            <Text style={styles.patternEmpty}>“{weakestHabit.title}” has no completed check-ins in this range. Try making it smaller or choosing a time that fits your day.</Text>
+          ) : weakestHabit ? (
+            <View style={styles.strongestRow}><Text style={styles.strongestName}>{weakestHabit.title}</Text><Text style={styles.strongestCount}>{weakestHabit.count} check-ins</Text></View>
+          ) : (
+            <Text style={styles.patternEmpty}>Add a habit to start comparing patterns across your routine.</Text>
           )}
         </GlassCard>
 
@@ -217,6 +288,12 @@ function createStyles() { return StyleSheet.create({
   fillLight: { height: 6, borderRadius: 99, backgroundColor: colors.brand },
   patternFootnote: { color: colors.secondary, fontSize: 10, lineHeight: 15 },
   patternEmpty: { color: colors.secondary, fontSize: 11, lineHeight: 17 },
+  weekdayBars: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", minHeight: 91, paddingTop: 10 },
+  weekdayColumn: { flex: 1, alignItems: "center", gap: 6 },
+  weekdayValue: { color: colors.secondary, fontSize: 9, fontWeight: "600" },
+  weekdayTrack: { height: 50, width: 13, justifyContent: "flex-end", borderRadius: 8, backgroundColor: color("mint", 0.15), overflow: "hidden" },
+  weekdayFill: { width: "100%", borderRadius: 8, backgroundColor: colors.brand },
+  weekdayLabel: { color: colors.secondary, fontSize: 10, fontWeight: "600" },
   noteRow: { flexDirection: "row", alignItems: "flex-start", gap: 8, paddingHorizontal: 3, marginTop: 17 },
   noteText: { flex: 1, color: colors.secondary, fontSize: 10, lineHeight: 16 },
   bottomSpacer: { height: 92 },
