@@ -1,7 +1,7 @@
 # Habit Tracker
 
 [![Google Play](https://img.shields.io/badge/Google_Play-Get_the_app-414141?logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.habittrackerwasiii.app)
-[![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![Built with Expo](https://img.shields.io/badge/Built_with-Expo-4630EB?logo=expo&logoColor=white)](https://expo.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-typed-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
@@ -178,6 +178,6 @@ Please avoid claiming a flow is tested unless the relevant check was actually ru
 
 ## License
 
-This project is licensed under the **MIT License**. You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the license conditions.
+This repository is **source-available under a proprietary, all-rights-reserved license**. You may view the source for personal evaluation, but you may not modify, redistribute, publish derivative works, or use the code in another project without prior written permission from Waseem Akram / WasiiLabs. Where written permission is granted, attribution and copyright notices must be retained unless that permission says otherwise.
 
-See [`LICENSE`](./LICENSE) for the complete license text. Copyright © 2026 Waseem Akram.
+This is **not an open-source license**. If you want to contribute, read [CONTRIBUTING.md](CONTRIBUTING.md) and obtain maintainer approval before submitting work. See [`LICENSE`](./LICENSE) for the full terms. Copyright © 2026 Waseem Akram / WasiiLabs.
