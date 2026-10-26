@@ -1,5 +1,4 @@
 import { AppText as Text } from "../../components/ui/app-text";
-import { AppText as Text as NativeText } from "../../components/ui";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ChartNoAxesColumnIncreasing, CircleCheck, Clock3 } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
