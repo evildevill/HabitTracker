@@ -11,6 +11,7 @@ const iconByHabit = {
 type HabitRowProps = { habit: Habit; onToggle: (id: string) => void; compact?: boolean };
 
 export function HabitRow({ habit, onToggle, compact = false }: HabitRowProps) {
+  const styles = createStyles();
   const Icon = iconByHabit[habit.icon];
   const handlePress = () => {
     void Haptics.impactAsync(habit.completed ? Haptics.ImpactFeedbackStyle.Light : Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
@@ -34,7 +35,7 @@ export function HabitRow({ habit, onToggle, compact = false }: HabitRowProps) {
     </Pressable>
   );
 }
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   row: { minHeight: 78, flexDirection: "row", alignItems: "center", gap: 13, paddingHorizontal: 13, paddingVertical: 12, borderRadius: 17, backgroundColor: surfaces.card, borderWidth: 1, borderColor: surfaces.border },
   compactRow: { minHeight: 70, borderRadius: 16, backgroundColor: color("paper", 0.83) },
   doneRow: { backgroundColor: color("brand", 0.055), borderColor: color("brand", 0.13) },
@@ -46,4 +47,4 @@ const styles = StyleSheet.create({
   subtitle: { color: colors.secondary, fontSize: 11, fontWeight: "400", lineHeight: 15 },
   check: { width: 27, height: 27, borderRadius: 9, borderWidth: 1.5, borderColor: color("brand", 0.32), backgroundColor: colors.paper, alignItems: "center", justifyContent: "center" },
   checked: { backgroundColor: colors.brand, borderColor: colors.brand },
-});
+}); }
