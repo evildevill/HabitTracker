@@ -65,8 +65,6 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
     };
   });
   const strongestWeekday = weekdayTotals.filter((day) => day.availableDays > 0).sort((a, b) => b.count / b.availableDays - a.count / a.availableDays)[0];
-  const possibleCheckIns = habits.length * range;
-  const consistency = possibleCheckIns ? Math.round((completedInRange / possibleCheckIns) * 100) : 0;
   const chartWidth = 320;
   const chartHeight = 154;
   const chartTop = 16;
@@ -160,9 +158,9 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
         <View style={styles.metricsGrid}>
           <GlassCard style={styles.metricCard}>
             <View style={styles.metricIcon}><Target size={17} color={colors.brand} /></View>
-            <Text style={styles.metricValue}>{consistency}%</Text>
-            <Text style={styles.metricLabel}>Check-in rate</Text>
-            <Text style={styles.metricHint}>Against all habits × {range} days</Text>
+            <Text style={styles.metricValue}>{activeDays ? (completedInRange / activeDays).toFixed(1) : "0"}</Text>
+            <Text style={styles.metricLabel}>Avg. active day</Text>
+            <Text style={styles.metricHint}>Check-ins on days you showed up</Text>
           </GlassCard>
           <GlassCard style={styles.metricCard}>
             <View style={styles.metricIcon}><TrendingUp size={17} color={colors.brand} /></View>
