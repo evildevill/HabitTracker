@@ -128,7 +128,7 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
           <ChevronRight size={16} color={color("secondary", 0.55)} />
         </Pressable>
 
-        <GlassCard style={styles.noteCard} shadow={false}>
+        <GlassCard style={styles.noteCard}>
           <View style={styles.noteIcon}><ShieldCheck size={18} color={colors.brand} strokeWidth={1.8} /></View>
           <View style={styles.noteCopy}>
             <Text style={styles.noteTitle}>Your routine belongs to you.</Text>
