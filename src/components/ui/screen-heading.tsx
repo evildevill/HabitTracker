@@ -1,5 +1,4 @@
-import { AppText as Text } from "./";
-import { AppText as Text as NativeText } from "./";
+import { AppText as Text } from "./app-text";
 import { StyleSheet, View } from "react-native";
 import { color, colors, monoFont, roundedFont, typography } from "../../design/tokens";
 
