@@ -100,8 +100,10 @@ Be respectful, constructive, and welcoming. Critique ideas and code rather than 
 
 ## Licensing and contribution terms
 
-By submitting a contribution, you confirm that you have the right to submit it and that you identify any third-party code or assets and their applicable licenses. Do not submit work copied from sources whose terms do not permit its inclusion.
+**This repository uses a proprietary, source-available license. It is not an open-source project.** Viewing the code does not grant permission to modify, redistribute, publish derivative works, or reuse it in another project. See [LICENSE](LICENSE) for the terms.
 
-Contributions are subject to the license and any contribution terms published by the repository at the time of contribution. If you need different licensing terms or are unsure whether a contribution can be accepted, discuss it with the maintainer before submitting.
+Please open an issue or discussion to propose a change before doing substantial work. Obtain written approval from the maintainer before assuming a proposed change will be accepted. Do not submit copied code or assets unless their licenses permit the intended use.
 
-Thank you for helping make Habit Tracker better.
+Submitting a pull request does not, by itself, grant the project or other users a license to use your contribution, and it does not guarantee that the contribution will be merged. Before any contribution can be incorporated, the maintainer may require a written contributor license agreement, copyright assignment, or other explicit written agreement granting the necessary rights. Do not assume that submitting a PR waives your rights or automatically transfers them.
+
+Thank you for helping improve Habit Tracker while respecting the project's licensing terms.
