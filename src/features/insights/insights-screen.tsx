@@ -46,7 +46,7 @@ export function InsightsScreen({ habits }: InsightsScreenProps) {
           <View style={styles.soonPill}><Text style={styles.soonText}>COMING LATER</Text></View>
         </View>
 
-        <GlassCard style={styles.futureCard} shadow={false}>
+        <GlassCard style={styles.futureCard}>
           <View style={styles.futureIcon}><Clock3 size={21} color={colors.brand} strokeWidth={1.8} /></View>
           <Text style={styles.futureTitle}>A clearer picture takes time</Text>
           <Text style={styles.futureBody}>Weekly consistency, streaks, and trends will become more useful as you build a longer history. For now, this view only shows today's check-ins—no made-up statistics.</Text>
