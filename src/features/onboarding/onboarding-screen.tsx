@@ -1,5 +1,6 @@
+import { AppText as Text } from "../../components/ui";
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, Animated, PanResponder, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AccessibilityInfo, Animated, PanResponder, Pressable, ScrollView, StyleSheet, Text as NativeText, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { ArrowLeft, ArrowRight, Check, Sun, Brain, Heart, Zap } from "lucide-react-native";
 import type { ComponentType } from "react";
