@@ -9,7 +9,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { CalendarCheck2, CheckCircle2, Flame } from "lucide-react-native";
 
 // Keep the normalized RGB values aligned with the root DESIGN.md.
@@ -194,16 +193,6 @@ export function AnimatedSplashScreen(): JSX.Element {
     >
       <View pointerEvents="none" style={StyleSheet.absoluteFill}>
         <View style={[StyleSheet.absoluteFill, { backgroundColor: palette.canvas }]} />
-        <LinearGradient
-          colors={[
-            color("brand", 0.075),
-            "rgba(0, 0, 0, 0)",
-            color("paper", 0.5),
-          ]}
-          start={{ x: 1, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          style={StyleSheet.absoluteFill}
-        />
       </View>
 
       <View style={styles.content}>
@@ -366,11 +355,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    shadowColor: palette.ink,
-    shadowOpacity: 0.12,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 12 },
-    elevation: 8,
   },
   brandUnderline: {
     width: 28,
