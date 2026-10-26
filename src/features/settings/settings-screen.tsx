@@ -145,10 +145,10 @@ export function SettingsScreen({ onRestartOnboarding, onOpenLegal, onOpenNotific
 function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 },
   heading: { marginBottom: 25 },
-  profileCard: { flexDirection: "row", alignItems: "center", gap: 13, padding: 16, borderRadius: 22, backgroundColor: colors.ink, marginBottom: 30 },
+  profileCard: { flexDirection: "row", alignItems: "center", gap: 13, padding: 16, borderRadius: 22, backgroundColor: colors.strongSurface, marginBottom: 30 },
   profileMark: { borderRadius: 16, padding: 5, backgroundColor: color("paper", 0.1) },
   profileCopy: { flex: 1, gap: 4 },
-  profileTitle: { color: colors.paper, fontSize: 15, fontWeight: "700", letterSpacing: -0.2 },
+  profileTitle: { color: colors.onStrong, fontSize: 15, fontWeight: "700", letterSpacing: -0.2 },
   profileSubtitle: { color: color("paper", 0.65), fontSize: 11 },
   versionPill: { backgroundColor: color("paper", 0.1), borderRadius: 999, paddingHorizontal: 9, paddingVertical: 6 },
   versionText: { color: colors.citrus, fontSize: 10, fontWeight: "700" },
