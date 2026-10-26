@@ -35,6 +35,7 @@ export function AppShell() {
   const [activeTab, setActiveTab] = useState<TabKey>("today");
   const [habits, setHabits] = useState<Habit[]>([]);
   const [completionEvents, setCompletionEvents] = useState<HabitCompletionEvent[]>([]);
+  const [completionHistoryLoaded, setCompletionHistoryLoaded] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [showNotificationOnboarding, setShowNotificationOnboarding] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
@@ -55,6 +56,39 @@ export function AppShell() {
     }).catch(() => undefined);
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    AsyncStorage.getItem("habit-tracker.completion-history").then((saved) => {
+      if (!active || !saved) return;
+      try {
+        const parsed: unknown = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const valid = parsed.filter((event): event is HabitCompletionEvent =>
+            event !== null &&
+            typeof event === "object" &&
+            typeof event.habitId === "string" &&
+            typeof event.at === "number" &&
+            typeof event.completed === "boolean"
+          );
+          setCompletionEvents(valid.slice(-3650));
+        }
+      } catch {
+        // Ignore invalid or outdated local history.
+      }
+    }).catch(() => undefined).finally(() => {
+      if (active) setCompletionHistoryLoaded(true);
+    });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!completionHistoryLoaded) return;
+    void AsyncStorage.setItem(
+      "habit-tracker.completion-history",
+      JSON.stringify(completionEvents.slice(-3650)),
+    ).catch(() => undefined);
+  }, [completionEvents, completionHistoryLoaded]);
 
   useEffect(() => {
     refreshPalette(isDark);
