@@ -1,5 +1,4 @@
 import { AppText as Text } from "../../components/ui/app-text";
-import { AppText as Text as NativeText } from "../../components/ui";
 import { useCallback, useEffect, useState } from "react";
 import { AppState, Linking, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BellRing, CheckCircle2, ChevronLeft, ChevronRight, ExternalLink, ShieldCheck } from "lucide-react-native";
