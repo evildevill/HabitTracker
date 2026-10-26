@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   AccessibilityInfo,
-  Animated,
   Appearance,
-  Dimensions,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -14,7 +12,6 @@ import {
   Text,
   TextInput,
   View,
-  useColorScheme,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
@@ -41,67 +38,34 @@ export function AppShell() {
   const [showNotificationOnboarding, setShowNotificationOnboarding] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [showAppearanceSettings, setShowAppearanceSettings] = useState(false);
-  const [appearanceMode, setAppearanceMode] = useState<AppearanceMode>("system");
+  const [appearanceMode, setAppearanceMode] = useState<AppearanceMode>("light");
   const [, setPaletteVersion] = useState(0);
-  const systemScheme = useColorScheme();
-  const [transitioning, setTransitioning] = useState(false);
-  const [transitionDark, setTransitionDark] = useState(false);
-  const transitionScale = useRef(new Animated.Value(0.001)).current;
-  const transitionFade = useRef(new Animated.Value(1)).current;
-  const transitionParticles = useRef(new Animated.Value(0)).current;
-  const reduceMotion = useRef(false);
+
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
   const [legalDocument, setLegalDocument] = useState<LegalDocument | null>(null);
 
-  const isDark = appearanceMode === "system" ? systemScheme === "dark" : appearanceMode === "dark";
+  const isDark = appearanceMode === "dark";
 
   useEffect(() => {
     let active = true;
-    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => { if (active) reduceMotion.current = enabled; }).catch(() => undefined);
-    const motionSubscription = AccessibilityInfo.addEventListener("reduceMotionChanged", (enabled) => { reduceMotion.current = enabled; });
     AsyncStorage.getItem("habit-tracker.appearance").then((saved) => {
-      if (!active) return;
-      if (saved === "light" || saved === "dark" || saved === "system") setAppearanceMode(saved);
+      if (active && (saved === "light" || saved === "dark")) setAppearanceMode(saved);
     }).catch(() => undefined);
-    return () => { active = false; motionSubscription.remove(); };
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
     refreshPalette(isDark);
     setPaletteVersion((version) => version + 1);
-    Appearance.setColorScheme(appearanceMode === "system" ? null : appearanceMode);
+    Appearance.setColorScheme(appearanceMode);
   }, [appearanceMode, isDark]);
 
   const changeAppearance = (next: AppearanceMode) => {
-    if (next === appearanceMode) { setShowAppearanceSettings(false); return; }
-    const nextDark = next === "system" ? systemScheme === "dark" : next === "dark";
+    if (next === appearanceMode) return;
     void Haptics.selectionAsync().catch(() => undefined);
-    setTransitionDark(nextDark);
-    if (reduceMotion.current) {
-      setAppearanceMode(next);
-      void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
-      setShowAppearanceSettings(false);
-      return;
-    }
-    setTransitioning(true);
-    transitionScale.setValue(0.001);
-    transitionParticles.setValue(0);
-    transitionFade.setValue(1);
-    const { width, height } = Dimensions.get("window");
-    const reach = Math.sqrt(width * width + height * height) * 1.2;
-    requestAnimationFrame(() => {
-      Animated.parallel([
-        Animated.timing(transitionScale, { toValue: reach / 50, duration: 420, useNativeDriver: true }),
-        Animated.timing(transitionParticles, { toValue: 1, duration: 420, useNativeDriver: true }),
-      ]).start(({ finished }) => {
-        if (!finished) return;
-        setAppearanceMode(next);
-        void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
-        setShowAppearanceSettings(false);
-        Animated.timing(transitionFade, { toValue: 0, duration: 120, useNativeDriver: true }).start(() => setTransitioning(false));
-      });
-    });
+    setAppearanceMode(next);
+    void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
   };
 
   const toggleHabit = (id: string) => {
@@ -264,28 +228,12 @@ export function AppShell() {
           </KeyboardAvoidingView>
         </View>
       </Modal>
-      {transitioning ? (
-        <View pointerEvents="none" style={styles.themeTransition}>
-          <Animated.View style={[styles.themeBurst, { backgroundColor: transitionDark ? "#091C16" : "#F4F7F4", transform: [{ scale: transitionScale }], opacity: transitionFade }]} />
-          {Array.from({ length: 24 }, (_, index) => {
-            const angle = index * 2.399963229728653;
-            const distance = 55 + ((index * 43) % 190);
-            const travel = transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0, distance] });
-            return <Animated.View key={index} style={[styles.themeParticle, { backgroundColor: index % 4 === 0 ? (transitionDark ? "#DCEB69" : "#B78B36") : (transitionDark ? "#9ECDB8" : "#164D3E"), opacity: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0.9, 0] }), transform: [{ translateX: Animated.multiply(travel, Math.cos(angle)) }, { translateY: Animated.multiply(travel, Math.sin(angle)) }, { scale: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0.4, index % 5 === 0 ? 1.8 : 1] }) }] }]} />;
-          })}
-          <Animated.View style={[styles.themeSpark, { opacity: transitionFade, transform: [{ scale: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1.7] }) }, { rotate: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: ["0deg", "75deg"] }) }] }]}><Text style={[styles.themeSparkText, { color: transitionDark ? "#DCEB69" : "#164D3E" }]}>✦</Text></Animated.View>
-        </View>
-      ) : null}
+
     </View>
   );
 }
 
 function createStyles() { return StyleSheet.create({
-  themeTransition: { ...StyleSheet.absoluteFillObject, zIndex: 999, alignItems: "center", justifyContent: "center", overflow: "hidden" },
-  themeBurst: { width: 110, height: 110, borderRadius: 55, position: "absolute", top: "17%", right: "8%" },
-  themeSpark: { position: "absolute", top: "18%", right: "12%", width: 48, height: 48, alignItems: "center", justifyContent: "center" },
-  themeSparkText: { fontSize: 34, fontWeight: "300" },
-  themeParticle: { position: "absolute", top: "17%", right: "8%", width: 4, height: 4, borderRadius: 3 },
   root: {
     flex: 1,
     backgroundColor: colors.canvas,
