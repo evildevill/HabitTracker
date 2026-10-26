@@ -3,6 +3,7 @@ import { color, colors, monoFont, roundedFont, typography } from "../../design/t
 
 type ScreenHeadingProps = { eyebrow: string; title: string; subtitle: string; count?: string };
 export function ScreenHeading({ eyebrow, title, subtitle, count }: ScreenHeadingProps) {
+  const styles = createStyles();
   return (
     <View style={styles.container}>
       <View style={styles.eyebrowRow}>
@@ -14,7 +15,7 @@ export function ScreenHeading({ eyebrow, title, subtitle, count }: ScreenHeading
     </View>
   );
 }
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   container: { gap: 7 },
   eyebrowRow: { minHeight: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   eyebrow: { color: colors.brand, fontSize: typography.eyebrow, fontWeight: "700", letterSpacing: 1.5, fontFamily: monoFont },
@@ -22,4 +23,4 @@ const styles = StyleSheet.create({
   count: { color: colors.brand, fontSize: typography.count, fontWeight: "700", fontFamily: monoFont },
   title: { color: colors.ink, fontSize: typography.screenTitle, fontWeight: "800", letterSpacing: -1.7, lineHeight: 43, fontFamily: roundedFont },
   subtitle: { color: colors.secondary, fontSize: 14, fontWeight: "400", lineHeight: 21, fontFamily: roundedFont },
-});
+}); }
