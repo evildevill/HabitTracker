@@ -9,6 +9,7 @@ import { getNotificationPermission, requestNotificationPermission } from "./noti
 type Props = { onBack: () => void };
 
 export function NotificationSettingsScreen({ onBack }: Props) {
+  const styles = createStyles();
   const [granted, setGranted] = useState(false);
   const [canAskAgain, setCanAskAgain] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -96,7 +97,7 @@ export function NotificationSettingsScreen({ onBack }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   content: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 28 },
   back: { flexDirection: "row", alignItems: "center", gap: 5, alignSelf: "flex-start", paddingVertical: 8, paddingRight: 14, marginBottom: 13 },
   backText: { color: colors.ink, fontSize: 12, fontWeight: "700" },
@@ -130,4 +131,4 @@ const styles = StyleSheet.create({
   infoFootText: { color: colors.brandDark, fontSize: 10, fontWeight: "700" },
   pressed: { opacity: 0.8, transform: [{ scale: 0.99 }] },
   bottomSpacer: { height: 92 },
-});
+}); }
