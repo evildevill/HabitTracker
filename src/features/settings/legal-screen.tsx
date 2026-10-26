@@ -1,4 +1,5 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppText as Text } from "../../components/ui";
+import { Pressable, ScrollView, StyleSheet, Text as NativeText, View } from "react-native";
 import { ArrowLeft, CheckCircle2, LockKeyhole, Scale } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
 import { color, colors, monoFont, roundedFont, surfaces } from "../../design/tokens";
