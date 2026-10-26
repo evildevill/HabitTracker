@@ -25,6 +25,7 @@ type TabBarProps = {
 };
 
 export function TabBar({ activeTab, onSelect }: TabBarProps) {
+  const styles = createStyles();
   return (
     <View style={styles.positioner}>
       <View style={styles.dock}>
@@ -62,7 +63,7 @@ export function TabBar({ activeTab, onSelect }: TabBarProps) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   positioner: {
     position: "absolute",
     left: 0,
@@ -108,4 +109,4 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     transform: [{ scale: 0.975 }],
   },
-});
+}); }
