@@ -14,6 +14,7 @@ type RangeDays = 7 | 30 | 90;
 type InsightsScreenProps = { habits: Habit[]; completionEvents: HabitCompletionEvent[] };
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+const localDayKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 const ranges: RangeDays[] = [7, 30, 90];
 
 export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps) {
@@ -28,7 +29,7 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
 
   const days = useMemo(() => Array.from({ length: range }, (_, index) => {
     const date = new Date(start + index * DAY_MS);
-    return { key: date.toISOString().slice(0, 10), label: range === 7 ? date.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 1) : date.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }), date };
+    return { key: localDayKey(date), label: range === 7 ? date.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 1) : date.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }), date };
   }), [range, start]);
 
   const latestStateByHabitDay = new Map<string, HabitCompletionEvent>();
@@ -36,7 +37,7 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
     .filter((event) => event.at >= start && event.at < start + range * DAY_MS)
     .sort((a, b) => a.at - b.at)
     .forEach((event) => {
-      const key = event.habitId + ":" + new Date(event.at).toISOString().slice(0, 10);
+      const key = event.habitId + ":" + localDayKey(new Date(event.at));
       latestStateByHabitDay.set(key, event);
     });
   const scopedEvents = Array.from(latestStateByHabitDay.values()).filter((event) => event.completed);
@@ -82,7 +83,7 @@ export function InsightsScreen({ habits, completionEvents }: InsightsScreenProps
           <View><Text style={styles.sectionTitle}>Your patterns</Text><Text style={styles.sectionSubtitle}>Completion activity from this app session</Text></View>
         </View>
 
-        <View style={styles.rangeControl} accessibilityRole="radiogroup" accessibilityLabel="Insight time range">
+        <View style={styles.rangeControl} accessibilityLabel="Insight time range">
           {ranges.map((daysCount) => (
             <Pressable key={daysCount} accessibilityRole="radio" accessibilityState={{ selected: range === daysCount }} onPress={() => setRange(daysCount)} style={[styles.rangeOption, range === daysCount && styles.rangeOptionActive]}>
               <Text style={[styles.rangeText, range === daysCount && styles.rangeTextActive]}>{daysCount}D</Text>
