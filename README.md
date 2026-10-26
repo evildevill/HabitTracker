@@ -171,4 +171,6 @@ Please avoid claiming a flow is tested unless the relevant check was actually ru
 
 ## License
 
-No license has been declared in this repository yet. Unless a license is added, the source should not be assumed to be available for unrestricted reuse.
+This project is licensed under the **MIT License**. You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the license conditions.
+
+See [`LICENSE`](./LICENSE) for the complete license text. Copyright © 2026 Waseem Akram.
