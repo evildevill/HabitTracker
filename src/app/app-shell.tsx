@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Animated,
   Appearance,
   Dimensions,
@@ -47,6 +48,7 @@ export function AppShell() {
   const [transitionDark, setTransitionDark] = useState(false);
   const transitionScale = useRef(new Animated.Value(0.001)).current;
   const transitionFade = useRef(new Animated.Value(1)).current;
+  const transitionParticles = useRef(new Animated.Value(0)).current;
   const reduceMotion = useRef(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [newHabitTitle, setNewHabitTitle] = useState("");
@@ -84,10 +86,14 @@ export function AppShell() {
     }
     setTransitioning(true);
     transitionScale.setValue(0.001);
+    transitionParticles.setValue(0);
     transitionFade.setValue(1);
     const { width, height } = Dimensions.get("window");
     const reach = Math.sqrt(width * width + height * height) * 1.2;
-    Animated.timing(transitionScale, { toValue: reach / 50, duration: 760, useNativeDriver: true }).start(({ finished }) => {
+    Animated.parallel([
+      Animated.timing(transitionScale, { toValue: reach / 50, duration: 760, useNativeDriver: true }),
+      Animated.timing(transitionParticles, { toValue: 1, duration: 760, useNativeDriver: true }),
+    ]).start(({ finished }) => {
       if (!finished) return;
       setAppearanceMode(next);
       void AsyncStorage.setItem("habit-tracker.appearance", next).catch(() => undefined);
@@ -256,11 +262,28 @@ export function AppShell() {
           </KeyboardAvoidingView>
         </View>
       </Modal>
+      {transitioning ? (
+        <View pointerEvents="none" style={styles.themeTransition}>
+          <Animated.View style={[styles.themeBurst, { backgroundColor: transitionDark ? "#091C16" : "#F4F7F4", transform: [{ scale: transitionScale }], opacity: transitionFade }]} />
+          {Array.from({ length: 24 }, (_, index) => {
+            const angle = index * 2.399963229728653;
+            const distance = 55 + ((index * 43) % 190);
+            const travel = transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0, distance] });
+            return <Animated.View key={index} style={[styles.themeParticle, { backgroundColor: index % 4 === 0 ? (transitionDark ? "#DCEB69" : "#B78B36") : (transitionDark ? "#9ECDB8" : "#164D3E"), opacity: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0.9, 0] }), transform: [{ translateX: Animated.multiply(travel, Math.cos(angle)) }, { translateY: Animated.multiply(travel, Math.sin(angle)) }, { scale: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0.4, index % 5 === 0 ? 1.8 : 1] }) }] }]} />;
+          })}
+          <Animated.View style={[styles.themeSpark, { opacity: transitionFade, transform: [{ scale: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1.7] }) }, { rotate: transitionParticles.interpolate({ inputRange: [0, 1], outputRange: ["0deg", "75deg"] }) }] }]}><Text style={[styles.themeSparkText, { color: transitionDark ? "#DCEB69" : "#164D3E" }]}>✦</Text></Animated.View>
+        </View>
+      ) : null}
     </View>
   );
 }
 
 function createStyles() { return StyleSheet.create({
+  themeTransition: { ...StyleSheet.absoluteFillObject, zIndex: 999, alignItems: "center", justifyContent: "center", overflow: "hidden" },
+  themeBurst: { width: 110, height: 110, borderRadius: 55, position: "absolute", top: "17%", right: "8%" },
+  themeSpark: { position: "absolute", top: "18%", right: "12%", width: 48, height: 48, alignItems: "center", justifyContent: "center" },
+  themeSparkText: { fontSize: 34, fontWeight: "300" },
+  themeParticle: { position: "absolute", top: "17%", right: "8%", width: 4, height: 4, borderRadius: 3 },
   root: {
     flex: 1,
     backgroundColor: colors.canvas,
