@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { color, colors } from "../../design/tokens";
 
 type AppBackgroundProps = { children: ReactNode };
-export function AppBackground({ children }: AppBackgroundProps) {
+export function AppBackground({ children }: AppBackgroundProps) {\n  const styles = createStyles();
   return (
     <View style={styles.root}>
       <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: colors.canvas }]} />
@@ -19,4 +19,4 @@ export function AppBackground({ children }: AppBackgroundProps) {
     </View>
   );
 }
-const styles = StyleSheet.create({ root: { flex: 1, backgroundColor: colors.canvas } });
+function createStyles() { return StyleSheet.create({ root: { flex: 1, backgroundColor: colors.canvas } }); }
