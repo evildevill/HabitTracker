@@ -1,4 +1,5 @@
 import { AppText as Text } from "./";
+import { AppText as Text as NativeText } from "./";
 import { useEffect, useRef, useState } from "react";
 import type { JSX } from "react";
 import {
