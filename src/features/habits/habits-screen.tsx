@@ -1,6 +1,6 @@
 import { AppText as Text } from "../../components/ui";
 import { AppText as Text as NativeText } from "../../components/ui";
-import { Pressable, ScrollView, StyleSheet, Text as NativeText, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { Plus, ListChecks } from "lucide-react-native";
 import { AppBackground } from "../../components/ui/app-background";
