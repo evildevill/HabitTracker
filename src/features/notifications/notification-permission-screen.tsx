@@ -8,6 +8,7 @@ import { getNotificationPermission, requestNotificationPermission } from "./noti
 type Props = { onFinish: () => void };
 
 export function NotificationPermissionScreen({ onFinish }: Props) {
+  const styles = createStyles();
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export function NotificationPermissionScreen({ onFinish }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles() { return StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.canvas },
   wash: { position: "absolute", top: -95, right: -90, width: 280, height: 280, borderRadius: 140, backgroundColor: color("mint", 0.18) },
   content: { paddingHorizontal: 24, paddingTop: 17, paddingBottom: 14, flexGrow: 1 },
@@ -137,4 +138,4 @@ const styles = StyleSheet.create({
   busy: { opacity: 0.75 },
   pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
   footerHint: { color: color("secondary", 0.8), fontSize: 10, textAlign: "center" },
-});
+}); }
