@@ -98,7 +98,7 @@ function createStyles() { return StyleSheet.create({
   listCount: { color: colors.secondary, fontSize: 12, fontWeight: "600", paddingBottom: 2 },
   list: { gap: 9 },
   addButton: { minHeight: 76, marginTop: 15, paddingHorizontal: 13, paddingVertical: 12, borderRadius: 20, backgroundColor: color("mint", 0.1), borderWidth: 1, borderColor: color("brand", 0.15), flexDirection: "row", alignItems: "center", gap: 12 },
-  addIcon: { width: 43, height: 43, borderRadius: 14, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center" },
+  addIcon: { width: 43, height: 43, borderRadius: 14, backgroundColor: colors.strongSurface, alignItems: "center", justifyContent: "center" },
   addCopy: { flex: 1, gap: 4 },
   addTitle: { color: colors.ink, fontSize: 14, fontWeight: "700", letterSpacing: -0.15 },
   addSubtitle: { color: colors.secondary, fontSize: 11, lineHeight: 16 },
