@@ -1,6 +1,13 @@
 # Habit Tracker
 
+[![Google Play](https://img.shields.io/badge/Google_Play-Get_the_app-414141?logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.habittrackerwasiii.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
+[![Built with Expo](https://img.shields.io/badge/Built_with-Expo-4630EB?logo=expo&logoColor=white)](https://expo.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-typed-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
 A calm, privacy-minded habit tracker built with **React Native, Expo, and TypeScript**. Habit Tracker is designed around small daily actions, a focused interface, and useful feedback without requiring an account.
+
+**Get it on Google Play:** [Habit Tracker](https://play.google.com/store/apps/details?id=com.habittrackerwasiii.app)
 
 > **Project status:** Active development. The app includes onboarding, daily habit check-ins, a habit list, local check-in insights, appearance preferences, and notification-permission settings. Some data, including the habit list, is not yet persisted across app restarts.
 
